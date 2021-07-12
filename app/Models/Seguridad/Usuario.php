@@ -2,8 +2,7 @@
 
 namespace App\Models\Seguridad;
 
-use App\Models\Admin\Empleado;
-use App\Models\Admin\Empresa;
+use App\Models\Admin\Cita;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Admin\Rol;
 use Illuminate\Support\Facades\Hash;
@@ -12,23 +11,46 @@ use Illuminate\Support\Facades\Session;
 class Usuario extends Authenticatable
 {
     protected $table = 'usuario';
-    //protected $remember_token = false;
-    //protected $guarded = ['id'];
+   
     protected $fillable = [
-        
-        'usuario', 'password', 'remember_token', 'tipo_de_usuario', 'email', 'activo', 'empleado_id'
+        'papellido',
+        'sapellido',
+        'pnombre',
+        'snombre',
+        'tipo_documento',
+        'documento',
+        'usuario',
+        'password',
+        'remenber_token',
+        'email',
+        'cod_retus',
+        'celular',
+        'telefono',
+        'profesion',
+        'especialidad',
+        'observacion',
+        'ips',
+        'activo',
+        'delete_at'
     ];
 
 
 
 
-    protected $hidden = [
-        'password'
-    ];
+    protected $hidden = ['password'];
+    
 
     
     public function roles1(){
-        return $this->belongsToMany(Rol::class, 'usuario_rol');
+        return $this->belongsToMany(Rol::class,'usuario_rol');
+    }
+
+    public function historiau(){
+        return $this->hasMany(Historia::class, 'usuario_id');
+    }
+
+    public function citau(){
+        return $this->hasMany(Cita::class, 'usuario_id');
     }
 
     public function setSession(){
@@ -42,8 +64,8 @@ class Usuario extends Authenticatable
                     'rol_nombre' => $roles1[0]['nombre'],
                     'usuario' => $this->usuario,
                     'usuario_id' => $this->id,
-                    'tipo_user' => $this->tipo_de_usuario,
-                    'empleado_id' => $this->empleado_id,
+                    'profesion' => $this->profesion,
+                    'especialidad' => $this->especialidad,
                     'email' => $this->email,
                     'activo'=>$this->activo
                 ]
@@ -60,11 +82,13 @@ class Usuario extends Authenticatable
         }
     }
 
-    public function empleados(){
-        return $this->belongsTo(Empleado::class, 'ide');
-    }
+    // public function historias(){
+    //     return $this->belongsTo(Historia::class, 'usuario_id');
+    // }
 
-   
+    // public function citas(){
+    //     return $this->belongsTo(Cita::class, 'usuario_id');
+    // }
     
 
 }

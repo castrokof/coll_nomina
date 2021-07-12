@@ -106,6 +106,83 @@
 
 
 
+  
+
+
+<!-- /.Modal detalle prestamo -->
+
+  
+<div class="modal fade" tabindex="-1" id ="modal-cliente"  role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-content">
+
+
+  <!-- Default box -->
+  <div class="card card-success" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+    <div class="card-header">
+      <h3 class="card-title-cli"></h3>
+
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="maximize">
+          <i class="fas fa-expand"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+        
+          <button type="button" class="btn btn-tool" data-dismiss="modal">
+            <i class="fas fa-times"></i>
+          </button>
+        
+       
+      </div>
+      <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+   
+  <div class="card-body table-responsive p-2">
+        
+    <table id="cliente" class="table table-hover  text-nowrap">
+      {{-- <table id="cliente" class="table table-striped table-bordered"> --}}
+      <thead>
+      <tr>  
+           
+            <th>Consecutivo</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Tipo de documento</th>
+            <th>Documento</th>
+            <th>Telefono</th>
+            <th>Celular</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Pais</th>
+            <th>Ciudad</th>
+            <th>Barrio</th>
+            <th>Sector</th>
+            <th>Activo</th>
+            <th>Observación</th>
+            <th>Usuario_id</th>
+            
+                         
+      </tr>
+      </thead>
+      <tbody>
+         
+      </tbody>
+    </table>
+  </div>
+      <!-- /.class-table-responsive -->
+  </div>
+  <!-- /.card -->
+
+  </div>
+  </div>
+</div>
+   
+
+
+
 
 
 
@@ -129,6 +206,146 @@
 <script>
  
  $(document).ready(function(){
+
+
+  fill_datatable();
+
+  function fill_datatable( id = '')
+  {
+      //---------------------------------------------------
+
+        //initiate dataTables plugin
+        var datatable1 = 
+        $('#cliente')
+        //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+        .DataTable({
+        language: idioma_espanol,
+        processing: true,
+        lengthMenu: [ [25, 50, 100, 500, -1 ], [25, 50, 100, 500, "Mostrar Todo"] ],
+        processing: true,
+        serverSide: true,
+        aaSorting: [[ 1, "asc" ]],
+        ajax:{
+          url:"{{ route('clientecli')}}",
+          type:"get",
+          data: {id:id}, 
+              },
+        columns: [
+          
+          {data:'consecutivo',
+          name:'consecutivo'
+          },
+          {data:'nombres',
+          name:'nombres'}
+          ,
+          {data:'apellidos',
+          name:'apellidos'
+          },
+          {data:'tipo_documento',
+          name:'tipo_documento'
+          },
+          {data:'documento',
+          name:'documento'
+          },
+          {data:'telefono',
+          name:'telefono'
+          },
+          {data:'celular',
+          name:'celular'
+          },
+          {data:'direccion',
+          name:'direccion'
+          },
+          {data:'estado',
+          name:'estado'
+          },
+          {data:'pais',
+          name:'pais'
+          },
+          {data:'ciudad',
+          name:'ciudad'
+          },
+          {data:'barrio',
+          name:'barrio'
+          },
+          {data:'sector',
+          name:'sector'
+          },
+         
+          {data:'activo',
+          name:'activo'
+          },
+          {data:'observacion',
+          name:'observacion'
+          },
+          {data:'usuario_id',
+          name:'usuario_id'
+          },
+                   
+        ],
+
+         //Botones----------------------------------------------------------------------
+         
+         "dom":'<"row"<"col-xs-1 form-inline"><"col-md-4 form-inline"l><"col-md-5 form-inline"f><"col-md-3 form-inline"B>>rt<"row"<"col-md-8 form-inline"i> <"col-md-4 form-inline"p>>',
+         
+
+                   buttons: [
+                      {
+    
+                   extend:'copyHtml5',
+                   titleAttr: 'Copiar Registros',
+                   title:"seguimiento",
+                   className: "btn  btn-outline-primary btn-sm"
+    
+    
+                      },
+                      {
+    
+                   extend:'excelHtml5',
+                   titleAttr: 'Exportar Excel',
+                   title:"seguimiento",
+                   className: "btn  btn-outline-success btn-sm"
+    
+    
+                      },
+                       {
+    
+                   extend:'csvHtml5',
+                   titleAttr: 'Exportar csv',
+                   className: "btn  btn-outline-warning btn-sm"
+                   //text: '<i class="fas fa-file-excel"></i>'
+                   
+                      },
+                      {
+    
+                   extend:'pdfHtml5',
+                   titleAttr: 'Exportar pdf',
+                   className: "btn  btn-outline-secondary btn-sm"
+    
+    
+                      }
+                   ],
+
+
+        
+    
+        });
+
+      }
+$(document).on('click', '.clientes', function(){
+  
+  var id = $(this).attr('id');
+ 
+  if(id != '' ){
+    
+       $('#cliente').DataTable().destroy();
+       fill_datatable(id);
+       $('.card-title-cli').text('Clientes');
+       $('#modal-cliente').modal('show');  
+    }
+  });
+
+
         //initiate dataTables plugin
       var datatable = 
         $('#empleado')
@@ -207,6 +424,7 @@
         });
 
 $('#create_empleado').click(function(){
+  $('#form-general')[0].reset();
   $('.modal-title').text('Agregar Nuevo Empleado');
   $('#action_button').val('Add');
   $('#action').val('Add');

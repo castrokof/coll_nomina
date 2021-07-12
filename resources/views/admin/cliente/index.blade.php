@@ -83,7 +83,7 @@
 </div>
 </div>
 
-<!-- /.Modal crear cliente -->
+<!-- /.Modal crear y editar cliente -->
 
 
 

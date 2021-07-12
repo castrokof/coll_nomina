@@ -24,9 +24,12 @@ class ClienteController extends Controller
          $id_usuario = Session()->get('usuario_id');
          
          $usuarios = Usuario::orderBy('id')->where('id', '=', $id_usuario)->pluck('usuario', 'id')->toArray();
-         
-    
+
+       
+
         if($request->ajax()){
+
+          
 
             $datas = Cliente::where('usuario_id', '=', $id_usuario)->orderBy('usuario_id')->orderBy('consecutivo')->get();
             return  DataTables()->of($datas)
@@ -45,11 +48,57 @@ class ClienteController extends Controller
             }) 
             ->rawColumns(['action'])
             ->make(true);
-            }
+            } 
         return view('admin.cliente.index', compact('usuarios', 'datas'));
+        
     }
 
+    public function indexcli(Request $request)
+    {
+        
+         $id_usuario = Session()->get('usuario_id');
+         
+         $usuarios = Usuario::orderBy('id')->where('id', '=', $id_usuario)->pluck('usuario', 'id')->toArray();
 
+        $id_empleados = $request->id;
+
+        if($request->ajax()){
+
+           if($id_empleados != 0 || $id_empleados != null){
+
+             $datas = DB::table('usuario')
+            ->Join('empleado', 'usuario.empleado_id', '=', 'empleado.ide')
+            ->Join('cliente', 'usuario.id', '=', 'cliente.usuario_id')
+            ->where('empleado.ide', '=', $id_empleados)
+            ->get();
+            return  DataTables()->of($datas)
+            //   ->addColumn('action', function($datas){
+            //   $button = '<button type="button" name="edit" id="'.$datas->id.'"
+            //   class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Cliente"><i class="far fa-edit"></i></button>';
+            //   $button .='&nbsp;<button type="button" name="prestamo" id="'.$datas->id.'"
+            //   class = "prestamo btn-float  bg-gradient-warning btn-sm tooltipsC" title="Agregar Prestamo"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button>';
+            //   $button .='&nbsp;<button type="button" name="detalle" id="'.$datas->id.'"
+            //   class = "detalle btn-float  bg-gradient-success btn-sm tooltipsC" title="Detalle de Prestamos"><i class="fas fa-atlas"></i></i></button>';
+            //   return $button;
+    
+            //     }) 
+                //->rawColumns(['action'])
+                ->make(true);
+            }else{
+                $datas = DB::table('usuario')
+                ->Join('empleado', 'usuario.empleado_id', '=', 'empleado.ide')
+                ->Join('cliente', 'usuario.id', '=', 'cliente.usuario_id')
+                ->where('empleado.ide', '=', $id_empleados)
+                ->get();
+                return  DataTables()->of($datas)
+                ->make(true);
+
+            }
+
+
+        return view('admin.empleado.index', compact('usuarios', 'datas'));
+        }
+    }
     public function indexCliente(Request $request, $id)
     {
         

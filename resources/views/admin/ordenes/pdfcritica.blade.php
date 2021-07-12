@@ -90,20 +90,6 @@
              </div>     
 <script>
 
-// jQuery(document).ready(function() {
-
-//   $.ajax({
-//            success:function(data){  
-
-//              $('tbody').html(data.table_data);   
-                  
-//            }
-              
-                 
-//         });
-          
-// });
-
 </script>
 
 </body>

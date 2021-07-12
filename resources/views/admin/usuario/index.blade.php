@@ -9,7 +9,7 @@
 
 
 @section('scripts')
-<script src="{{asset("assets/pages/scripts/admin/usuario/index.js")}}" type="text/javascript"></script>
+
 <script src="{{asset("assets/pages/scripts/admin/usuario/crearuser.js")}}" type="text/javascript"></script>    
 @endsection
 
@@ -22,7 +22,7 @@
         <div class="card-header with-border">
           <h3 class="card-title">Usuarios</h3>
           <div class="card-tools pull-right">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-u"><i class="fa fa-fw fa-plus-circle"></i> Nuevo Usuario</button>
+            <button type="button" class="btn btn-default" name="create_usuario" id="create_usuario" data-toggle="modal" data-target="#modal-u"><i class="fa fa-fw fa-plus-circle"></i> Nuevo Usuario</button>
             </button>
           </div>
         </div>
@@ -32,45 +32,28 @@
         {{-- class="table table-hover table-bordered text-nowrap" --}}
         <thead>
         <tr>
-               <th class="btn-accion-tabla tooltipsC" title="Editar este registro"><i class="fa fa-fw fa-pencil-alt"></i></th>
-              <th class="btn-accion-tabla tooltipsC" title="Editar password"><i class="fas fa-key"></i></th>    
+              <th>Acciones</th>
               <th>Id</th>
-              <th>Nombre</th>
+              <th>1Nombre</th>
+              <th>2Nombre</th>
+              <th>1Apellido</th>
+              <th>2Apellido</th>
+              <th>Tipo documento</th>
+              <th>Documento</th>
               <th>Usuario</th>
-              <th>Tipo de Usuario</th>
+              <th>Celular</th>
+              <th>Retus</th>
+              <th>Profesión</th>
+              <th>Especialidad</th>
               <th>Email</th>
-              <th>Empresa</th>
+              <th>Ips</th>
               <th>Activo</th>
               <th>Rol</th>
+              <th>Fecha de creacion</th>
              
         </tr>
         </thead>
         <tbody>
-            @foreach ($datas as $data1)
-            <tr>
-                 <td>
-                <a href="{{route('editar_usuario', ['id' => $data1->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
-                  <i class="fa fa-fw fa-pencil-alt"></i>
-                </a>
-                </td>
-                <td>
-                <a href="{{url("usuario/$data1->id/password")}}" class="btn-accion-tabla tooltipsC" title="Editar password">
-                  <i class="fas fa-key"></i>
-                </a>
-                </td>
-                <td>{{$data1->id}}</td>
-                <td>{{$data1->nombres}}</td>
-                <td>{{$data1->usuario}}</td>
-                <td>{{$data1->tipo_de_usuario}}</td>
-                <td>{{$data1->email}}</td>
-                <td>{{$data1->empresa_id}}</td>
-                <td>{{$data1->activo}}</td>
-                <td>
-                    {{$data1->rol_id}}    
-                                         
-                </td>
-            </tr>
-        @endforeach          
         </tbody>
       </table>
     </div>
@@ -86,15 +69,16 @@
         <div class="row">
             <div class="col-lg-12">
               @include('includes.form-error')
-              @include('includes.form-mensaje')    
-               <div class="card card-warning">
+              @include('includes.form-mensaje')
+              <span id="form_result"></span>
+               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">Crear Usuarios</h3>
+                  <h3 class="card-title"></h3>
                   <div class="card-tools pull-right">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-              <form action="{{route('guardar_usuario')}}" id="form-general" class="form-horizontal" method="POST">
+              <form  id="form-general" class="form-horizontal" method="POST">
                 @csrf
                 <div class="card-body">
                                   @include('admin.usuario.form')
@@ -104,7 +88,7 @@
                                 
                                   <div class="col-lg-3"></div>
                                   <div class="col-lg-6">
-                                  @include('includes.boton-form-crear-user')    
+                                  @include('includes.boton-form-crear-empresa-empleado-usuario')    
                               </div>
                                </div>
                               <!-- /.card-footer -->
@@ -139,21 +123,87 @@
 
 <script>
  
- jQuery(function($) {
+ $(document).ready(function(){
         //initiate dataTables plugin
 
         var myTable = 
-        $('#usuarios')
-        //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-        .DataTable({
+        $('#usuarios').DataTable({
         language: idioma_espanol,
         processing: true,
+        lengthMenu: [ [25, 50, 100, 500, -1 ], [25, 50, 100, 500, "Mostrar Todo"] ],
+        processing: true,
+        serverSide: true,
+        aaSorting: [[ 1, "asc" ]],
+        
+        ajax:{
+          url:"{{ route('usuario')}}",
+              },
+        columns: [
+          {data:'action',
+           name:'action',
+           orderable: false
+          },
+          {data:'id',
+          name: 'id'
+          },
+          {data:'pnombre',
+          name: 'pnombre'
+          },
+          {data:'snombre',
+           name:'snombre'
+          },
+          {data:'papellido',
+          name:'papellido'
+          },
+          {data:'sapellido',
+          name:'sapellido'
+          },
+          {data:'tipo_documento',
+          name:'tipo_documento'
+          },
+          {data:'documento',
+           name:'documento'
+          },
+          {data:'usuario',
+           name:'usuario'
+          },
+          {data:'celular',
+           name:'celular'
+          },
+          {data:'cod_retus',
+           name:'cod_retus'
+          },
+          {data:'profesion',
+           name:'profesion'
+          },
+          {data:'especialidad',
+           name:'especialidad'
+          },
+          {data:'email',
+           name:'email'
+          },
+          {data:'ips',
+           name:'ips'
+          },
+          {data:'activo',
+           name:'activo'
+          },
+          
+          {data:'nombre',
+           name:'nombre'
+          },
+          {data:'created_at',
+           name:'created_at'
+          }
+                   
+        ],
 
          //Botones----------------------------------------------------------------------
-     
+         
          "dom":'<"row"<"col-xs-1 form-inline"><"col-md-4 form-inline"l><"col-md-5 form-inline"f><"col-md-3 form-inline"B>>rt<"row"<"col-md-8 form-inline"i> <"col-md-4 form-inline"p>>',
-                   
-         buttons: [
+         
+
+                   buttons: [
                       {
     
                    extend:'copyHtml5',
@@ -190,11 +240,168 @@
                       }
                    ],
 
+                  
+
+
         
     
         });
 
-       });
+  $('#create_usuario').click(function(){
+  $('#form-general')[0].reset();
+  $('#usuario').prop('readonly', false).prop('required', true);
+  $('#email').prop('readonly', false).prop('required', true);
+  $('#password').prop('readonly', false).prop('required', true);
+  $('#remenber_token').prop('readonly', false).prop('required', true);
+  $('.card-title').text('Agregar Nuevo usuario');
+  $('#action_button').val('Add');
+  $('#action').val('Add');
+  $('#form_result').html('');
+  $('#modal-u').modal('show');
+ });
+
+ $('#form-general').on('submit', function(event){
+    event.preventDefault(); 
+    var url = '';
+    var method = '';
+    var text = '';
+
+  if($('#action').val() == 'Add')
+  {
+    text = "Estás por crear un usuario"
+    url = "{{route('guardar_usuario')}}";
+    method = 'post';
+  }  
+
+  if($('#action').val() == 'Edit')
+  {
+    text = "Estás por actualizar un usuario"
+    var updateid = $('#hidden_id').val();
+    url = "/usuario/"+updateid;
+    method = 'put';
+  }  
+    Swal.fire({
+     title: "¿Estás seguro?",
+     text: text,
+     icon: "success", 
+     showCancelButton: true,
+     showCloseButton: true,
+     confirmButtonText: 'Aceptar',
+     }).then((result)=>{
+    if(result.value){ 
+    $.ajax({
+           url:url,
+           method:method,
+           data:$(this).serialize(),
+           dataType:"json",
+           success:function(data){
+              var html = '';
+                    if(data.errors){
+
+                    html = '<div class="alert alert-danger alert-dismissible" data-auto-dismiss="3000">'
+                      '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
+                        '<h5><i class="icon fas fa-check"></i> Mensaje Ventas</h5>';
+                                     
+                    for (var count = 0; count < data.errors.length; count++)
+                    {
+                      html += '<p>' + data.errors[count]+'<p>';
+                    }         
+                    html += '</div>';
+                    }
+                    
+                    if(data.success == 'ok') {
+                      $('#form-general')[0].reset();
+                      $('#modal-u').modal('hide');
+                      $('#usuarios').DataTable().ajax.reload();
+                      Swal.fire(
+                        {
+                          icon: 'success',
+                          title: 'usuario creado correctamente',
+                          showConfirmButton: false,
+                          timer: 1500
+                          
+                        }
+                      )
+                      // Manteliviano.notificaciones('cliente creado correctamente', 'Sistema Ventas', 'success');
+                      
+                    }else if(data.success == 'ok1'){
+                      $('#form-general')[0].reset();
+                      $('#modal-u').modal('hide');
+                      $('#usuarios').DataTable().ajax.reload();
+                      Swal.fire(
+                        {
+                          icon: 'warning',
+                          title: 'usuario actualizado correctamente',
+                          showConfirmButton: false,
+                          timer: 1500
+                          
+                        }
+                      )
+                      // Manteliviano.notificaciones('cliente actualizado correctamente', 'Sistema Ventas', 'success');
+
+                    } 
+                    $('#form_result').html(html)  
+              }
+
+
+           });
+          }
+        });
+          
+
+  });
+
+
+// Edición de cliente
+
+$(document).on('click', '.edit', function(){
+    var id = $(this).attr('id');
+    
+  $.ajax({
+    url:"/usuario/"+id+"/editar",
+    dataType:"json",
+    success:function(data){
+      $('#pnombre').val(data.result.pnombre);
+      $('#snombre').val(data.result.snombre);
+      $('#papellido').val(data.result.papellido);
+      $('#sapellido').val(data.result.sapellido);
+      $('#tipo_documento').val(data.result.tipo_documento);
+      $('#documento').val(data.result.documento);
+      $('#usuario').val(data.result.usuario).prop('readonly', true).prop('required', false);
+      $('#email').val(data.result.email).prop('readonly', true).prop('required', false);
+      $('#cod_retus').val(data.result.cod_retus);
+      $('#celular').val(data.result.celular);
+      $('#telefono').val(data.result.telefono);
+      $('#profesion').val(data.result.profesion);
+      $('#especialidad').val(data.result.especialidad);
+      $('#ips').val(data.result.ips);
+      $('#rol_id').val(data.result.rol_id);
+      $('#activo').val(data.result.activo);
+      $('#observacion').val(data.result.observacion);
+      $('#password').val(data.result.password).prop('readonly', true).prop('required', false);
+      $('#remenber_token').val(data.result.remenber_token).prop('readonly', true).prop('required', false);
+      $('#hidden_id').val(id);
+      $('.card-title').text('Editar usuario');
+      $('#action_button').val('Edit');
+      $('#action').val('Edit');
+      $('#modal-u').modal('show');
+     
+    }
+    
+
+  }).fail( function( jqXHR, textStatus, errorThrown ) {
+
+if (jqXHR.status === 403) {
+
+  Manteliviano.notificaciones('No tienes permisos para realizar esta accion', 'Sistema Ventas', 'warning');
+
+}});
+
+ });
+
+
+
+});
        
 
    var idioma_espanol =
@@ -231,3 +438,4 @@
    
 
 @endsection
+

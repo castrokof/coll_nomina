@@ -37,18 +37,18 @@ height:70%; }
         </div>  
            
             <div class="card-body">
-              <form action="{{route('generar_critica')}}" id="form-general" class="form-horizontal" method="GET ">
+            <form action="{{route('generar_critica')}}" id="form-general" class="form-horizontal" method="GET ">
                 @csrf  
                 @include('admin.ordenes.form-critica-generar')
                               
             </tr>
             </td> 
-              </form>
+            </form>
             </div>
           
 
-               </div>              
-              </div>
+            </div>              
+            </div>
         
                         
 <div class="card-body table-responsive p-0" style="height: 600px;">

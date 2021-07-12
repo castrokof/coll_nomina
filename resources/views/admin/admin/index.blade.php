@@ -119,7 +119,9 @@
                  <p><h5>Total a cobrar : <i class="fas fa-dollar-sign"></i> {{ $item->cobro}}</h5></p>
                  @foreach ($data as $item1)
                  <p><h5>Total cobrado : <i class="fas fa-dollar-sign"></i> {{ $item1->cobrado}}</h5></p>
-                 <p><h5>Total atrasado : <i class="fas fa-dollar-sign"></i> {{ $item->cobro - $item1->cobrado}}</h5></p>
+                 @foreach ($dataa as $itema)
+                 <p><h5>Total atrasado : <i class="fas fa-dollar-sign"></i> {{ $itema->atrasado}}</h5></p>
+                 @endforeach
                  @endforeach
                  <p><h5>Clientes a cobrar: {{ $item->cobros}}</h5></p>
                  <p><h5>Clientes pendientes de cobro: {{ $item->pendiente_cobros}}</h5></p>

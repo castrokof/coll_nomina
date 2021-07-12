@@ -27,9 +27,16 @@ class ValidacionUsuario extends FormRequest
             
         return [
             
-            'tipo_de_usuario'  => 'required',
+            'papellido' => 'required',
+            'pnombre' => 'required',
+            'tipo_documento' => 'required',
+            'documento'=> 'required',
             'email'  => 'required|email|max:100|unique:usuario,email,'.$this->route('id'),
             'activo'  => 'required',
+            'celular' => 'required',
+            'profesion' => 'required',
+            'especialidad' => 'required',
+            'activo' => 'required',
             'rol_id' => 'required|integer'
         ];
             
@@ -39,13 +46,21 @@ class ValidacionUsuario extends FormRequest
         
         return [
             'usuario'  => 'required|max:50|unique:usuario,usuario,'.$this->route('id'),
-            'tipo_de_usuario'  => 'required',
-            'email'  => 'required|email|max:100|unique:usuario,email,'.$this->route('id'),
+            'papellido' => 'required',
+            'pnombre' => 'required',
+            'tipo_documento' => 'required',
+            'documento'=> 'required',
             'password'  => 'required|min:6',
             'remenber_token'  => 'required|same:password',
+            'email'  => 'required|email|max:100|unique:usuario,email,'.$this->route('id'),
             'activo'  => 'required',
-            'empleado_id' => 'required|integer|unique:usuario,empleado_id',
+            'celular' => 'required',
+            'profesion' => 'required',
+            'especialidad' => 'required',
+            'activo' => 'required',
             'rol_id' => 'required|integer'
+
+
         ];
     
             

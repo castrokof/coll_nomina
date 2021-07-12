@@ -12,77 +12,28 @@ class UsuarioAdministradorSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('empresa')->insert([
-
-            'nombre'=>'AQUAPROGRAMMER', 
-            'tipo_documento'=>'NIT', 
-            'documento'=>1130629762,
-            'activo'=>'1',
-                       
-
-        ]);
-        
-        DB::table('empleado')->insert([
-
-            'nombres'=>'Jhonnathan', 
-            'apellidos'=>'Castro Galeano',
-            'tipo_documento'=>'CC',
-            'documento'=>1130629762,
-            'pais'=>'Colombia', 
-            'ciudad'=>'Cali', 
-            'barrio'=>'Marroquin 1', 
-            'direccion'=>'Cra 26', 
-            'celular'=>'3175018125', 
-            'telefono'=>'5243909', 
-            'activo'=>'1',
-            'empresa_id'=>1
-            
-
-        ]);
-
-        DB::table('empleado')->insert([
-
-            
-            'nombres'=>'Juan Diego', 
-            'apellidos'=>'Castro',
-            'tipo_documento'=>'CC',
-            'documento'=>123456789,
-            'pais'=>'Colombia', 
-            'ciudad'=>'Cali', 
-            'barrio'=>'Calibella', 
-            'direccion'=>'Cra 7', 
-            'celular'=>'3001234567', 
-            'telefono'=>'5243900', 
-            'activo'=>'1',
-            'empresa_id'=>1
-            
-
-        ]);
-        
-        DB::table('usuario')->insert([
-
-            'usuario'=>'jcastro', 
+       DB::table('usuario')->insert([
+            'papellido'=>strtoupper('Castro'),
+            'sapellido'=>strtoupper('Galeano'),
+            'pnombre'=>strtoupper('Jhonnathan'),
+            'snombre'=>null,
+            'tipo_documento'=>strtoupper('CC'),
+            'documento'=>'1130629762',
+            'usuario'=>'jcastro',
             'password'=>bcrypt('123456'),
             'remenber_token'=>bcrypt('123456'),
-            'tipo_de_usuario'=>'office', 
             'email'=>'castrokof@gmail.com',
-            'activo'=>1,
-            'empleado_id'=>1
-            
-
-        ]);
+            'cod_retus'=>'0123',
+            'celular'=>'3175018125',
+            'telefono'=>'3062047',
+            'profesion'=>strtoupper('ingeniero'),
+            'especialidad'=>strtoupper('sistemas'),
+            'observacion'=>strtoupper('Prueba'),
+            'ips'=>strtoupper('atencion fidem s.a.s'),
+            'activo'=>'1'
+            ]);
         
-        DB::table('usuario')->insert([
-
-            'usuario'=>'jdcastro', 
-            'password'=>bcrypt('123456'),
-            'remenber_token'=>bcrypt('123456'),
-            'tipo_de_usuario'=>'office', 
-            'email'=>'jdcastro@gmail.com',
-            'activo'=>1,
-            'empleado_id'=>2
-
-        ]);
+   
 
         DB::table('usuario_rol')->insert([
 
@@ -92,14 +43,7 @@ class UsuarioAdministradorSeeder extends Seeder
                       
 
         ]);
-        DB::table('usuario_rol')->insert([
-
-            'rol_id'=>1, 
-            'usuario_id'=>2, 
-             
-                      
-
-        ]);
+       
     
         //Creación de menu
 
@@ -154,43 +98,28 @@ class UsuarioAdministradorSeeder extends Seeder
         DB::table('menu')->insert([
 
             'menu_id'=> 6, 
-            'nombre'=>'Listar usuarios',
+            'nombre'=>'Listar profesionales',
             'url'=>'usuario',
             'orden'=>1, 
             'icono'=>'fa fa-user'
         ]);
-        DB::table('menu')->insert([
-
-            'menu_id'=> 1, 
-            'nombre'=>'Empresa',
-            'url'=>'admin/empresa',
-            'orden'=>5, 
-            'icono'=>'fas fa-industry'
-        ]);
        
+    
         DB::table('menu')->insert([
 
-            'menu_id'=> 0, 
-            'nombre'=>'Empleado',
-            'url'=>'empleado',
-            'orden'=>3, 
-            'icono'=>'fas fa-motorcycle'
-        ]);
-        DB::table('menu')->insert([
-
-            'menu_id'=> 15, 
-            'nombre'=>'Cliente',
-            'url'=>'cliente',
+            'menu_id'=> 11, 
+            'nombre'=>'Paciente',
+            'url'=>'paciente',
             'orden'=>1, 
             'icono'=>'fas fa-handshake'
         ]);
         DB::table('menu')->insert([
 
             'menu_id'=> 15, 
-            'nombre'=>'Prestamos',
-            'url'=>'prestamo',
-            'orden'=>3, 
-            'icono'=>'fas fa-money-bill-alt'
+            'nombre'=>'Historia',
+            'url'=>'#',
+            'orden'=>4, 
+            'icono'=>'fa fa-list'
         ]);
         DB::table('menu')->insert([
 
@@ -203,27 +132,45 @@ class UsuarioAdministradorSeeder extends Seeder
         DB::table('menu')->insert([
 
             'menu_id'=> 15, 
-            'nombre'=>'Ordenar ruta',
-            'url'=>'cliente/ruta',
-            'orden'=>2, 
-            'icono'=>'fas fa-route'
-        ]);
-        DB::table('menu')->insert([
-
-            'menu_id'=> 0, 
-            'nombre'=>'Admin-Clientes',
-            'url'=>'#',
-            'orden'=>5, 
+            'nombre'=>'Historias creadas',
+            'url'=>'historia',
+            'orden'=>1, 
             'icono'=>'fa fa-cog fa-spin fa-3x fa-fw'
         ]);
         DB::table('menu')->insert([
 
-            'menu_id'=> 15, 
-            'nombre'=>'Ruta de cobro',
-            'url'=>'pago',
+            'menu_id'=> 0, 
+            'nombre'=>'IPS',
+            'url'=>'#',
             'orden'=>4, 
-            'icono'=>'fas fa-cash-register'
+            'icono'=>'far fa-building'
         ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 11, 
+            'nombre'=>'Cita',
+            'url'=>'cita',
+            'orden'=>3, 
+            'icono'=>'fa fa-calendar'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 11, 
+            'nombre'=>'Pacientes programados',
+            'url'=>'paciente-pro',
+            'orden'=>2, 
+            'icono'=>'fa fa-stethoscope'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 15, 
+            'nombre'=>'Consulta Historias PDF',
+            'url'=>'historiapdf',
+            'orden'=>2, 
+            'icono'=>'fas fa-clipboard-list'
+        ]);
+     
+       
 
         //Relación menu-rol
 
@@ -267,27 +214,10 @@ class UsuarioAdministradorSeeder extends Seeder
             'rol_id'=> 1, 
             'menu_id'=> 8
         ]);
-        
         DB::table('menu_rol')->insert([
 
             'rol_id'=> 1, 
-            'menu_id'=> 10
-        ]);
-       
-        DB::table('menu_rol')->insert([
-
-            'rol_id'=> 2, 
-            'menu_id'=> 6
-        ]);
-        DB::table('menu_rol')->insert([
-
-            'rol_id'=> 2, 
-            'menu_id'=> 7
-        ]);
-        DB::table('menu_rol')->insert([
-
-            'rol_id'=> 2, 
-            'menu_id'=> 10
+            'menu_id'=> 9
         ]);
        
         DB::table('menu_rol')->insert([
@@ -298,21 +228,6 @@ class UsuarioAdministradorSeeder extends Seeder
         DB::table('menu_rol')->insert([
 
             'rol_id'=> 1, 
-            'menu_id'=> 12
-        ]);
-        DB::table('menu_rol')->insert([
-
-            'rol_id'=> 2, 
-            'menu_id'=> 11
-        ]);
-        DB::table('menu_rol')->insert([
-
-            'rol_id'=> 3, 
-            'menu_id'=> 11
-        ]);
-        DB::table('menu_rol')->insert([
-
-            'rol_id'=> 2, 
             'menu_id'=> 12
         ]);
         DB::table('menu_rol')->insert([
@@ -330,15 +245,32 @@ class UsuarioAdministradorSeeder extends Seeder
             'rol_id'=> 1, 
             'menu_id'=> 15
         ]);
+       
+       
         DB::table('menu_rol')->insert([
 
-            'rol_id'=> 1, 
-            'menu_id'=> 16
+            'rol_id'=> 2, 
+            'menu_id'=> 8
         ]);
         DB::table('menu_rol')->insert([
 
             'rol_id'=> 2, 
-            'menu_id'=> 15
+            'menu_id'=> 9
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 2, 
+            'menu_id'=> 11
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 2, 
+            'menu_id'=> 12
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 2, 
+            'menu_id'=> 13
         ]);
         DB::table('menu_rol')->insert([
 
@@ -348,13 +280,7 @@ class UsuarioAdministradorSeeder extends Seeder
         DB::table('menu_rol')->insert([
 
             'rol_id'=> 2, 
-            'menu_id'=> 16
-        ]);
-        DB::table('menu_rol')->insert([
-
-            'rol_id'=> 3, 
             'menu_id'=> 15
         ]);
-        
     }
 }

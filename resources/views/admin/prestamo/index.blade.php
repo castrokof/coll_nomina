@@ -50,6 +50,7 @@
         <tr>  
               <th>Acciones</th>
               <th>Consecutivo</th>
+              <th>Id_prestamo</th>
               <th>Nombres</th>
               <th>Apellidos</th>
               <th>Monto</th>
@@ -326,6 +327,9 @@ $("#interes").change(cuota);
           {data:'consecutivo',
           name:'consecutivo'
           },
+          {data:'idp',
+          name:'idp'
+          },
           {data:'nombres',
           name:'nombres'
           },
@@ -427,6 +431,17 @@ $("#interes").change(cuota);
     
                       }
                    ],
+
+                   "createdRow": function(row, data, dataIndex) { 
+                    if (data["latitud"] > 0) { 
+                    $(row).css("background-color", "#b63333"); 
+                    $(row).addClass("warning"); 
+                    }else if(data["monto_pendiente"] == 0){
+                    $(row).css("background-color", "#80c261"); 
+                    $(row).addClass("warning"); 
+
+                    }
+                  }
 
 
         

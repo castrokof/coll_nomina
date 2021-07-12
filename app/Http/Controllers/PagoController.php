@@ -18,11 +18,216 @@ class PagoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index(Request $request)
+    // {
+    //     $pagos_registrados = $request->estado_pago;
+    //     $idcuota = $request->idcuota;
+
+    //     $fechaAi= Carbon::now()->toDateString()." 00:00:01";
+    //     $fechaAf= Carbon::now()->toDateString()." 23:59:59";
+
+
+    //     $fecha_Actual = Carbon::now();
+    //     $fecha_Actual = $fecha_Actual->Format('Y-m-d');
+        
+    //     $usuario_id = $request->session()->get('usuario_id');
+        
+    //     $clientes = Cliente::where('usuario_id', '=', $usuario_id )->get();
+        
+    //     $datasp1 = DB::table('prestamo')
+    //         ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //         ->where([['prestamo.usuario_id', '=', $usuario_id], ['prestamo.estado', '!=', 'P']])
+    //         ->pluck('cliente.nombres as nombres','prestamo.idp as idp')->toArray();
+        
+         
+         
+    //      if($request->ajax()){
+            
+    //         if($pagos_registrados == 0 || $pagos_registrados == null){
+    //         $datas = DB::table('prestamo')
+    //         ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //         ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+    //         ->where([['prestamo.usuario_id', '=', $usuario_id], ['prestamo.idp', '=', $idcuota], ['detalle_prestamo.fecha_cuota', '<=', $fecha_Actual]])
+    //         ->whereIn('detalle_prestamo.estado', ['C','A'])
+    //         ->where(function ($query) {
+    //             $fechai= Carbon::now()->toDateString()." 00:00:01";
+    //             $query->where('detalle_prestamo.updated_at', '<', $fechai)
+    //                   ->orWhere('detalle_prestamo.updated_at', '=', null);
+    //         })
+    //         ->get();
+    //         return  DataTables()->of($datas)
+    //             ->addColumn('action', function($datas){
+    //             $button ='<div id="pagodes"><button type="button" name="prestamo" id="'.$datas->idd.'"
+    //             class = "pay btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button></div>
+    //             ';
+    //             $button .= '<div id="edicdes"><button type="button" name="edit" id="'.$datas->idd.'"
+    //             class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i></button></div>';
+                               
+    //             return $button;
+
+    //         }) 
+    //         ->rawColumns(['action'])
+    //         ->make(true);
+             
+
+    //      } else if($pagos_registrados == 1){
+
+    //             $datas = DB::table('prestamo')
+    //             ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //             ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+    //             ->where([['prestamo.usuario_id', '=', $usuario_id],['prestamo.idp', '=', $idcuota]])
+    //             ->whereBetween('detalle_prestamo.updated_at', [$fechaAi, $fechaAf])
+    //             ->whereIn('detalle_prestamo.estado', ['P','A'])
+    //             ->get();
+    //             return  DataTables()->of($datas)
+    //                 ->addColumn('action', function($datas){
+    //                 $button = '<button type="button" name="edit" id="'.$datas->idd.'"
+    //                 class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i></button>';
+    //                 $button .='&nbsp;<button type="button" name="prestamo" id="'.$datas->idp.'"
+    //                 class = "detallepay btn-float  bg-gradient-success btn-sm tooltipsC" title="Detalle de Pago"><i class="fas fa-atlas"></i></i></button>';
+    //                 return $button;
+    
+    //             }) 
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+
+
+    //         }else if($pagos_registrados == 2){
+
+    //             $datas = DB::table('prestamo')
+    //             ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //             ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+    //             ->where([['prestamo.usuario_id', '=', $usuario_id],['prestamo.idp', '=', $idcuota], ['detalle_prestamo.updated_at', '<', $fechaAi]])
+    //             ->whereIn('detalle_prestamo.estado', ['A'])
+    //             ->get();
+    //             return  DataTables()->of($datas)
+    //                 ->addColumn('action', function($datas){
+    //                 $button = '<button type="button" name="edit" id="'.$datas->idd.'"
+    //                 class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i></button>';
+    //                 $button .='&nbsp;<button type="button" name="prestamo" id="'.$datas->idp.'"
+    //                 class = "detallepay btn-float  bg-gradient-success btn-sm tooltipsC" title="Detalle de Pago"><i class="fas fa-atlas"></i></i></button>';
+    //                 return $button;
+    
+    //             }) 
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+
+
+    //         }else if($pagos_registrados == 3 ){
+               
+    //             $idcuotas = Prestamo::where('idp', '=', $request->idcuota)->pluck('idp')->toArray();
+                                   
+    //             $datas = DB::table('prestamo')
+    //             ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //             ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+    //             ->where([['prestamo.usuario_id', '=', $usuario_id], ['prestamo.idp', '=', $idcuota], ['detalle_prestamo.fecha_cuota', '>', $fecha_Actual]])
+    //             ->whereIn('detalle_prestamo.estado', ['C'])
+    //             ->get();
+    //             return 
+                
+    //             DataTables()->of($datas)
+    //                 ->addColumn('action', function($datas){
+    //                 $button ='&nbsp;<button type="button" name="prestamo" id="'.$datas->idd.'"
+    //                 class = "pay btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button>';
+    //                 return $button;
+    
+    //             }) 
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+    //             response()->json($idcuotas);
+
+    //         }
+            
+
+
+    //         }
+         
+    //     return view('admin.pago.index', compact('datas','clientes','idcuotas'));
+    // }
+
+    // public function index1(Request $request)
+    // {
+    //     $pagos_registrados = $request->estado_pago;
+    //     $idcuota = $request->idcuota;
+
+    //     $fechaAi= Carbon::now()->toDateString()." 00:00:01";
+    //     $fechaAf= Carbon::now()->toDateString()." 23:59:59";
+
+
+    //     $fecha_Actual = Carbon::now();
+    //     $fecha_Actual = $fecha_Actual->Format('Y-m-d');
+        
+    //     $usuario_id = $request->session()->get('usuario_id');
+        
+    //     $clientes = Cliente::where('usuario_id', '=', $usuario_id )->get();
+        
+    //     $datasp = DB::table('prestamo')
+    //         ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //         ->where([['prestamo.usuario_id', '=', $usuario_id], ['prestamo.estado', '!=', 'P']])
+    //         ->pluck('cliente.nombres as nombres','prestamo.idp as idp')->toArray();
+
+    //     $idcuotas = Prestamo::where('idp', '=', $idcuota)->pluck('idp')->toArray();
+            
+    //      if($request->ajax()){
+            
+    //         if($pagos_registrados == 0 || $pagos_registrados == null){
+    //         $datas = DB::table('prestamo')
+    //         ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //         ->where([['prestamo.usuario_id', '=', $usuario_id],['prestamo.monto_pendiente', '>', 0]])->get();
+    //         return  DataTables()->of($datas)
+    //             ->addColumn('action', function($datas){
+    //             $button ='<div id="pagodes"><button type="button" name="prestamo" id="'.$datas->idp.'"
+    //             class = "payd btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button></div>
+    //             ';
+    //             // $button .= '<div id="edicdes"><button type="button" name="edit" id="'.$datas->idp.'"
+    //             // class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i></button></div>';
+                               
+    //             return $button;
+
+    //         }) 
+    //         ->rawColumns(['action'])
+    //         ->make(true);
+
+    //      } else if($pagos_registrados == 1){
+
+    //             $datas = DB::table('prestamo')
+    //             ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+    //             ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+    //             ->where('prestamo.usuario_id', '=', $usuario_id)
+    //             ->whereBetween('detalle_prestamo.updated_at', [$fechaAi, $fechaAf])
+    //             ->whereIn('detalle_prestamo.estado', ['P','A'])
+    //             ->get();
+    //             return  DataTables()->of($datas)
+    //                 ->addColumn('action', function($datas){
+    //                 $button = '<button type="button" name="edit" id="'.$datas->idp.'"
+    //                 class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i></button>';
+    //                 $button .='&nbsp;<button type="button" name="prestamo" id="'.$datas->idp.'"
+    //                 class = "detallepay btn-float  bg-gradient-success btn-sm tooltipsC" title="Detalle de Pago"><i class="fas fa-atlas"></i></i></button>';
+    //                 return $button;
+    
+    //             }) 
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+
+
+    //         }
+
+            
+
+
+    //         }
+    //     return view('admin.pago.index', compact('datas','clientes','datasp', 'idcuotas'));
+    // }
+
+
     public function index(Request $request)
     {
         $pagos_registrados = $request->estado_pago;
+        $prestamoc_id = $request->prestamoc_id;
 
-        
+        $fechaAi= Carbon::now()->toDateString()." 00:00:01";
+        $fechaAf= Carbon::now()->toDateString()." 23:59:59";
+
 
         $fecha_Actual = Carbon::now();
         $fecha_Actual = $fecha_Actual->Format('Y-m-d');
@@ -30,19 +235,34 @@ class PagoController extends Controller
         $usuario_id = $request->session()->get('usuario_id');
         
         $clientes = Cliente::where('usuario_id', '=', $usuario_id )->get();
-                            
-             
-        if($request->ajax()){
+        
+        $datasp = DB::table('prestamo')
+            ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+            ->where([['prestamo.usuario_id', '=', $usuario_id], ['prestamo.estado', '!=', 'P']])
+            ->pluck('cliente.nombres as nombres','prestamo.idp as idp')->toArray();
+            
+         if($request->ajax()){
             
             if($pagos_registrados == 0 || $pagos_registrados == null){
             $datas = DB::table('prestamo')
             ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
             ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
-            ->where([['prestamo.usuario_id', '=', $usuario_id], ['detalle_prestamo.fecha_cuota', '=', $fecha_Actual], ['detalle_prestamo.estado', '=', 'C']])->get();
+            ->where([['prestamo.usuario_id', '=', $usuario_id], ['detalle_prestamo.fecha_cuota', '=', $fecha_Actual]])
+            ->whereIn('detalle_prestamo.estado', ['C'])
+            ->where(function ($query) {
+                $fechai= Carbon::now()->toDateString()." 00:00:01";
+                $query->where('detalle_prestamo.updated_at', '<', $fechai)
+                      ->orWhere('detalle_prestamo.updated_at', '=', null);
+            })
+            ->get();
             return  DataTables()->of($datas)
                 ->addColumn('action', function($datas){
-                $button ='&nbsp;<button type="button" name="prestamo" id="'.$datas->idp.'"
-                class = "pay btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button>';
+                $button ='<div id="pagodes"><button type="button" name="prestamo" id="'.$datas->idd.'"
+                class = "pay btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button></div>
+                ';
+                $button .= '<div id="edicdes"><button type="button" name="edit" id="'.$datas->idd.'"
+                class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i></button></div>';
+                               
                 return $button;
 
             }) 
@@ -54,10 +274,13 @@ class PagoController extends Controller
                 $datas = DB::table('prestamo')
                 ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
                 ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
-                ->where([['prestamo.usuario_id', '=', $usuario_id], ['detalle_prestamo.fecha_cuota', '=', $fecha_Actual], ['detalle_prestamo.estado', '!=', 'C']])->get();
+                ->where('prestamo.usuario_id', '=', $usuario_id)
+                ->whereBetween('detalle_prestamo.updated_at', [$fechaAi, $fechaAf])
+                ->whereIn('detalle_prestamo.estado', ['P','A'])
+                ->get();
                 return  DataTables()->of($datas)
                     ->addColumn('action', function($datas){
-                    $button = '<button type="button" name="edit" id="'.$datas->idp.'"
+                    $button = '<button type="button" name="edit" id="'.$datas->idd.'"
                     class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i></button>';
                     $button .='&nbsp;<button type="button" name="prestamo" id="'.$datas->idp.'"
                     class = "detallepay btn-float  bg-gradient-success btn-sm tooltipsC" title="Detalle de Pago"><i class="fas fa-atlas"></i></i></button>';
@@ -68,13 +291,88 @@ class PagoController extends Controller
                 ->make(true);
 
 
-            }
+            }else if($pagos_registrados == 2){
+
+                $datas = DB::table('prestamo')
+                ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+                ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+                ->where([['prestamo.usuario_id', '=', $usuario_id], ['detalle_prestamo.fecha_cuota', '<', $fecha_Actual]])
+                ->where(function ($query) {
+                $fechai= Carbon::now()->toDateString()." 00:00:01";
+                $query->where('detalle_prestamo.updated_at', '<', $fechai)
+                      ->orWhere('detalle_prestamo.updated_at', '=', null);
+                      
+                })
+                ->whereIn('detalle_prestamo.estado', ['A','C'])
+                ->get();
+                return  DataTables()->of($datas)
+                    ->addColumn('action', function($datas){
+                    $button ='<div id="pagodes"><button type="button" name="prestamo" id="'.$datas->idd.'"
+                    class = "pay btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i>
+                    <i class="fas fa-money-bill-alt"></i></button></div>';
+                    
+                    $button .= '<div id="edicdes"><button type="button" name="edit" id="'.$datas->idd.'"
+                    class = "editpay btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar Pago"><i class="far fa-edit"></i>
+                    </button></div>';
+                    
+                   // $button .='&nbsp;<button type="button" name="prestamo" id="'.$datas->idp.'"
+                    //class = "detallepay btn-float  bg-gradient-success btn-sm tooltipsC" title="Detalle de Pago"><i class="fas fa-atlas"></i>
+                    //</i></button>';
+                    return $button;
+    
+                }) 
+                ->rawColumns(['action'])
+                ->make(true);
+
+
+            }else if($pagos_registrados == 3 && $prestamoc_id == null ){
+               
+                
+                $datas = DB::table('prestamo')
+                ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+                ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+                ->where([['prestamo.usuario_id', '=', $usuario_id], ['detalle_prestamo.fecha_cuota', '>', $fecha_Actual]])
+                ->whereIn('detalle_prestamo.estado', ['C'])
+                ->get();
+                return  DataTables()->of($datas)
+                    ->addColumn('action', function($datas){
+                    $button ='&nbsp;<button type="button" name="prestamo" id="'.$datas->idd.'"
+                    class = "pay btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button>';
+                    return $button;
+    
+                }) 
+                ->rawColumns(['action'])
+                ->make(true);
+
+
+            }else if($pagos_registrados == 3 && $prestamoc_id > 0 ){
+               
+                
+                $datas = DB::table('prestamo')
+                ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
+                ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
+                ->where([['prestamo.usuario_id', '=', $usuario_id], ['detalle_prestamo.fecha_cuota', '>', $fecha_Actual], ['prestamo.idp', '=', $prestamoc_id]])
+                ->whereIn('detalle_prestamo.estado', ['C'])
+                ->get();
+                return  DataTables()->of($datas)
+                    ->addColumn('action', function($datas){
+                    $button ='&nbsp;<button type="button" name="prestamo" id="'.$datas->idd.'"
+                    class = "pay btn-float  bg-gradient-warning btn-sm tooltipsC" title="Registar Pago"><i class="fa fa-fw fa-plus-circle"></i><i class="fas fa-money-bill-alt"></i></button>';
+                    return $button;
+    
+                }) 
+                ->rawColumns(['action'])
+                ->make(true);
 
 
             }
-        return view('admin.pago.index', compact('datas','clientes'));
+
+            
+
+
+            }
+        return view('admin.pago.index', compact('datas','clientes','datasp'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -94,14 +392,85 @@ class PagoController extends Controller
     public function guardar(Request $request)
     {   
 
-       
+        $fecha_Actual = Carbon::now();
+        $fecha_Actual = $fecha_Actual->Format('Y-m-d');
+
+
         $vc= DetallePrestamo::where([['prestamo_id', '=', $request->prestamo_id],
         ['d_numero_cuota', '=', $request->numero_cuota]])->first();
 
         $saldo = Prestamo::where('idp', '=', $request->prestamo_id)->first();
         $saldop = $saldo->monto_pendiente;
 
-        $vcd = $vc->valor_cuota;
+
+        $vcd = $vc->valor_cuota; // Valor cuota diaria
+
+
+  if($request->fecha_pago > $fecha_Actual){
+
+
+    if($request->valor_abono <  $vcd && $saldo->latitud == 0){
+            
+        Pago::create($request->all());
+
+        DB::table('detalle_prestamo')
+        ->where([['prestamo_id', '=', $request->prestamo_id],
+                 ['d_numero_cuota', '=', $request->numero_cuota]])
+        ->update([
+        'valor_cuota' => ($vcd - $request->valor_abono),
+        'estado'=>'C',
+        'updated_at'=> now() 
+        ]);
+
+        DB::table('prestamo')
+        ->where([
+            ['idp', '=', $request->prestamo_id]
+            ])
+        ->update([
+        'monto_pendiente'=>($saldop - $request->valor_abono),
+        'updated_at'=> now(),
+
+        ]);
+        
+        return response()->json(['success' => 'abono']); 
+    
+    }else if($vcd == $request->valor_abono  && $saldo->latitud == 0){
+        
+        Pago::create($request->all());
+
+        DB::table('detalle_prestamo')
+        ->where([['prestamo_id', '=', $request->prestamo_id],
+                 ['d_numero_cuota', '=', $request->numero_cuota]])
+        ->update([
+        'estado'=>'P',
+        'updated_at'=> now() 
+        ]);
+
+        
+        DB::table('prestamo')
+        ->where([
+            ['idp', '=', $request->prestamo_id]
+            ])
+        ->update([
+        'monto_pendiente'=>($saldop - $request->valor_abono),
+        'updated_at'=> now(),
+
+        ]);
+        return response()->json(['success' => 'okadelanto']); 
+  
+    }else if($request->valor_abono > $vcd){
+        
+        return response()->json(['success' => 'noadelanto']); 
+}else if($request->valor_abono <= $vcd && $saldo->latitud > 0){
+        
+    return response()->json(['success' => 'error']); 
+}
+
+
+
+  }else if($request->fecha_pago <= $fecha_Actual){
+  
+     //Pago de saldo total
         if($request->valor_abono == $saldop){
             
             Pago::create($request->all());
@@ -118,6 +487,7 @@ class PagoController extends Controller
             $cuotasat = $saldoa->cuotas_atrasadas;
             $saldoat = $saldoa->latitud;
             
+            //Actualizo todo los campos en ceros de cuotas atrasadas, monto atrasado, capital y el estado cambia a cancelado
             DB::table('prestamo')
             ->where([
                 ['idp', '=', $request->prestamo_id]
@@ -133,7 +503,9 @@ class PagoController extends Controller
             
             return response()->json(['success' => 'total']);
 
-            }else if($request->valor_abono == 0 || $request->valor_abono <  $vcd){
+            }
+             //Pago de cuota 0 o < que cuota diaria
+            else if($request->valor_abono == 0 || $request->valor_abono <  $vcd){
             
             Pago::create($request->all());
 
@@ -162,7 +534,9 @@ class PagoController extends Controller
             ]);
             
 
-        }else if($request->valor_abono > $vcd && $request->valor_abono < $saldop){
+        }
+     //Pago de cuota diaria + abono a atraso total
+        else if($request->valor_abono == ($vcd + $saldo->latitud) && $saldo->latitud > 0 ){
             
             $saldoa = Prestamo::where('idp', '=', $request->prestamo_id)->first();    
            
@@ -173,7 +547,7 @@ class PagoController extends Controller
 
             //dd($cuotasatdesc)
             
-            if($cuotasatdesc <= $cuotasat ){
+            if($cuotasatdesc == $cuotasat ){
             
             Pago::create($request->all());
 
@@ -185,7 +559,15 @@ class PagoController extends Controller
             'updated_at'=> now() 
             ]);
 
-            
+            DB::table('detalle_prestamo')
+            ->where([['prestamo_id', '=', $request->prestamo_id],
+                     ['estado', '=', 'A']])
+            ->update([
+            'estado'=>'P',
+            'updated_at'=> now() 
+            ]);
+
+
             
             DB::table('prestamo')
             ->where([
@@ -197,36 +579,38 @@ class PagoController extends Controller
             'monto_pendiente'=>($saldop - $request->valor_abono),
             'updated_at'=> now()
             ]);
-            }else if($cuotasat == 0 ){
+            // }else if($cuotasat == 0 ){
 
-                DB::table('detalle_prestamo')
-            ->where([['prestamo_id', '=', $request->prestamo_id],
-                     ['d_numero_cuota', '=', $request->numero_cuota]])
-            ->update([
-            'estado'=>'P',
-            'updated_at'=> now() 
-            ]);
+            //     DB::table('detalle_prestamo')
+            // ->where([['prestamo_id', '=', $request->prestamo_id],
+            //          ['d_numero_cuota', '=', $request->numero_cuota]])
+            // ->update([
+            // 'estado'=>'P',
+            // 'updated_at'=> now() 
+            // ]);
 
            
-            Pago::create($request->all());
+            // Pago::create($request->all());
             
-            DB::table('prestamo')
-            ->where([
-                ['idp', '=', $request->prestamo_id]
-                ])
-            ->update([
-            'monto_pendiente'=>($saldop - $request->valor_abono),
-            'longitud'=>($request->valor_abono-$vcd),
-            'updated_at'=> now()
-            ]);
+            // DB::table('prestamo')
+            // ->where([
+            //     ['idp', '=', $request->prestamo_id]
+            //     ])
+            // ->update([
+            // 'monto_pendiente'=>($saldop - $request->valor_abono),
+            // 'longitud'=>($request->valor_abono-$vcd),
+            // 'updated_at'=> now()
+            // ]);
 
-            }else{
+            // }else{
 
-                return response()->json(['success' => 'noa']);  
+                 
             }
             
-
-        }else if($vcd == $request->valor_abono){
+            return response()->json(['success' => 'noat']); 
+        }
+     //Pago de cuota diaria normal
+        else if($vcd == $request->valor_abono){
         
         Pago::create($request->all());
 
@@ -249,15 +633,28 @@ class PagoController extends Controller
 
         ]);
         
-        }
+  }else if($request->valor_abono > $vcd  && $request->valor_abono < $saldop && $saldo->latitud == 0){
 
-        
+            
+            return response()->json(['success' => 'adelantos']);
 
-        return response()->json(['success' => 'ok']);
+  }else if($request->valor_abono > $vcd && $request->valor_abono < ($vcd + $saldo->latitud) ){
 
-    }
+            return response()->json(['success' => 'vcda']);
 
-    /**
+  }else if($request->valor_abono > ($vcd + $saldo->latitud) && $saldo->latitud > 0 ){
+
+            return response()->json(['success' => 'adelantosa']);
+  }
+ 
+  return response()->json(['success' => 'ok']);
+
+ }else {
+    return response()->json(['success' => 'error']);
+ }
+
+}
+ /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -285,7 +682,7 @@ class PagoController extends Controller
         $data = DB::table('prestamo')
         ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
         ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
-        ->where([['prestamo.idp', '=', $id],['prestamo.usuario_id', '=', $usuario_id],['detalle_prestamo.fecha_cuota', '=', $fecha_Actual]])->get();
+        ->where([['prestamo.usuario_id', '=', $usuario_id],['detalle_prestamo.idd', '=', $id]])->get();
             return response()->json(['result'=>$data]);
 
         }
@@ -303,9 +700,15 @@ class PagoController extends Controller
        if(request()->ajax()){
         $data = DB::table('prestamo')
         ->Join('cliente', 'prestamo.cliente_id', '=', 'cliente.id')
-        ->Join('pago', 'prestamo.idp', '=', 'pago.prestamo_id')
         ->Join('detalle_prestamo', 'prestamo.idp', '=', 'detalle_prestamo.prestamo_id')
-        ->where([['prestamo.idp', '=', $id],['prestamo.usuario_id', '=', $usuario_id],['pago.prestamo_id', '=', $id], ['detalle_prestamo.fecha_cuota', '=', $fecha_Actual], ['pago.fecha_pago', '=', $fecha_Actual]])->get();
+        ->join('pago', function ($join) {
+            $join->on('detalle_prestamo.d_numero_cuota', '=', 'pago.numero_cuota')
+                 ->on('detalle_prestamo.prestamo_id', '=', 'pago.prestamo_id')
+                 ->on('prestamo.idp', '=', 'pago.prestamo_id');
+        })
+        ->where([['prestamo.usuario_id', '=', $usuario_id],['detalle_prestamo.idd', '=', $id]])->first();
+        
+        
             return response()->json(['result'=>$data]);
 
         }
@@ -422,7 +825,7 @@ class PagoController extends Controller
             $saldoat = $saldoa->latitud;    // Saldo atrasado total
             
             
-            //Actualiza de nuevo
+  //Actualiza de nuevo
             $pago->update($request->all());
 
             $saldoa = Prestamo::where('idp', '=', $request->prestamo_id)->first();    
@@ -443,7 +846,7 @@ class PagoController extends Controller
             
            
 
-        }else if($request->valor_abono > $vcd && $request->valor_abono < $saldop){
+ }else if($request->valor_abono > $vcd && $request->valor_abono < $saldop){
             
             $saldoa = Prestamo::where('idp', '=', $request->prestamo_id)->first();    
            
@@ -452,8 +855,8 @@ class PagoController extends Controller
             $abonoat = $request->valor_abono - $vcd; // Abono a saldo atrasado
             $cuotasatdesc = round($abonoat/$vcd,2); // Cuotas a descontar de las atrasadas
            
-            if($cuotasatdesc <= $cuotasat && $abonoat <= $saldoat ){
-                        
+ if($cuotasatdesc <= $cuotasat && $abonoat <= $saldoat ){
+            
             DB::table('detalle_prestamo')
             ->where([['prestamo_id', '=', $request->prestamo_id],
                      ['d_numero_cuota', '=', $request->numero_cuota]])
@@ -475,7 +878,7 @@ class PagoController extends Controller
             'monto_pendiente'=>($saldop - $request->valor_abono),
             'updated_at'=> now()
             ]);
-            }else if($cuotasat == 0 ){
+ }else if($cuotasat == 0 ){
 
                 DB::table('detalle_prestamo')
             ->where([['prestamo_id', '=', $request->prestamo_id],
@@ -498,13 +901,13 @@ class PagoController extends Controller
             'updated_at'=> now()
             ]);
 
-            }else{
+ }else{
 
                 return response()->json(['success' => 'noa']);  
-            }
+      }
             
 
-        }else if($vcd == $request->valor_abono){
+ }else if($vcd == $request->valor_abono){
         
         $pago =  Pago::where([['prestamo_id', '=', $request->prestamo_id], ['numero_cuota', '=', $request->numero_cuota]])->first();
         $pagoq = $pago->valor_abono; //Valor abono de cuota ya pagada

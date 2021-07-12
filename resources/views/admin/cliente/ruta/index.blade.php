@@ -42,7 +42,7 @@
 @section("scriptsPlugins")
 <!-- jQuery ui -->
 <script src="{{asset("assets/$theme/plugins/jquery-ui/jquery-ui.min.js")}}"></script>
-
+<script src="{{asset("assets/$theme/plugins/jquery-touch/jquery.ui.touch-punch.min.js")}}"></script>
 @endsection
 
 @section("scripts")
@@ -81,7 +81,7 @@
               
               <a href="#" class="nav-link active">
                
-               {{$item->consecutivo}} <i class="left fas fa-angle-left"></i> <i class="fas fa-route"></i> {{$item->nombres}}---{{$item->direccion}}
+                <i class="fas fa-bars"></i> {{$item->consecutivo}} <i class="left fas fa-angle-left"></i> <i class="fas fa-route"></i> {{$item->nombres}}---{{$item->direccion}}
               
                   
                 </a>

@@ -87,6 +87,8 @@ class PrestamoController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
+        //dd(date('z', strtotime($request->fecha_inicial)));
+
         Prestamo::create($request->all());
 
         $id = DB::table('prestamo')->orderBy('idp','desc')->limit(1)->select('idp')->get();
@@ -115,10 +117,77 @@ class PrestamoController extends Controller
         ]);
 
         $numero_cuota++;
-        $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
         
-                
+         //comprueba si el año es bisiesto o no
+         if(date('L', strtotime($fechaInicial)) == 1){
+
+            //Comprueba si es diciembre
+            if(date('m', strtotime($fechaInicial)) == 12){
+
+            if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 352 || date('z', strtotime($fechaInicial)) == 359)){
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+            }
+            else if((date('N', strtotime($fechaInicial)) == 5 || date('N', strtotime($fechaInicial)) == 1) && (date('z', strtotime($fechaInicial)) == 352 || date('z', strtotime($fechaInicial)) == 359)) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(8)->toDateString();
+            }
+            else if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 351 || date('z', strtotime($fechaInicial)) == 358)) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(9)->toDateString();
+            }
+            else if(date('N', strtotime($fechaInicial)) != 6 && date('N', strtotime($fechaInicial)) != 5 && (date('z', strtotime($fechaInicial)) == 352 || date('z', strtotime($fechaInicial)) == 359) ) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+            }
+            else if(date('N', strtotime($fechaInicial)) == 6 ) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+            }
+            else
+            {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+            }
+            }
+            else if(date('N', strtotime($fechaInicial)) == 6 && date('m', strtotime($fechaInicial)) != 12) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+            }
+            else if(date('m', strtotime($fechaInicial)) != 12)
+            { 
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+            }
+                    
+        
+         }else{
+         //Comprueba si es diciembre
+        if(date('m', strtotime($fechaInicial)) == 12){
+
+        if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 351 || date('z', strtotime($fechaInicial)) == 358)){
+            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(9)->toDateString();
         }
+        else if((date('N', strtotime($fechaInicial)) == 5 || date('N', strtotime($fechaInicial)) == 1) && (date('z', strtotime($fechaInicial)) == 351 || date('z', strtotime($fechaInicial)) == 358)) {
+            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(8)->toDateString();
+        }
+        else if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 350 || date('z', strtotime($fechaInicial)) == 357)) {
+            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(8)->toDateString();
+        }
+        else if(date('N', strtotime($fechaInicial)) != 6 && date('N', strtotime($fechaInicial)) != 5 && date('N', strtotime($fechaInicial)) != 1 && (date('z', strtotime($fechaInicial)) == 351 || date('z', strtotime($fechaInicial)) == 358) ) {
+            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+        }
+        else if(date('N', strtotime($fechaInicial)) == 6 ) {
+            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+        }
+        else
+        {
+            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+        } 
+        // meses normales sin diciembre
+        }
+        else if(date('N', strtotime($fechaInicial)) == 6 && date('m', strtotime($fechaInicial)) != 12) {
+            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+        }
+        else if(date('m', strtotime($fechaInicial)) != 12)
+        { 
+           $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(7)->toDateString();
+        }
+        }
+
+       }
 
         }
         
@@ -190,13 +259,77 @@ class PrestamoController extends Controller
             
 
             $numero_cuota++;
+                        
             
-            if(date('N', strtotime($fechaInicial)) == 6){
+            //comprueba si el año es bisiesto o no
+            if(date('L', strtotime($fechaInicial)) == 1){
+
+                //Comprueba si es diciembre
+                if(date('m', strtotime($fechaInicial)) == 12){
+
+                if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 358 || date('z', strtotime($fechaInicial)) == 365)){
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
+                }
+                else if(date('N', strtotime($fechaInicial)) == 5 && (date('z', strtotime($fechaInicial)) == 358 || date('z', strtotime($fechaInicial)) == 365)) {
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(3)->toDateString();
+                }
+                else if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 357 || date('z', strtotime($fechaInicial)) == 364)) {
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(3)->toDateString();
+                }
+                else if(date('N', strtotime($fechaInicial)) != 6 && date('N', strtotime($fechaInicial)) != 5 && (date('z', strtotime($fechaInicial)) == 358 || date('z', strtotime($fechaInicial)) == 365) ) {
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
+                }
+                else if(date('N', strtotime($fechaInicial)) == 6 ) {
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
+                }
+                else
+                {
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(1)->toDateString();
+                }
+                }
+                else if(date('N', strtotime($fechaInicial)) == 6 && date('m', strtotime($fechaInicial)) != 12) {
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
+                }
+                else if(date('m', strtotime($fechaInicial)) != 12)
+                { 
+                    $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(1)->toDateString();
+                }
+                        
+            
+             }else{
+             //Comprueba si es diciembre
+            if(date('m', strtotime($fechaInicial)) == 12){
+
+            if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 357 || date('z', strtotime($fechaInicial)) == 364)){
                 $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
-            }else{ 
+            }
+            else if(date('N', strtotime($fechaInicial)) == 5 && (date('z', strtotime($fechaInicial)) == 357 || date('z', strtotime($fechaInicial)) == 364)) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(3)->toDateString();
+            }
+            else if(date('N', strtotime($fechaInicial)) == 6 && (date('z', strtotime($fechaInicial)) == 356 || date('z', strtotime($fechaInicial)) == 363)) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(3)->toDateString();
+            }
+            else if(date('N', strtotime($fechaInicial)) != 6 && date('N', strtotime($fechaInicial)) != 5 && (date('z', strtotime($fechaInicial)) == 357 || date('z', strtotime($fechaInicial)) == 364) ) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
+            }
+            else if(date('N', strtotime($fechaInicial)) == 6 ) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
+            }
+            else
+            {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(1)->toDateString();
+            } 
+            // meses normales sin diciembre
+            }
+            else if(date('N', strtotime($fechaInicial)) == 6 && date('m', strtotime($fechaInicial)) != 12) {
+                $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(2)->toDateString();
+            }
+            else if(date('m', strtotime($fechaInicial)) != 12)
+            { 
+               $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(1)->toDateString();
+            }
+            }
             
-            $fechaInicial = Carbon::createFromFormat('Y-m-d',$fechaInicial)->addDay(1)->toDateString();
-            }  
             }
     
             }

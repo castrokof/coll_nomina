@@ -14,15 +14,25 @@ class CreateUsuarioTable extends Migration
     public function up()
     {
         Schema::create('usuario', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('usuario',50)->unique();
+            $table->Increments('id');
+            $table->string('papellido',100);
+            $table->string('sapellido',100)->nullable();
+            $table->string('pnombre',100);
+            $table->string('snombre',100)->nullable();
+            $table->string('tipo_documento',10);
+            $table->string('documento',19);
+            $table->string('usuario',20)->unique();
             $table->string('password',100);
             $table->string('remenber_token',100);
-            $table->string('tipo_de_usuario',50);
             $table->string('email',100)->unique();
+            $table->string('cod_retus',40)->nullable();
+            $table->string('celular',50);
+            $table->string('telefono',50)->nullable();
+            $table->string('profesion',50);
+            $table->string('especialidad',50);
+            $table->string('observacion',200)->nullable();
+            $table->string('ips',50);
             $table->char('activo',1);
-            $table->unsignedBigInteger('empleado_id');
-            $table->foreign('empleado_id', 'fk_empleadoid_usuarioid')->references('id')->on('empleado')->onDelete('restrict')->onUpdate('restrict');
             $table->dateTime('delete_at')->nullable();
             $table->timestamps();
         });

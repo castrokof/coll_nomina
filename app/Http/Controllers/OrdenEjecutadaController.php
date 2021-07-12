@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace app\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,10 +15,10 @@ class OrdenEjecutadaController extends Controller
      * @return \Illuminate\Http\Response
      */
   public function medidorejecutado(Request $request)
-  {   
-    
-    
-    $url1=null;   
+  {
+
+
+    $url1=null;
     $id_orden=$request->Id_Orden;
     $id_orden_lec=$request->id_Orden_lectura;
     $Estado=$request->Estado;
@@ -31,15 +31,15 @@ class OrdenEjecutadaController extends Controller
    ->where([
     ['Estado','=',2],
     ['id','=',$id_orden],
-    ])            
+    ])
     ->count();*/
     /*$VEOEJE = DB::table('orden_ejecutada')
     ->where([
     ['estado_id','=',4],
     ['ordenejecutada_id','=',$id_orden],
-    ])            
+    ])
     ->count();*/
-    
+
     if($causa != null ){
 
       $critica = 'CAUSADO';
@@ -65,34 +65,34 @@ class OrdenEjecutadaController extends Controller
       $critica = 'NORMAL';
 
     }
-    
-    
+
+
   if($id_orden > 0 && $Estado == 4 && $urlfoto1 != null && $critica != 'NORMAL' && $critica != 'CAUSADO'){
-    
+
     // Subimos la foto 1
-  
-    
+
+
     $imagen1 = base64_decode($urlfoto1);
     $imagen_name1 = $id_orden.'_1.jpg';
     $path1 = public_path('/imageneslectura/'.$imagen_name1);
     file_put_contents($path1, $imagen1);
-    $img1 = Image::make(public_path('imageneslectura/'.$imagen_name1)); 
+    $img1 = Image::make(public_path('imageneslectura/'.$imagen_name1));
     $textimage = $request->Fechar_Gestion;
     $img1->resize(640, 480);
     $img1->text($textimage, 10, 35,
-     function($font){ 
+     function($font){
        $font->size(24);
        $font->file(public_path('font/OpenSans-Regular.ttf'));
-       $font->color('#f1f505'); 
-       $font->align('left'); 
-       $font->valign('bottom'); 
-       $font->angle(0); }); 
-    $img1->save(public_path('imageneslectura/'.$imagen_name1)); 
-    
+       $font->color('#f1f505');
+       $font->align('left');
+       $font->valign('bottom');
+       $font->angle(0); });
+    $img1->save(public_path('imageneslectura/'.$imagen_name1));
+
     $url1='imageneslectura/'.$imagen_name1;
-     
-   
-   
+
+
+
    $ORDEN = DB::table('orden_ejecutada')
           ->insert([
           'id' => $id_orden,
@@ -121,10 +121,10 @@ class OrdenEjecutadaController extends Controller
           'futuro5' => $request->Causa,
           'futuro6' => null,
           'created_at'=>now()
-                                   
+
             ]);
 
-         
+
         DB::table('ordenescu')
                 ->where('id','=',$id_orden)
                 ->update([
@@ -134,7 +134,7 @@ class OrdenEjecutadaController extends Controller
                   'Critica' => $critica,
                   'fecha_de_ejecucion' => $request->Fechar_Gestion,
                   'foto1' => $url1,
-                  'foto2' => null,  
+                  'foto2' => null,
                   'Coordenada' => $request->Comentario,
                   'Latitud' => $request->Latitud,
                   'Longitud' => $request->Longitud,
@@ -146,16 +146,16 @@ class OrdenEjecutadaController extends Controller
                   'Observacion_des' => $request->Observacion,
                   'new_medidor' => $request->nuevo_medidor,
                   'updated_at'=>now()
-                 
-                ]); 
-               
+
+                ]);
+
 
         return response()->json(0);
-    
+
     } else if($id_orden > 0 && $Estado == 4 && $critica == 'NORMAL'){
-    
-    
-   
+
+
+
    $ORDEN = DB::table('orden_ejecutada')
           ->insert([
           'id' => $id_orden,
@@ -184,10 +184,10 @@ class OrdenEjecutadaController extends Controller
           'futuro5' => $request->Causa,
           'futuro6' => null,
           'created_at'=>now()
-                                   
+
             ]);
 
-         
+
         DB::table('ordenescu')
                 ->where('id','=',$id_orden)
                 ->update([
@@ -197,7 +197,7 @@ class OrdenEjecutadaController extends Controller
                   'Critica' => $critica,
                   'fecha_de_ejecucion' => $request->Fechar_Gestion,
                   'foto1' => $url1,
-                  'foto2' => null,  
+                  'foto2' => null,
                   'Coordenada' => $request->Comentario,
                   'Latitud' => $request->Latitud,
                   'Longitud' => $request->Longitud,
@@ -209,12 +209,12 @@ class OrdenEjecutadaController extends Controller
                   'Observacion_des' => $request->Observacion,
                   'new_medidor' => $request->nuevo_medidor,
                   'updated_at'=>now()
-                 
+
                 ]);
-                
-                
+
+
                  return response()->json(0);
-                
+
                 /*else if($id_orden > 0 && $Estado == 4 &&  $urlfoto1 != null ){
 
       // Subimos la foto 1
@@ -225,27 +225,27 @@ class OrdenEjecutadaController extends Controller
     $imagen_name1 = $id_orden.'_1.jpg';
     $path1 = public_path('/imageneslectura/'.$imagen_name1);
     file_put_contents($path1, $imagen1);
-    $img1 = Image::make(public_path('imageneslectura/'.$imagen_name1)); 
+    $img1 = Image::make(public_path('imageneslectura/'.$imagen_name1));
     $textimage = $request->fecha_de_ejecucion;
     $img1->resize(640, 480);
     $img1->text($textimage, 10, 35,
-     function($font){ 
+     function($font){
        $font->size(24);
        $font->file(public_path('font/OpenSans-Regular.ttf'));
-       $font->color('#f1f505'); 
-       $font->align('left'); 
-       $font->valign('bottom'); 
-       $font->angle(0); }); 
-    $img1->save(public_path('imageneslectura/'.$imagen_name1)); 
-    
+       $font->color('#f1f505');
+       $font->align('left');
+       $font->valign('bottom');
+       $font->angle(0); });
+    $img1->save(public_path('imageneslectura/'.$imagen_name1));
+
     $url1='imageneslectura/'.$imagen_name1;
      }
-      
+
 
         DB::table('orden_ejecutada')
         ->where('id','=',$id_orden)
         ->update([
-          
+
           'suscriptor' => null,
           'usuario' => $request->Usuario,
           'tipo_usuario' => null,
@@ -270,20 +270,20 @@ class OrdenEjecutadaController extends Controller
           'futuro4' => null,
           'futuro5' => null,
           'futuro6' => null,
-             
+
             ]);
 
             DB::table('ordenescu')
             ->where('id','=',$id_orden)
             ->update([
-             
+
               'Usuario' => $request->Usuario,
               'Lect_Actual' => $request->Lectura,
               'Cons_Act' => $request->Consumo,
               'Critica' => $critica,
               'fecha_de_ejecucion' => $request->Fechar_Gestion,
               'foto1' => $url1,
-              'foto2' => null,  
+              'foto2' => null,
               'Coordenada' => null,
               'Latitud' => $request->Latitud,
               'Longitud' => $request->Longitud,
@@ -295,41 +295,41 @@ class OrdenEjecutadaController extends Controller
               'Observacion_des' => null,
               'new_medidor' => $request->nuevo_medidor,
               'updated_at'=>now()
-              
-            ]); 
-           
+
+            ]);
+
 
 
         return response()->json(0);*/
-       
+
       }else if($id_orden > 0 && $Estado == 4 && $urlfoto1 != null && $critica = 'CAUSADO'){
-          
-          
-    
+
+
+
     // Subimos la foto 1
-  
-    
+
+
     $imagen1 = base64_decode($urlfoto1);
     $imagen_name1 = $id_orden.'_1.jpg';
     $path1 = public_path('/imageneslectura/'.$imagen_name1);
     file_put_contents($path1, $imagen1);
-    $img1 = Image::make(public_path('imageneslectura/'.$imagen_name1)); 
+    $img1 = Image::make(public_path('imageneslectura/'.$imagen_name1));
     $textimage = $request->Fechar_Gestion;
     $img1->resize(640, 480);
     $img1->text($textimage, 10, 35,
-     function($font){ 
+     function($font){
        $font->size(24);
        $font->file(public_path('font/OpenSans-Regular.ttf'));
-       $font->color('#f1f505'); 
-       $font->align('left'); 
-       $font->valign('bottom'); 
-       $font->angle(0); }); 
-    $img1->save(public_path('imageneslectura/'.$imagen_name1)); 
-    
+       $font->color('#f1f505');
+       $font->align('left');
+       $font->valign('bottom');
+       $font->angle(0); });
+    $img1->save(public_path('imageneslectura/'.$imagen_name1));
+
     $url1='imageneslectura/'.$imagen_name1;
-     
-   
-   
+
+
+
    $ORDEN = DB::table('orden_ejecutada')
           ->insert([
           'id' => $id_orden,
@@ -358,10 +358,10 @@ class OrdenEjecutadaController extends Controller
           'futuro5' => $request->Causa,
           'futuro6' => null,
           'created_at'=>now()
-                                   
+
             ]);
 
-         
+
         DB::table('ordenescu')
                 ->where('id','=',$id_orden)
                 ->update([
@@ -371,7 +371,7 @@ class OrdenEjecutadaController extends Controller
                   'Critica' => $critica,
                   'fecha_de_ejecucion' => $request->Fechar_Gestion,
                   'foto1' => $url1,
-                  'foto2' => null,  
+                  'foto2' => null,
                   'Coordenada' => $request->Comentario,
                   'Latitud' => $request->Latitud,
                   'Longitud' => $request->Longitud,
@@ -383,25 +383,25 @@ class OrdenEjecutadaController extends Controller
                   'Observacion_des' => $request->Observacion,
                   'new_medidor' => $request->nuevo_medidor,
                   'updated_at'=>now()
-                 
-                ]); 
-               
+
+                ]);
+
 
         return response()->json(0);
-          
-          
-          
+
+
+
 
         }return response()->json(1);
-        
-    
-      
-      
+
+
+
+
   }
-      
-  
-    
-    
+
+
+
+
 
 
     /**
@@ -409,7 +409,7 @@ class OrdenEjecutadaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
 
     /**
      * Store a newly created resource in storage.

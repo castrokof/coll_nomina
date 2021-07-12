@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $("#li").draggable();
     $('#menu').sortable({
         stop: function() {
 
