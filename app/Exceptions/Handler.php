@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -49,14 +50,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
+
         return parent::render($request, $exception);
     }
 
 
 
-    // public function shouldReport(Throwable $exception){
-
-    // }
-
-    // public function renderForConsole($output, Throwable $exception){}
 }

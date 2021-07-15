@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 
 class ValidacionUsuario extends FormRequest
 {
@@ -16,17 +17,30 @@ class ValidacionUsuario extends FormRequest
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
+
+    public function response(array $errors)
+    {
+        if ($this->expectsJson()) {
+            return new JsonResponse($errors);
+        }
+        return $this->redirector->to($this->getRedirectUrl())
+            ->withInput($this->except($this->dontFlash))
+            ->withErrors($errors, $this->errorBag);
+    }
+
+
     public function rules()
     {
         if($this->route('id')){
-            
+
         return [
-            
+
             'papellido' => 'required',
             'pnombre' => 'required',
             'tipo_documento' => 'required',
@@ -39,11 +53,11 @@ class ValidacionUsuario extends FormRequest
             'activo' => 'required',
             'rol_id' => 'required|integer'
         ];
-            
+
         }else{
-        
-        
-        
+
+
+
         return [
             'usuario'  => 'required|max:50|unique:usuario,usuario,'.$this->route('id'),
             'papellido' => 'required',
@@ -62,8 +76,11 @@ class ValidacionUsuario extends FormRequest
 
 
         ];
-    
-            
+
+
             }
         }
+
+
+
 }

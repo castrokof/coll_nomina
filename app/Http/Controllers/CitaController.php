@@ -24,8 +24,8 @@ class CitaController extends Controller
 
         $pacientes = Paciente::orderBy('documento')->select('id_paciente', 'documento', DB::raw("CONCAT(pnombre,' ',papellido) as paciente") )->get();
         $profesionales = Usuario::orderBy('id')->select('id', 'documento', 'especialidad',DB::raw("CONCAT(pnombre,' ',papellido) as profesional") )->get();
-        
-        
+
+
         if($request->ajax()){
             $datas = DB::table('cita')
             ->Join('usuario', 'cita.usuario_id', '=', 'usuario.id')
@@ -37,23 +37,23 @@ class CitaController extends Controller
             ->orderBy('cita.created_at')
             //->where('cita.created_at', '>=', $fechaActual)
             ->get();
-            
+
 
         return  DataTables()->of($datas)
         ->addColumn('action', function($datas){
         $button = '<button type="button" name="edit" id="'.$datas->id_cita.'"
         class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar cita"><i class="far fa-edit"></i></button>';
-               
+
       return $button;
 
-        }) 
+        })
         ->rawColumns(['action'])
         ->make(true);
-        
+
      }
 
-     
-     return view('admin.cita.index', compact('datas', 'pacientes', 'profesionales'));
+
+     return view('admin.cita.index', compact('pacientes', 'profesionales'));
     }
 
     /**
@@ -70,8 +70,8 @@ class CitaController extends Controller
             'usuario_id' => 'required',
             'paciente_id' => 'required',
             'tipo_cita' => 'required'
-            
-            
+
+
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -79,23 +79,23 @@ class CitaController extends Controller
         if($error->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
         }
-        
+
         $fechahoracita = $request->fechahora.":00";
 
        $citaasignada = DB::table('cita')->where([
         ['fechahora', '=', $fechahoracita], ['usuario_id', '=', $request->usuario_id]]
        )->count();
 
-       
+
         if($citaasignada>0){
-        
+
             return response()->json(['success' => 'tomada']);
 
         }else{
-        
+
 
         DB::table('cita')
-        ->insert([ 
+        ->insert([
         'fechahora' => $fechahoracita,
         'sede' => $request->sede,
         'usuario_id' => $request->usuario_id,
@@ -153,10 +153,10 @@ class CitaController extends Controller
 
         // $pacientes = Paciente::orderBy('documento')->select('id_paciente', 'documento', DB::raw("CONCAT(pnombre,' ',papellido) as paciente") )->get();
         // $profesionales = Usuario::orderBy('id')->select('id', 'documento', 'especialidad',DB::raw("CONCAT(pnombre,' ',papellido) as profesional") )->get();
-        
+
 
         if(request()->ajax()){
-             
+
 
             $data = DB::table('cita')
             ->Join('usuario', 'cita.usuario_id', '=', 'usuario.id')
@@ -169,9 +169,9 @@ class CitaController extends Controller
             ->first();
 
 
-            
+
                 return response()->json(['result'=>$data]);
-    
+
             }
             return view('admin.cita.index', compact('datas'));
     }
@@ -191,7 +191,7 @@ class CitaController extends Controller
             'usuario_id' => 'required',
             'paciente_id' => 'required',
             'tipo_cita' => 'required'
-            
+
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -199,24 +199,24 @@ class CitaController extends Controller
         if($error->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
         }
-        
+
         $fechahoracita = $request->fechahora.":00";
 
        $citaasignada = DB::table('cita')->where([
         ['fechahora', '=', $fechahoracita], ['usuario_id', '=', $request->usuario_id]]
        )->count();
 
-       
+
         if($citaasignada>0){
-        
+
             return response()->json(['success' => 'tomada']);
 
         }else{
-        
+
 
         DB::table('cita')
         ->where('id_cita', $id)
-        ->update([ 
+        ->update([
         'fechahora' => $fechahoracita,
         'sede' => $request->sede,
         'usuario_id' => $request->usuario_id,

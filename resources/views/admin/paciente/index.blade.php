@@ -4,13 +4,13 @@
     Pacientes
 @endsection
 @section("styles")
-<link href="{{asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css")}}" rel="stylesheet" type="text/css"/>       
+<link href="{{asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css")}}" rel="stylesheet" type="text/css"/>
 @endsection
 
 
 @section('scripts')
 
-<script src="{{asset("assets/pages/scripts/admin/usuario/crearuser.js")}}" type="text/javascript"></script>    
+<script src="{{asset("assets/pages/scripts/admin/usuario/crearuser.js")}}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
@@ -27,7 +27,7 @@
           </div>
         </div>
       <div class="card-body table-responsive p-2">
-        
+
       <table id="pacientes" class="table table-hover  text-nowrap">
         {{-- class="table table-hover table-bordered text-nowrap" --}}
         <thead>
@@ -51,9 +51,9 @@
               <th>Observaciones</th>
               <th>Fecha de creacion</th>
 
-        
-       
-             
+
+
+
         </tr>
         </thead>
         <tbody>
@@ -68,7 +68,7 @@
 
     <div class="modal fade" tabindex="-1" id ="modal-u" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">   
+        <div class="modal-content">
         <div class="row">
             <div class="col-lg-12">
               @include('includes.form-error')
@@ -88,17 +88,17 @@
                               </div>
                               <!-- /.card-body -->
                               <div class="card-footer">
-                                
+
                                   <div class="col-lg-3"></div>
                                   <div class="col-lg-6">
-                                  @include('includes.boton-form-crear-empresa-empleado-usuario')    
+                                  @include('includes.boton-form-crear-empresa-empleado-usuario')
                               </div>
                                </div>
                               <!-- /.card-footer -->
               </form>
-                         
-            
-               
+
+
+
           </div>
         </div>
       </div>
@@ -125,11 +125,29 @@
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
 
 <script>
- 
+
  $(document).ready(function(){
+
+//funcion de edad
+
+function edad() {
+
+    let fecha1 = new Date($("#futuro2").val());
+    let fecha2 = new Date();
+
+    let resta = new Date(fecha2.getDate - fecha1.getDate);
+
+    let edad = Math.round(resta);
+
+
+}
+
+
+$("#futuro2").change();
+
         //initiate dataTables plugin
 
-        var myTable = 
+        var myTable =
         $('#pacientes').DataTable({
         language: idioma_espanol,
         processing: true,
@@ -137,7 +155,7 @@
         processing: true,
         serverSide: true,
         aaSorting: [[ 1, "asc" ]],
-        
+
         ajax:{
           url:"{{ route('paciente')}}",
               },
@@ -197,56 +215,56 @@
           {data:'created_at',
            name:'created_at'
           }
-                   
+
         ],
 
          //Botones----------------------------------------------------------------------
-         
+
          "dom":'<"row"<"col-xs-1 form-inline"><"col-md-4 form-inline"l><"col-md-5 form-inline"f><"col-md-3 form-inline"B>>rt<"row"<"col-md-8 form-inline"i> <"col-md-4 form-inline"p>>',
-         
+
 
                    buttons: [
                       {
-    
+
                    extend:'copyHtml5',
                    titleAttr: 'Copiar Registros',
                    title:"seguimiento",
                    className: "btn  btn-outline-primary btn-sm"
-    
-    
+
+
                       },
                       {
-    
+
                    extend:'excelHtml5',
                    titleAttr: 'Exportar Excel',
                    title:"seguimiento",
                    className: "btn  btn-outline-success btn-sm"
-    
-    
+
+
                       },
                        {
-    
+
                    extend:'csvHtml5',
                    titleAttr: 'Exportar csv',
                    className: "btn  btn-outline-warning btn-sm"
                    //text: '<i class="fas fa-file-excel"></i>'
-                   
+
                       },
                       {
-    
+
                    extend:'pdfHtml5',
                    titleAttr: 'Exportar pdf',
                    className: "btn  btn-outline-secondary btn-sm"
-    
-    
+
+
                       }
                    ],
 
-                  
 
 
-        
-    
+
+
+
         });
 
   $('#create_paciente').click(function(){
@@ -259,7 +277,7 @@
  });
 
  $('#form-general').on('submit', function(event){
-    event.preventDefault(); 
+    event.preventDefault();
     var url = '';
     var method = '';
     var text = '';
@@ -269,7 +287,7 @@
     text = "Estás por crear un paciente"
     url = "{{route('guardar_paciente')}}";
     method = 'post';
-  }  
+  }
 
   if($('#action').val() == 'Edit')
   {
@@ -277,16 +295,16 @@
     var updateid = $('#hidden_id').val();
     url = "/paciente/"+updateid;
     method = 'put';
-  }  
+  }
     Swal.fire({
      title: "¿Estás seguro?",
      text: text,
-     icon: "success", 
+     icon: "success",
      showCancelButton: true,
      showCloseButton: true,
      confirmButtonText: 'Aceptar',
      }).then((result)=>{
-    if(result.value){ 
+    if(result.value){
     $.ajax({
            url:url,
            method:method,
@@ -296,17 +314,18 @@
               var html = '';
                     if(data.errors){
 
-                    html = '<div class="alert alert-danger alert-dismissible" data-auto-dismiss="3000">'
-                      '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
-                        '<h5><i class="icon fas fa-check"></i> Mensaje Ventas</h5>';
-                                     
+                    html =
+                    '<div class="alert alert-danger alert-dismissible">'+
+                       '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+                        '<h5><i class="icon fas fa-ban"></i> Mensaje fidem</h5>';
+
                     for (var count = 0; count < data.errors.length; count++)
                     {
                       html += '<p>' + data.errors[count]+'<p>';
-                    }         
+                    }
                     html += '</div>';
                     }
-                    
+
                     if(data.success == 'ok') {
                       $('#form-general')[0].reset();
                       $('#modal-u').modal('hide');
@@ -317,11 +336,11 @@
                           title: 'paciente creado correctamente',
                           showConfirmButton: false,
                           timer: 1500
-                          
+
                         }
                       )
-                      // Manteliviano.notificaciones('cliente creado correctamente', 'Sistema Ventas', 'success');
-                      
+
+
                     }else if(data.success == 'ok1'){
                       $('#form-general')[0].reset();
                       $('#modal-u').modal('hide');
@@ -332,20 +351,20 @@
                           title: 'paciente actualizado correctamente',
                           showConfirmButton: false,
                           timer: 1500
-                          
+
                         }
                       )
-                      // Manteliviano.notificaciones('cliente actualizado correctamente', 'Sistema Ventas', 'success');
 
-                    } 
-                    $('#form_result').html(html)  
+
+                    }
+                    $('#form_result').html(html)
               }
 
 
            });
           }
         });
-          
+
 
   });
 
@@ -354,7 +373,7 @@
 
 $(document).on('click', '.edit', function(){
     var id = $(this).attr('id');
-    
+
   $.ajax({
     url:"/paciente/"+id+"/editar",
     dataType:"json",
@@ -380,15 +399,15 @@ $(document).on('click', '.edit', function(){
       $('#action_button').val('Edit');
       $('#action').val('Edit');
       $('#modal-u').modal('show');
-     
+
     }
-    
+
 
   }).fail( function( jqXHR, textStatus, errorThrown ) {
 
 if (jqXHR.status === 403) {
 
-  Manteliviano.notificaciones('No tienes permisos para realizar esta accion', 'Sistema Ventas', 'warning');
+  Manteliviano.notificaciones('No tienes permisos para realizar esta accion', 'Sistema Fidem', 'warning');
 
 }});
 
@@ -397,7 +416,7 @@ if (jqXHR.status === 403) {
 
 
 });
-       
+
 
    var idioma_espanol =
                  {
@@ -427,10 +446,10 @@ if (jqXHR.status === 403) {
                     "copy": "Copiar",
                     "colvis": "Visibilidad"
                 }
-                }   
-       
+                }
+
   </script>
-   
+
 
 @endsection
 

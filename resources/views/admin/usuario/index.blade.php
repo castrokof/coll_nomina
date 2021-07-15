@@ -4,13 +4,13 @@
     Usuarios
 @endsection
 @section("styles")
-<link href="{{asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css")}}" rel="stylesheet" type="text/css"/>       
+<link href="{{asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css")}}" rel="stylesheet" type="text/css"/>
 @endsection
 
 
 @section('scripts')
 
-<script src="{{asset("assets/pages/scripts/admin/usuario/crearuser.js")}}" type="text/javascript"></script>    
+<script src="{{asset("assets/pages/scripts/admin/usuario/crearuser.js")}}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
@@ -27,7 +27,7 @@
           </div>
         </div>
       <div class="card-body table-responsive p-2">
-        
+
       <table id="usuarios" class="table table-hover  text-nowrap">
         {{-- class="table table-hover table-bordered text-nowrap" --}}
         <thead>
@@ -50,7 +50,7 @@
               <th>Activo</th>
               <th>Rol</th>
               <th>Fecha de creacion</th>
-             
+
         </tr>
         </thead>
         <tbody>
@@ -65,7 +65,7 @@
 
     <div class="modal fade" tabindex="-1" id ="modal-u" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">   
+        <div class="modal-content">
         <div class="row">
             <div class="col-lg-12">
               @include('includes.form-error')
@@ -85,17 +85,17 @@
                               </div>
                               <!-- /.card-body -->
                               <div class="card-footer">
-                                
+
                                   <div class="col-lg-3"></div>
                                   <div class="col-lg-6">
-                                  @include('includes.boton-form-crear-empresa-empleado-usuario')    
+                                  @include('includes.boton-form-crear-empresa-empleado-usuario')
                               </div>
                                </div>
                               <!-- /.card-footer -->
               </form>
-                         
-            
-               
+
+
+
           </div>
         </div>
       </div>
@@ -122,11 +122,11 @@
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
 
 <script>
- 
+
  $(document).ready(function(){
         //initiate dataTables plugin
 
-        var myTable = 
+        var myTable =
         $('#usuarios').DataTable({
         language: idioma_espanol,
         processing: true,
@@ -134,7 +134,7 @@
         processing: true,
         serverSide: true,
         aaSorting: [[ 1, "asc" ]],
-        
+
         ajax:{
           url:"{{ route('usuario')}}",
               },
@@ -188,63 +188,63 @@
           {data:'activo',
            name:'activo'
           },
-          
+
           {data:'nombre',
            name:'nombre'
           },
           {data:'created_at',
            name:'created_at'
           }
-                   
+
         ],
 
          //Botones----------------------------------------------------------------------
-         
+
          "dom":'<"row"<"col-xs-1 form-inline"><"col-md-4 form-inline"l><"col-md-5 form-inline"f><"col-md-3 form-inline"B>>rt<"row"<"col-md-8 form-inline"i> <"col-md-4 form-inline"p>>',
-         
+
 
                    buttons: [
                       {
-    
+
                    extend:'copyHtml5',
                    titleAttr: 'Copiar Registros',
                    title:"seguimiento",
                    className: "btn  btn-outline-primary btn-sm"
-    
-    
+
+
                       },
                       {
-    
+
                    extend:'excelHtml5',
                    titleAttr: 'Exportar Excel',
                    title:"seguimiento",
                    className: "btn  btn-outline-success btn-sm"
-    
-    
+
+
                       },
                        {
-    
+
                    extend:'csvHtml5',
                    titleAttr: 'Exportar csv',
                    className: "btn  btn-outline-warning btn-sm"
                    //text: '<i class="fas fa-file-excel"></i>'
-                   
+
                       },
                       {
-    
+
                    extend:'pdfHtml5',
                    titleAttr: 'Exportar pdf',
                    className: "btn  btn-outline-secondary btn-sm"
-    
-    
+
+
                       }
                    ],
 
-                  
 
 
-        
-    
+
+
+
         });
 
   $('#create_usuario').click(function(){
@@ -261,7 +261,7 @@
  });
 
  $('#form-general').on('submit', function(event){
-    event.preventDefault(); 
+    event.preventDefault();
     var url = '';
     var method = '';
     var text = '';
@@ -271,7 +271,7 @@
     text = "Estás por crear un usuario"
     url = "{{route('guardar_usuario')}}";
     method = 'post';
-  }  
+  }
 
   if($('#action').val() == 'Edit')
   {
@@ -279,36 +279,22 @@
     var updateid = $('#hidden_id').val();
     url = "/usuario/"+updateid;
     method = 'put';
-  }  
+  }
     Swal.fire({
      title: "¿Estás seguro?",
      text: text,
-     icon: "success", 
+     icon: "success",
      showCancelButton: true,
      showCloseButton: true,
      confirmButtonText: 'Aceptar',
      }).then((result)=>{
-    if(result.value){ 
+    if(result.value){
     $.ajax({
            url:url,
            method:method,
            data:$(this).serialize(),
            dataType:"json",
            success:function(data){
-              var html = '';
-                    if(data.errors){
-
-                    html = '<div class="alert alert-danger alert-dismissible" data-auto-dismiss="3000">'
-                      '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
-                        '<h5><i class="icon fas fa-check"></i> Mensaje Ventas</h5>';
-                                     
-                    for (var count = 0; count < data.errors.length; count++)
-                    {
-                      html += '<p>' + data.errors[count]+'<p>';
-                    }         
-                    html += '</div>';
-                    }
-                    
                     if(data.success == 'ok') {
                       $('#form-general')[0].reset();
                       $('#modal-u').modal('hide');
@@ -319,11 +305,11 @@
                           title: 'usuario creado correctamente',
                           showConfirmButton: false,
                           timer: 1500
-                          
+
                         }
                       )
                       // Manteliviano.notificaciones('cliente creado correctamente', 'Sistema Ventas', 'success');
-                      
+
                     }else if(data.success == 'ok1'){
                       $('#form-general')[0].reset();
                       $('#modal-u').modal('hide');
@@ -334,20 +320,62 @@
                           title: 'usuario actualizado correctamente',
                           showConfirmButton: false,
                           timer: 1500
-                          
+
                         }
                       )
                       // Manteliviano.notificaciones('cliente actualizado correctamente', 'Sistema Ventas', 'success');
 
-                    } 
-                    $('#form_result').html(html)  
-              }
+                    }
+                }
 
 
-           });
+           }).fail( function( jqXHR, textStatus, errorThrown ) {
+
+            if (jqXHR.status === 422) {
+
+                var error = jqXHR.responseJSON;
+
+                $.each(error, function(i, items) {
+
+                    var errores =[];
+                    errores.push(items.celular+'<br>');
+                    errores.push(items.activo+'<br>');
+                    errores.push(items.documento+'<br>');
+                    errores.push(items.email+'<br>');
+                    errores.push(items.especialidad+'<br>');
+                    errores.push(items.papellido+'<br>');
+                    errores.push(items.pnombre+'<br>');
+                    errores.push(items.password+'<br>');
+                    errores.push(items.profesion+'<br>');
+                    errores.push(items.tipo_documento+'<br>');
+                    errores.push(items.usuario+'<br>');
+
+                    console.log(errores);
+
+                    var filtered = errores.filter(function (el) {
+                        return el != "undefined<br>";
+                        });
+
+                        console.log(filtered);
+                        Swal.fire(
+                        {
+                          icon: 'danger',
+                          title: 'El formulario contiene errores',
+                          html: filtered,
+                          showConfirmButton: true,
+                          //timer: 1500
+                        }
+                      )
+
+
+                    //Manteliviano.notificaciones(items, 'Sistema Ventas', 'warning');
+
+                });
+                }
+        });
           }
         });
-          
+
 
   });
 
@@ -356,7 +384,7 @@
 
 $(document).on('click', '.edit', function(){
     var id = $(this).attr('id');
-    
+
   $.ajax({
     url:"/usuario/"+id+"/editar",
     dataType:"json",
@@ -385,9 +413,9 @@ $(document).on('click', '.edit', function(){
       $('#action_button').val('Edit');
       $('#action').val('Edit');
       $('#modal-u').modal('show');
-     
+
     }
-    
+
 
   }).fail( function( jqXHR, textStatus, errorThrown ) {
 
@@ -402,7 +430,7 @@ if (jqXHR.status === 403) {
 
 
 });
-       
+
 
    var idioma_espanol =
                  {
@@ -432,10 +460,10 @@ if (jqXHR.status === 403) {
                     "copy": "Copiar",
                     "colvis": "Visibilidad"
                 }
-                }   
-       
+                }
+
   </script>
-   
+
 
 @endsection
 

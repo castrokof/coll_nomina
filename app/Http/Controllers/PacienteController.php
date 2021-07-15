@@ -6,6 +6,7 @@ use App\Models\Admin\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PacienteController extends Controller
 {
@@ -18,26 +19,26 @@ class PacienteController extends Controller
     {
         $usuario_id = $request->session()->get('usuario_id');
 
-        
+
 
         if($request->ajax()){
 
         $datas = Paciente::orderBy('id_paciente')
         ->get();
-       
+
         return  DataTables()->of($datas)
         ->addColumn('action', function($datas){
         $button = '<button type="button" name="edit" id="'.$datas->id_paciente.'"
         class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="far fa-edit"></i></button>';
-               
+
       return $button;
 
-        }) 
+        })
         ->rawColumns(['action'])
         ->make(true);
      }
 
-     return view('admin.paciente.index', compact('datas'));
+     return view('admin.paciente.index');
 
     }
 
@@ -57,15 +58,16 @@ class PacienteController extends Controller
             'ciudad' => 'required',
             'direccion' => 'required',
             'sexo' => 'required'
-            
+
         );
 
         $error = Validator::make($request->all(), $rules);
 
         if($error->fails()) {
+
             return response()->json(['errors' => $error->errors()->all()]);
         }
-        
+
         Paciente::create($request->all());
             return response()->json(['success' => 'ok']);
     }
@@ -101,14 +103,14 @@ class PacienteController extends Controller
     public function editar($id)
     {
         if(request()->ajax()){
-             
+
             $data = Paciente::where('id_paciente', $id)->first();
-               
+
                 return response()->json(['result'=>$data]);
-    
+
             }
             return view('admin.paciente.index');
-    
+
     }
 
     /**
@@ -129,8 +131,8 @@ class PacienteController extends Controller
             'ciudad' => 'required',
             'sexo' => 'required',
             'direccion' => 'required',
-            
-            
+
+
         );
 
 
@@ -139,7 +141,7 @@ class PacienteController extends Controller
         if($error->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
         }
-        
+
         $data = DB::table('paciente')->where('id_paciente', '=', $id)
         ->update([
             'papellido' => $request->papellido,
@@ -159,8 +161,8 @@ class PacienteController extends Controller
             'sexo' => $request->sexo,
             'observaciones' => $request->observaciones,
             'updated_at' => now()
-           
-          ]); 
+
+          ]);
         // $data->update($request->all());
         return response()->json(['success' => 'ok1']);
     }
