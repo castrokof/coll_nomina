@@ -77,7 +77,7 @@
 
     <div class="card-body login-card-body">
         <img src="{{asset("assets/img/coll_nomina_logo.svg")}}") alt="User Avatar" class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center img-size-500 mr-12 " >
-       <p class="login-box-msg"> <b>Coll Nomina</b></p>
+       <p class="login-box-msg"> <b>Registro de turnos</b></p>
        <div class="card"></div><hr />
       <p class="login-box-msg">Inicie Sesion</p>
       @if ($errors->any())
