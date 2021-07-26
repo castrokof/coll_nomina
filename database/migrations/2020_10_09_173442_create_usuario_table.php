@@ -25,7 +25,6 @@ class CreateUsuarioTable extends Migration
             $table->string('password',100);
             $table->string('remenber_token',100);
             $table->string('email',100)->unique();
-            $table->string('cod_retus',40)->nullable();
             $table->string('celular',50);
             $table->string('telefono',50)->nullable();
             $table->string('profesion',50);

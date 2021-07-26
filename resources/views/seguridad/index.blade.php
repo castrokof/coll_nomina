@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.min.css")}}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
- 
+
   <style>
     .spinner {
   display: inline-block;
@@ -58,8 +58,8 @@
 .has-spinner.btn-large.active .spinner {
     width: 19px;
 }
-  </style>  
-  
+  </style>
+
 </head>
 <body class="hold-transition login-page">
 
@@ -67,17 +67,17 @@
 <div class="login-box">
   <div class="login-logo">
     <div class="row">
-        
-        
-      </div>          
+
+
+      </div>
     <a href="{{route('inicio')}}"></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
-    
+
     <div class="card-body login-card-body">
-        <img src="{{asset("assets/img/fidem_logo.jpeg")}}") alt="User Avatar" class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center img-size-500 mr-12 " >
-       <p class="login-box-msg"> <b>Historias Clinicas</b></p>
+        <img src="{{asset("assets/img/coll_nomina_logo.svg")}}") alt="User Avatar" class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center img-size-500 mr-12 " >
+       <p class="login-box-msg"> <b>Coll Nomina</b></p>
        <div class="card"></div><hr />
       <p class="login-box-msg">Inicie Sesion</p>
       @if ($errors->any())
@@ -91,7 +91,7 @@
           </ul>
       </div>
       @endif
-      
+
     <form action="{{route('login_post')}}" method="post">
         @csrf
         <div class="input-group mb-3">
@@ -112,14 +112,14 @@
         </div>
         <div class="row">
           <div class="col-lg-6 col-mb-6 col-xs-12">
-          </div> 
+          </div>
           <!-- /.col -->
           <div class="col-lg-6 col-mb-6 col-xs-12">
             <p>
             <button type="submit" class="btn  btn-info has-spinner" style="width:100%">
               Acceder
               <span class="spinner"><i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></span>
-              
+
               </button>
             </p>
           </div>
@@ -127,10 +127,10 @@
         </div>
       </form>
 
-     
+
       <!-- /.social-auth-links -->
 
-     
+
     </div>
     <!-- /.login-card-body -->
   </div>
@@ -153,7 +153,7 @@
        $(this).toggleClass('active');
    });
  });
- 
+
  </script>
 
 </body>
