@@ -25,14 +25,12 @@ class CreateUsuarioTable extends Migration
             $table->string('password',100);
             $table->string('remenber_token',100);
             $table->string('email',100)->unique();
-            $table->string('celular',50);
-            $table->string('telefono',50)->nullable();
-            $table->string('profesion',50);
-            $table->string('especialidad',50);
+            $table->string('celular',50)->nullable();
+            $table->string('cargo',50);
+            $table->string('salario',50);
             $table->string('observacion',200)->nullable();
             $table->string('ips',50);
             $table->char('activo',1);
-            $table->dateTime('delete_at')->nullable();
             $table->timestamps();
         });
     }
