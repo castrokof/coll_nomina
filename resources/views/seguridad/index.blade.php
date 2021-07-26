@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Ips-Fidem | Log in</title>
+  <title>Registro de Turnos</title>
 
     <!-- Favicons -->
     <link href="{{asset("assets/img/fidem_icon.jpeg")}}" rel="icon">
