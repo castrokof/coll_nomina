@@ -26,11 +26,11 @@ class CreateUsuarioTable extends Migration
             $table->string('remenber_token',100);
             $table->string('email',100)->unique();
             $table->string('celular',50)->nullable();
-            $table->string('cargo',50);
-            $table->string('salario',50);
             $table->string('observacion',200)->nullable();
             $table->string('ips',50);
             $table->char('activo',1);
+            $table->unsignedBigInteger('cargo_id');
+            $table->foreign('cargo_id','fk_position_usuario')->references('id')->on('position')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
     }
