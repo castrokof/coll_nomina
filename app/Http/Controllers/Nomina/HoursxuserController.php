@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Nomina;
 
 use App\Http\Controllers\Controller;
+use App\Models\Nomina\Hoursxuser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class HoursxuserController extends Controller
 {
@@ -12,9 +15,34 @@ class HoursxuserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request )
     {
+
+        if($request->ajax()){
+
+            $usuario_id = $request->session()->get('user_id');
+
+            $datas = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->where('hoursxuser.user_id', $usuario_id)
+            ->orderBy('hoursxuser.id')
+            ->get();
+            return  DataTables()->of($datas)
+                ->addColumn('action', function($datas){
+                $button = '<button type="button" name="edit" id="'.$datas->id.'"
+                class = "edit btn btn-primary btn-sm">Editar</button>';
+
+                return $button;
+
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+                }
+
+
         return view('nomina.control_turnos.index');
+
+
     }
 
     /**
@@ -35,7 +63,22 @@ class HoursxuserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'date_turn'  => 'date|required',
+            'hours_initial_turn'  => 'required|time',
+            'hours_end_turn'  => 'required|time',
+            'working_type'  => 'required',
+            'observation'  => 'required|max:100'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        Hoursxuser::create($request->all());
+            return response()->json(['success' => 'ok']);
     }
 
     /**
