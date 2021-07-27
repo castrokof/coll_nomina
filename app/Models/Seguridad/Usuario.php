@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Admin\Rol;
 use App\Models\Nomina\Hoursxuser;
 use App\Models\Nomina\Liquidationxuser;
+use App\Models\Nomina\Position;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -39,9 +40,9 @@ class Usuario extends Authenticatable
     protected $hidden = ['password'];
 
 
-    // public function cargos(){
-    //     return $this->belongsTo(Position::class, 'id');
-    // }
+    public function cargos(){
+         return $this->belongsTo(Position::class, 'id');
+    }
 
 
     public function hours(){
