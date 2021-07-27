@@ -19,7 +19,7 @@ class CreateHoursxuserTable extends Migration
             $table->time('hour_initial_turn');
             $table->time('hour_end_turn');
             $table->char('working_type',1);
-            $table->decimal('hours', 1);
+            $table->decimal('hours',10,1);
             $table->text('observation')->nullable();
             $table->unsignedInteger('user_id');
             $table->foreign('user_id', 'fk_usuario_hoursxuser')->references('id')->on('usuario')->onDelete('restrict')->onUpdate('restrict');
