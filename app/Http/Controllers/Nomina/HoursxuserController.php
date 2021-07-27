@@ -14,7 +14,7 @@ class HoursxuserController extends Controller
      */
     public function index()
     {
-        //
+        return view('nomina.control_turnos.index');
     }
 
     /**

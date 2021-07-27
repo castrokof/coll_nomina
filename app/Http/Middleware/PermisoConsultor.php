@@ -17,8 +17,10 @@ class PermisoConsultor
     {
         if ((session()->get('rol_nombre') == ('empresa')) || (session()->get('rol_nombre') == ('empleado')) || (session()->get('rol_nombre') == ('administrador')))
         return $next($request);
-        return redirect('/tablero')->with('mensaje', 'No tiene permiso para entrar aqui');
+
+        abort(403, "No tienes autorización para ingresar.");
+        //return redirect('/tablero')->with('mensaje', 'No tiene permiso para entrar aqui');
     }
 
-   
+
 }

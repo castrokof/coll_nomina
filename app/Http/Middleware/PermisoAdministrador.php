@@ -17,12 +17,13 @@ class PermisoAdministrador
     {
 
         if ((session()->get('rol_nombre') == ('administrador')))
+
         return $next($request);
-        
+
         abort(403, "No tienes autorización para ingresar.");
         //return redirect('/tablero')->with('mensaje', 'No tiene permiso para entrar aqui');
 
     }
 
-   
+
 }

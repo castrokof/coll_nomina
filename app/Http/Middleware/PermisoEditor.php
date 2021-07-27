@@ -17,7 +17,8 @@ class PermisoEditor
     {
         if ((session()->get('rol_nombre') == ('administrador')) || (session()->get('rol_nombre') == ('empresa')))
         return $next($request);
-        
-        return redirect('/tablero')->with('mensaje', 'No tienes autorización para realizar esta acción.');
+
+        abort(403, "No tienes autorización para ingresar.");
+        //return redirect('/tablero')->with('mensaje', 'No tienes autorización para realizar esta acción.');
     }
 }
