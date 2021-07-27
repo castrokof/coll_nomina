@@ -5,13 +5,16 @@ namespace App\Models\Seguridad;
 use App\Models\Admin\Cita;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Admin\Rol;
+use App\Models\Nomina\Hoursxuser;
+use App\Models\Nomina\Liquidationxuser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class Usuario extends Authenticatable
 {
     protected $table = 'usuario';
-   
+
+
     protected $fillable = [
         'papellido',
         'sapellido',
@@ -23,37 +26,42 @@ class Usuario extends Authenticatable
         'password',
         'remenber_token',
         'email',
-        'cod_retus',
         'celular',
-        'telefono',
-        'profesion',
-        'especialidad',
         'observacion',
         'ips',
         'activo',
-        'delete_at'
+        'cargo_id'
     ];
 
 
 
 
     protected $hidden = ['password'];
-    
 
-    
+
+    // public function cargos(){
+    //     return $this->belongsTo(Position::class, 'id');
+    // }
+
+
+    public function hours(){
+        return $this->hasMany(Hoursxuser::class, 'user_id');
+    }
+
+    public function hoursliquidation(){
+        return $this->hasMany(Liquidationxuser::class, 'user_id');
+    }
+
+
+
+
+
+
     public function roles1(){
         return $this->belongsToMany(Rol::class,'usuario_rol');
     }
 
-    public function historiau(){
-        return $this->hasMany(Historia::class, 'usuario_id');
-    }
-
-    public function citau(){
-        return $this->hasMany(Cita::class, 'usuario_id');
-    }
-
-    public function setSession(){
+       public function setSession(){
 
     $roles1 = $this->roles1()->get()->toArray();
 
@@ -71,7 +79,7 @@ class Usuario extends Authenticatable
                 ]
                 );
         }
-        
+
     }
     public function setPasswordAttribute($value)
     {
@@ -89,6 +97,6 @@ class Usuario extends Authenticatable
     // public function citas(){
     //     return $this->belongsTo(Cita::class, 'usuario_id');
     // }
-    
+
 
 }
