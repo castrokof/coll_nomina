@@ -7,11 +7,11 @@
     </div>
     <div class="col-lg-3">
         <label for="name" class="control-label requerido">Hora Ingreso:</label>
-        <input name="hours_initial_turn" class="form-control" id="hours_initial_turn" value="" required>
+        <input name="hour_initial_turn" class="form-control" id="hour_initial_turn" value="" required>
     </div>
     <div class="col-lg-3">
         <label for="name" class="control-label requerido">Hora Salida:</label>
-        <input class="form-control" name="hours_end_turn" id="hours_end_turn" value="" required>
+        <input class="form-control" name="hour_end_turn" id="hour_end_turn" value="" required>
     </div>
     <div>
     <label for="working_type" class="col-xs-2 control-label requerido">Jornada</label>

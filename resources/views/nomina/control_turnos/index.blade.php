@@ -42,6 +42,7 @@
             <th>Fecha</th>
             <th>Hora Ingreso</th>
             <th>Hora Salida</th>
+            <th>Horas Laboradas</th>
             <th>Jornada</th>
             <th>Observación</th>
             <th>Fecha y hora de registro</th>
@@ -87,7 +88,7 @@
 <script>
  $(document).ready(function(){
 
-        $('#hours_initial_turn').timepicker(
+        $('#hour_initial_turn').timepicker(
           {
           footer: true,
           modal: true,
@@ -97,7 +98,7 @@
 
 
 
-        $('#hours_end_turn').timepicker(
+        $('#hour_end_turn').timepicker(
           {
           footer: true,
           modal: true,
@@ -122,11 +123,13 @@
            orderable: false},
           {data:'id'},
           {data:'date_turn'},
-          {data:'hours_initial_turn'},
-          {data:'hours_end_turn'},
+          {data:'hour_initial_turn'},
+          {data:'hour_end_turn'},
+          {data:'hours'},
           {data:'working_type'},
           {data:'observation'},
-          {data:'created_at'}
+          {data:'created_at',
+           name:'created_at'}
         ],
 
          //Botones----------------------------------------------------------------------

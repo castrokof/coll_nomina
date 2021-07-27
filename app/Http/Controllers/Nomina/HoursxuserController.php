@@ -20,7 +20,7 @@ class HoursxuserController extends Controller
 
         if($request->ajax()){
 
-            $usuario_id = $request->session()->get('user_id');
+            $usuario_id = $request->session()->get('usuario_id');
 
             $datas = DB::table('hoursxuser')
             ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
@@ -65,10 +65,10 @@ class HoursxuserController extends Controller
     {
         $rules = array(
             'date_turn'  => 'date|required',
-            'hours_initial_turn'  => 'required',
-            'hours_end_turn'  => 'required',
+            'hour_initial_turn'  => 'required',
+            'hour_end_turn'  => 'required',
             'working_type'  => 'required',
-            'observation'  => 'required|max:100'
+            'observation'  => 'max:100'
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -77,7 +77,26 @@ class HoursxuserController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
-        Hoursxuser::create($request->all());
+        if((strtotime($request->hour_end_turn) - strtotime($request->hour_initial_turn))/3600 < 0){
+
+            $hours = (strtotime($request->hour_end_turn) - strtotime($request->hour_initial_turn))/3600 *-1;
+
+        }else{
+
+            $hours = (strtotime($request->hour_end_turn) - strtotime($request->hour_initial_turn))/3600;
+
+            }
+        Hoursxuser::create([
+            'date_turn' =>  $request->date_turn,
+            'hour_initial_turn'  => $request->hour_initial_turn,
+            'hour_end_turn'  => $request->hour_end_turn,
+            'working_type'  => $request->working_type,
+            'observation'  => $request->observation,
+            'hours' => $hours,
+            'user_id'  => $request->user_id,
+
+            ]);
+
             return response()->json(['success' => 'ok']);
     }
 
