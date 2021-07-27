@@ -22,8 +22,8 @@ class UsuarioAdministradorSeeder extends Seeder
             'salary'=>3700000,
             'value_hour'=>12500,
             'value_hour_add'=>12500,
-            'value_hour_night_add'=>22500,
             'value_patient_attended'=>0,
+            'value_hour_night'=>22500
               ]);
 
 

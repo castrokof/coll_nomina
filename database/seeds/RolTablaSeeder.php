@@ -17,21 +17,21 @@ class RolTablaSeeder extends Seeder
         $rols=[
 
             'administrador',
-            'empresa',
-            'empleado'
+            'supervisor',
+            'contratista'
 
         ];
 
         foreach ($rols as $key => $value) {
             DB::table('rol')->insert([
-                
+
                 'nombre' => $value,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s')
-              
+
             ]);
         }
 
-        
+
 
     }
 }
