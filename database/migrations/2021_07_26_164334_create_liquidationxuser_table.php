@@ -18,7 +18,7 @@ class CreateLiquidationxuserTable extends Migration
             $table->date('date_pay');
             $table->decimal('hour_paid',10,1);
             $table->decimal('hour_add',10,1);
-            $table->integer('turn_night',2);
+            $table->Integer('turn_night')->nullable();
             $table->text('pay_period');
             $table->bigInteger('total_payment');
             $table->unsignedInteger('user_id');
