@@ -15,10 +15,11 @@ class Position extends Model
         'salary',
         'value_hour',
         'value_hour_add',
-        'value_patient_attended'
+        'value_patient_attended',
+        'value_hour_night'
         ];
 
-      
+
 
         public function positionid()
         {
