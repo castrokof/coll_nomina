@@ -16,8 +16,8 @@ class CreateLiquidationxuserTable extends Migration
         Schema::create('liquidationxuser', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date_pay');
-            $table->decimal('hour_paid',1);
-            $table->decimal('hour_add',1);
+            $table->decimal('hour_paid',10,1);
+            $table->decimal('hour_add',10,1);
             $table->integer('turn_night',2);
             $table->text('pay_period');
             $table->bigInteger('total_payment');
