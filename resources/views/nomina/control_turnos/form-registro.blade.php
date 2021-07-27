@@ -13,7 +13,15 @@
         <label for="name" class="control-label requerido">Hora Salida:</label>
         <input class="form-control" name="hours_end_turn" id="hours_end_turn" value="" required>
     </div>
-    <div class="col-lg-9">
+    <div>
+    <label for="jornada" class="col-xs-2 control-label requerido">Jornada</label>
+        <select name="jornada" id="jornada" class="form-control select2bs4" style="width: 100%;">
+            <option value="">---Seleccione el Jornada---</option>
+            <option value="0">Diurno</option>
+            <option value="1">Nocturno</option>
+        </select>
+    </div>
+        <div class="col-lg-9">
     <label for="observacion" class="col-xs-3 control-label ">Observación</label>
     <textarea name="observation" id="observation" class="form-control" rows="2" placeholder="Enter ..." value="{{old('observacion')}}"></textarea>
     </div>
