@@ -65,8 +65,8 @@ class HoursxuserController extends Controller
     {
         $rules = array(
             'date_turn'  => 'date|required',
-            'hours_initial_turn'  => 'required|time',
-            'hours_end_turn'  => 'required|time',
+            'hours_initial_turn'  => 'required',
+            'hours_end_turn'  => 'required',
             'working_type'  => 'required',
             'observation'  => 'required|max:100'
         );

@@ -26,6 +26,7 @@
 
         <div class="card-body">
             <form id="form-general" class="form-horizontal">
+            @csrf
             @include('nomina.control_turnos.form-registro')
             @include('nomina.control_turnos.boton-registrar-turno')
             </form>
@@ -53,7 +54,6 @@
       </tbody>
     </table>
   </div>
-</form>
   <!-- /.card-body -->
 </div>
 </div>
