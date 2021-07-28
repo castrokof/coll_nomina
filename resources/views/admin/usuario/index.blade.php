@@ -42,13 +42,11 @@
               <th>Documento</th>
               <th>Usuario</th>
               <th>Celular</th>
-              <th>Retus</th>
-              <th>Profesión</th>
-              <th>Especialidad</th>
               <th>Email</th>
               <th>Ips</th>
               <th>Activo</th>
               <th>Rol</th>
+              <th>Cargo</th>
               <th>Fecha de creacion</th>
 
         </tr>
@@ -170,15 +168,6 @@
           {data:'celular',
            name:'celular'
           },
-          {data:'cod_retus',
-           name:'cod_retus'
-          },
-          {data:'profesion',
-           name:'profesion'
-          },
-          {data:'especialidad',
-           name:'especialidad'
-          },
           {data:'email',
            name:'email'
           },
@@ -188,13 +177,15 @@
           {data:'activo',
            name:'activo'
           },
-
           {data:'nombre',
-           name:'nombre'
+           name:'rol'
+          },
+          {data:'cargo',
+           name:'cargo'
           },
           {data:'created_at',
            name:'created_at'
-          }
+          },
 
         ],
 

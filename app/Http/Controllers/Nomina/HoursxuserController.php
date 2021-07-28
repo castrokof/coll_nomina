@@ -30,7 +30,7 @@ class HoursxuserController extends Controller
             return  DataTables()->of($datas)
                 ->addColumn('action', function($datas){
                 $button = '<button type="button" name="edit" id="'.$datas->id.'"
-                class = "edit btn btn-primary btn-sm">Editar</button>';
+                class = "edit btn btn-primary btn-sm tooltipsC"  title="Editar registro" >Editar</button>';
 
                 return $button;
 
