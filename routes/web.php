@@ -98,6 +98,10 @@ Route::get('select_position', 'Nomina\PositionController@select')->name('select_
 
 });
 
+/* RUTAS DE LISTAR CARGOS */
+
+Route::get('position', 'Nomina\PositionController@index')->name('position');
+Route::post('position', 'Nomina\PositionController@store')->name('guardar_cargo')->middleware('superEditor');
 
 
 
