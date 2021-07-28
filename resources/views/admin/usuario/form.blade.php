@@ -61,7 +61,7 @@
         <input type="text" name="celular" id="celular" class="form-control" value="{{old('celular')}}" required >
     </div>
     <div class="col-lg-3">
-        <label for="position" class="col-xs-4 control-label requerido">Cargo</label>
+        <label for="cargo_id" class="col-xs-4 control-label requerido">Cargo</label>
         <select name="cargo_id" id="cargo_id" class="form-control select2bs4" style="width: 100%;" required>
         </select>
     </div>

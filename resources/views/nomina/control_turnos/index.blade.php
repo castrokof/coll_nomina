@@ -14,23 +14,23 @@
 
 
 @section('scripts')
-
+<script src="{{asset("assets/pages/scripts/admin/hours/crearuser.js")}}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
 <div class="row">
   <div class="col-lg-12">
-      <div class="card card-info">
-      <div class="card-header with-border p-2">
-        <h3 class="card-title">Registro de turnos</h3>
-
-        <div class="card-body">
-            <form id="form-general" class="form-horizontal">
+      <div class="card card-info" id="form-card">
+      <span id="form_result"></span>
+      <div class="card-header with-border">
+        <h3 class="card-title">Registrar Turnos</h3>
+        <form  id="form-general" class="form-horizontal" method="POST">
             @csrf
+        <div class="card-body">
             @include('nomina.control_turnos.form-registro')
             @include('nomina.control_turnos.boton-registrar-turno')
-            </form>
         </div>
+    </form>
       </div>
     <div class="card-body table-responsive p-2">
 
@@ -116,7 +116,7 @@
         processing: true,
         serverSide: true,
         ajax:{
-          url:"{{ route('hours')}}",
+          url:"{{route('hours')}}",
               },
         columns: [
           {data:'action',
@@ -128,8 +128,7 @@
           {data:'hours'},
           {data:'working_type'},
           {data:'observation'},
-          {data:'created_at',
-           name:'created_at'}
+          {data:'created_at'}
         ],
 
          //Botones----------------------------------------------------------------------
@@ -183,20 +182,23 @@
 $('#form-general').on('submit', function(event){
     event.preventDefault();
     var url = '';
+    var icon = '';
 
-  if($('#action').val() == 'Add')
+    if($('#action').val() == 'Add')
   {
     url = "{{route('guardar_turno')}}";
     method = 'post';
     text = "Estás por registrar un turno";
+    icon = "warning";
   }
 
   if($('#action').val() == 'Edit')
   {
     var updateid = $('#hidden_id').val();
-    url = "/turno/"+updateid;
+    url = "/hoursxuser/"+updateid;
     method = 'put';
     text = "Estás por actualizar un turno";
+    icon = "danger";
   }
     Swal.fire({
      title: "¿Estás seguro?",
@@ -215,10 +217,10 @@ $('#form-general').on('submit', function(event){
            success:function(data){
               var html = '';
                     if(data.errors){
-
-                    html = '<div class="alert alert-danger alert-dismissible" data-auto-dismiss="3000">'
-                      '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
-                        '<h5><i class="icon fas fa-check"></i> Mensaje Ventas</h5>';
+                    html =
+                    '<div class="alert alert-danger alert-dismissible" data-auto-dismiss="3000">'+
+                      '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+                        '<h5><i class="icon fas fa-check"></i> Mensaje coll nomina</h5>';
 
                     for (var count = 0; count < data.errors.length; count++)
                     {
@@ -226,7 +228,7 @@ $('#form-general').on('submit', function(event){
                     }
                     html += '</div>';
                     }
-                    if(data.success == 'ok') {
+                    else if(data.success == 'ok') {
                       $('#form-general')[0].reset();
                       $('#registro').DataTable().ajax.reload();
                       Swal.fire(
@@ -263,8 +265,50 @@ $('#form-general').on('submit', function(event){
 
   });
 
+//Edición de turnos
 
-        });
+$(document).on('click', '.edit', function(){
+    var idh = $(this).attr('id');
+
+  $.ajax({
+    url:"/hoursxuser/"+idh+"/editar",
+    dataType:"json",
+    success:function(data){
+      $('#date_turn').val(data.result.date_turn);
+      $('#hour_initial_turn').val(data.result.hour_initial_turn);
+      $('#hour_end_turn').val(data.result.hour_end_turn);
+      $('#working_type').val(data.result.working_type);;
+      $('#observation').val(data.result.observation);
+      $('.card-title').text('Editar Turno');
+      $('#form-card').removeClass('card card-info');
+      $('#form-card').addClass('card card-warning');
+      $('#action_button').val('Editar').removeClass('btn-sucess')
+      $('#action_button').addClass('btn-danger')
+      $('#cancelar_button').css("display", "block")
+      $('#action').val('Edit');
+      $('#hidden_id').val(idh);
+
+    }
+
+
+  })
+
+
+});
+
+$('#form-general').on('reset', function(event){
+      $('.card-title').text('Registrar Turnos');
+      $('#form-card').removeClass('card card-warning');
+      $('#form-card').addClass('card card-info');
+      $('#action_button').val('Guardar').removeClass('btn-danger')
+      $('#action_button').addClass('btn-success')
+      $('#cancelar_button').css("display", "none")
+      $('#action').val('Add');
+
+
+});
+
+});
 
 
 

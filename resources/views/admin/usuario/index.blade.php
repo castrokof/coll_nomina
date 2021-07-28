@@ -100,7 +100,61 @@
     </div>
   </div>
 </div>
+<div class="modal fade" tabindex="-1" id ="modal-xlpass" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="row">
+        <div class="col-lg-12">
 
+           <div class="card card-warning">
+            <div class="card-header">
+              <h3 class="card-title">Editar Contraseña</h3>
+              <div class="card-tools pull-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <form action="" id="form-general-pass" class="form-horizontal" method="POST">
+              @csrf @method('put')
+              <div class="card-body">
+                <div class="form-group row col-lg-12">
+                    <div class="col-lg-6">
+                        <label for="password" class="col-xs-12 control-label requerido">Usuario</label>
+                        <input   type="Usuario" name="usuario_id" id="usuario_id" class="form-control" value=""  minlength="6" required >
+                    </div>
+
+                </div>
+                <div class="form-group row col-lg-12">
+                    <div class="col-lg-6">
+                    <label for="password" class="col-xs-12 control-label requerido">Password</label>
+                    <input   type="password" name="password1" id="password1" class="form-control" value=""  minlength="6" required >
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="remenber_token" class="col-xs-12 control-label requerido">repita el password</label>
+                        <input   type="password" name="remenber_token1" id="remenber_token1" class="form-control" value=""  minlength="6" required >
+                    </div>
+
+
+                </div>
+
+              </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-6">
+                                    <button type="button" id="actualizarpass" name="actualizar" class="btn btn-success">Actualizar</button>
+                            </div>
+                             </div>
+                            <!-- /.card-footer -->
+                </form>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
 
 @endsection
 
@@ -266,6 +320,7 @@
   $('#action').val('Add');
   $('#form_result').html('');
   $('#modal-u').modal('show');
+
  });
 
  $('#form-general').on('submit', function(event){
@@ -431,6 +486,79 @@ if (jqXHR.status === 403) {
 
  });
 
+
+
+
+$(document).on('click', '.epassword', function(){
+    var id = $(this).attr('id');
+     $('#usuario_id').val(id);
+     $('#modal-xlpass').modal('show');
+
+});
+
+    $('#actualizarpass').click(function(){
+    event.preventDefault();
+
+       var password = $('#password1').val();
+       var remenber_token = $('#remenber_token1').val();
+
+       if(password != remenber_token){
+
+        $('button[type="button"]').attr('enable','disabled');
+
+       }else if(password == '' || remenber_token == ''){
+
+        Swal.fire({
+              title: 'Los campos no pueden estar vacios',
+              icon: 'warning',
+              showCloseButton: true,
+              confirmButtonText: 'Aceptar',
+                })
+
+
+       }else{
+
+        Swal.fire({
+          title: "¿Estás seguro?",
+          text: "Estás por actualizar el password",
+          icon: "success",
+          showCancelButton: true,
+          showCloseButton: true,
+          confirmButtonText: 'Aceptar',
+          }).then((result)=>{
+         if(result.value){
+
+            $.ajax({
+                  url:"actualizar_password1/"+id+"/editar",
+                  method:'put',
+                  data:{password:password, remenber_token:remenber_token,
+
+                    "_token": $("meta[name='csrf-token']").attr("content")
+
+                  },
+                  success:function(respuesta)
+                  {
+                    if(respuesta.mensaje ='ok') {
+                      $('#modal-xl').modal('hide');
+                      $('#password1').val('');
+                      $('#remenber_token1').val('');
+                      Manteliviano.notificaciones('Password actualizado correctamente', 'Sistema Catastro de usuario','success');
+
+                  }else if(respuesta.mensaje ='ng'){
+
+
+                    Manteliviano.notificaciones('Las contraseñas deben coincidir', 'Sistema Catastro de usuario','error');
+                  }
+                  }
+                   });
+
+                }
+
+
+            });
+
+         }
+      });
 
 
 });
