@@ -4,8 +4,8 @@
     <a href="#" class="brand-link logo-switch">
     <img src="{{asset("assets/img/fidem_icon _aside.jpeg")}}" alt="fidem_icon _aside" class="brand-image-xl logo-xs" style="left: 2px">
     <img src="{{asset("assets/img/fidem_logo_aside.jpeg")}}" alt="fidem_logo_aside" class="brand-image-l logo-xl" style="left: 12px">
-    </a>  
-    
+    </a>
+
     <!-- Sidebar -->
     <div class="sidebar sidebar-light-info sidebar-collapse">
       {{-- <!-- Sidebar user (optional) -->
@@ -27,17 +27,17 @@
            </div>
           <div class="info">
             <i class="nav-item has-treeview">
-            <H5 alignt="center"> Clinica del dolor</H5>
+            <H5 alignt="center">Control Turnos</H5>
             </i>
          </div>
           </div>
-          
+
            @foreach ($menusComposer as $key => $item)
                @if($item["menu_id"] != 0)
                  @break
-               @endif 
-               @include("theme.$theme.menu-item", ["item" => $item]) 
-           @endforeach  
+               @endif
+               @include("theme.$theme.menu-item", ["item" => $item])
+           @endforeach
           </ul>
       </nav>
       <!-- /.sidebar-menu -->
