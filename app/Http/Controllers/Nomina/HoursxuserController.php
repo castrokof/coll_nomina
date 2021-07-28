@@ -79,6 +79,8 @@ class HoursxuserController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
+
+
         if((strtotime($request->hour_end_turn) - strtotime($request->hour_initial_turn))/3600 < 0){
 
             $hours = (strtotime($request->hour_end_turn) - strtotime($request->hour_initial_turn))/3600 *-1;

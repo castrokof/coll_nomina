@@ -184,6 +184,17 @@ $('#form-general').on('submit', function(event){
     var url = '';
     var icon = '';
 
+if( $('#date_turn').val() == '' ||  $('#hour_initial_turn').val() == '' ||  $('#hour_end_turn').val() == '' ||  $('#working_type').val() == ''){
+
+    Swal.fire({
+                  icon: 'warning',
+                  title: 'Debes rellenar los campos obligatorios',
+                  showConfirmButton: true,
+                  timer: 1500
+            });
+
+}else{
+
     if($('#action').val() == 'Add')
   {
     url = "{{route('guardar_turno')}}";
@@ -262,7 +273,7 @@ $('#form-general').on('submit', function(event){
           }
         });
 
-
+    }
   });
 
 //Edición de turnos

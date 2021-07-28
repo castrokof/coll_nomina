@@ -80,7 +80,7 @@
                 @csrf
                 <div class="card-body">
                                   @include('admin.usuario.form')
-                              </div>
+                </div>
                               <!-- /.card-body -->
                               <div class="card-footer">
 

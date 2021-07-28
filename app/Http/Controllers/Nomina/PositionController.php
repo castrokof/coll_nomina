@@ -20,11 +20,8 @@ class PositionController extends Controller
 
             if($request->ajax()){
 
-                $usuario_id = $request->session()->get('usuario_id');
 
-                $datas = Position::
-                orderBy('id')
-                ->get();
+                $datas = Position::orderBy('id')->get();
                 return  DataTables()->of($datas)
                     ->addColumn('action', function($datas){
                     $button = '<button type="button" name="edit" id="'.$datas->id.'"
@@ -45,17 +42,6 @@ class PositionController extends Controller
     }
 
 
-    public function select()
-    {
-        if(request()->ajax()){
-
-            $positions = Position::orderBy('id')->get();
-
-        return response()->json($positions);
-
-        }
-
-    }
 
     /**
      * Show the form for creating a new resource.
