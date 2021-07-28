@@ -17,8 +17,8 @@
     <label for="working_type" class="col-xs-2 control-label requerido">Jornada</label>
         <select name="working_type" id="working_type" class="form-control select2bs4" style="width: 100%;">
             <option value="">---Seleccione el Jornada---</option>
-            <option value="0">Diurno</option>
-            <option value="1">Nocturno</option>
+            <option value="Diurno">Diurno</option>
+            <option value="Nocturno">Nocturno</option>
         </select>
     </div>
         <div class="col-lg-9">
