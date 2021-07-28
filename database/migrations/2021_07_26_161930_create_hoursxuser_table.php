@@ -18,7 +18,7 @@ class CreateHoursxuserTable extends Migration
             $table->date('date_turn');
             $table->time('hour_initial_turn');
             $table->time('hour_end_turn');
-            $table->string('working_type');
+            $table->string('working_type', 20);
             $table->decimal('hours',10,1);
             $table->text('observation')->nullable();
             $table->unsignedInteger('user_id');

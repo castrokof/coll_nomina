@@ -7,6 +7,6 @@
         <label for="remenber_token" class="col-xs-4 control-label requerido">repita el password</label>
         <input   type="password" name="remenber_token1" id="remenber_token1" class="form-control" value=""  minlength="6" required >
     </div>
-    
+
 
 </div>

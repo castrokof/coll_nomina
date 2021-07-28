@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Nomina;
 
 use App\Http\Controllers\Controller;
+use App\Models\Nomina\Position;
 use Illuminate\Http\Request;
 
 class PositionController extends Controller
@@ -15,6 +16,19 @@ class PositionController extends Controller
     public function index()
     {
         //
+    }
+
+
+    public function select()
+    {
+        if(request()->ajax()){
+
+            $positions = Position::orderBy('id')->get();
+
+        return response()->json($positions);
+
+        }
+
     }
 
     /**

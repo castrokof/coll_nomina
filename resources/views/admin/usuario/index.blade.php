@@ -122,6 +122,23 @@
 <script>
 
  $(document).ready(function(){
+
+// funcion para cargar el select de position
+    $.get('select_position',
+    function(positions)
+    {
+        $('#cargo_id').empty();
+        $('#cargo_id').append("<option value=''>---seleccione via---</option>")
+        $.each(positions, function(position1, value){
+        $('#cargo_id').append("<option value='" + value.id + "'>" + value.position +"</option>")
+        });
+
+  });
+
+
+
+
+
         //initiate dataTables plugin
 
         var myTable =
@@ -240,10 +257,10 @@
 
   $('#create_usuario').click(function(){
   $('#form-general')[0].reset();
-  $('#usuario').prop('readonly', false).prop('required', true);
-  $('#email').prop('readonly', false).prop('required', true);
-  $('#password').prop('readonly', false).prop('required', true);
-  $('#remenber_token').prop('readonly', false).prop('required', true);
+  $('#usuario').prop('disabled', false).prop('required', true);
+  $('#email').prop('disabled', false).prop('required', true);
+  $('#password').prop('disabled', false).prop('required', true);
+  $('#remenber_token').prop('disabled', false).prop('required', true);
   $('.card-title').text('Agregar Nuevo usuario');
   $('#action_button').val('Add');
   $('#action').val('Add');
@@ -333,11 +350,10 @@
                     errores.push(items.activo+'<br>');
                     errores.push(items.documento+'<br>');
                     errores.push(items.email+'<br>');
-                    errores.push(items.especialidad+'<br>');
                     errores.push(items.papellido+'<br>');
                     errores.push(items.pnombre+'<br>');
                     errores.push(items.password+'<br>');
-                    errores.push(items.profesion+'<br>');
+                    errores.push(items.position+'<br>');
                     errores.push(items.tipo_documento+'<br>');
                     errores.push(items.usuario+'<br>');
 
@@ -386,20 +402,17 @@ $(document).on('click', '.edit', function(){
       $('#sapellido').val(data.result.sapellido);
       $('#tipo_documento').val(data.result.tipo_documento);
       $('#documento').val(data.result.documento);
-      $('#usuario').val(data.result.usuario).prop('readonly', true).prop('required', false);
-      $('#email').val(data.result.email).prop('readonly', true).prop('required', false);
-      $('#cod_retus').val(data.result.cod_retus);
+      $('#usuario').val(data.result.usuario).prop('disabled', true).prop('required', false);
+      $('#email').val(data.result.email).prop('required', false);
       $('#celular').val(data.result.celular);
-      $('#telefono').val(data.result.telefono);
-      $('#profesion').val(data.result.profesion);
-      $('#especialidad').val(data.result.especialidad);
       $('#ips').val(data.result.ips);
       $('#rol_id').val(data.result.rol_id);
       $('#activo').val(data.result.activo);
+      $('#cargo_id').val(data.result.cargo_id);
       $('#observacion').val(data.result.observacion);
-      $('#password').val(data.result.password).prop('readonly', true).prop('required', false);
-      $('#remenber_token').val(data.result.remenber_token).prop('readonly', true).prop('required', false);
-      $('#hidden_id').val(id);
+      $('#password').val(data.result.password).prop('disabled', true).prop('required', false);
+      $('#remenber_token').val(data.result.remenber_token).prop('disabled', true).prop('required', false);
+      $('#hidden_id').val(id)
       $('.card-title').text('Editar usuario');
       $('#action_button').val('Edit');
       $('#action').val('Edit');
