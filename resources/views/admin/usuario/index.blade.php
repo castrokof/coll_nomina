@@ -535,6 +535,8 @@ $(document).on('click', '.epassword', function(){
 
 });
 
+
+//Actualizacion de password desde listado de usuarios
     $('#actualizarpass').click(function(){
     event.preventDefault();
 
