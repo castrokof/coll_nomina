@@ -40,7 +40,7 @@ class UsuarioController extends Controller
             return  DataTables()->of($datas)
             ->addColumn('action', function($datas){
             $button = '<button type="button" name="edit" id="'.$datas->id.'"
-            class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="far fa-edit"></i></button>';
+            class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="fas fa-user-edit"></i></button>';
             $button .='&nbsp;<button type="button" name="editpass" id="'.$datas->id.'"
             class = "epassword btn-float  bg-gradient-warning btn-sm tooltipsC" title="Editar password"><i class="fas fa-key"></i></button>';
 
@@ -56,6 +56,7 @@ class UsuarioController extends Controller
             ->Join('usuario_rol', 'usuario.id', '=', 'usuario_rol.usuario_id')
             ->Join('position', 'usuario.cargo_id', '=', 'position.id')
             ->Join('rol', 'usuario_rol.rol_id', '=', 'rol.id')
+            ->where('usuario.id',  $usuario_id )
             ->select('usuario.id as id', 'usuario.pnombre as pnombre', 'usuario.snombre as snombre', 'usuario.papellido as papellido','usuario.sapellido as sapellido', 'rol.nombre as nombre',
             'usuario.tipo_documento as tipo_documento', 'usuario.documento as documento', 'usuario.usuario as usuario','position.position as cargo', 'usuario.celular as celular',
             'usuario.email as email', 'usuario.ips as ips','usuario.activo as activo', 'usuario.created_at as created_at')
@@ -65,7 +66,7 @@ class UsuarioController extends Controller
         return  DataTables()->of($datas)
         ->addColumn('action', function($datas){
         $button = '<button type="button" name="edit" id="'.$datas->id.'"
-        class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="far fa-edit"></i></button>';
+        class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="fas fa-user-edit"></i></button>';
         $button .='&nbsp;<button type="button" name="editpass" id="'.$datas->id.'"
         class = "epassword btn-float  bg-gradient-warning btn-sm tooltipsC" title="Editar password"><i class="fas fa-key"></i></button>';
         return $button;

@@ -90,7 +90,7 @@ Route::put('password1/{id}', 'UsuarioController@actualizarpassword1')->name('act
 
 /* RUTAS DE HORAS X USUARIO */
 
-Route::get('hoursxuser', 'Nomina\HoursxuserController@index')->name('hours');
+Route::get('hoursxuser', 'Nomina\HoursxuserController@index')->name('hours')->middleware('superEditor');
 Route::post('hoursxuser', 'Nomina\HoursxuserController@store')->name('guardar_turno')->middleware('superEditor');
 Route::get('hoursxuser/{id}/editar', 'Nomina\HoursxuserController@edit')->name('editar_turno')->middleware('superEditor');
 Route::put('hoursxuser/{id}', 'Nomina\HoursxuserController@update')->name('actualizar_turno')->middleware('superEditor');

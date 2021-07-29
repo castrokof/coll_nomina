@@ -15,12 +15,12 @@ class CreateHoursxuserTable extends Migration
     {
         Schema::create('hoursxuser', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date_turn');
-            $table->time('hour_initial_turn');
-            $table->time('hour_end_turn');
+            $table->dateTime('date_hour_initial_turn');
+            $table->dateTime('date_hour_end_turn');
             $table->string('working_type', 20);
             $table->decimal('hours',10,1);
             $table->text('observation')->nullable();
+            $table->string('supervisor', 50)->nullable();
             $table->unsignedInteger('user_id');
             $table->foreign('user_id', 'fk_usuario_hoursxuser')->references('id')->on('usuario')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();

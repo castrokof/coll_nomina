@@ -1,19 +1,15 @@
 
 <div class="modal-body main-body">
     <div class="form-group row">
-    <div class="col-lg-3">
-        <label for="name" class="control-label requerido">Fecha Reporte:</label>
-        <input type="date" name="date_turn" class="form-control" id="date_turn" value="" required>
+    <div class="col-lg-4">
+        <label for="name" class="control-label requerido">Fecha y Hora Ingreso:</label>
+        <input name="date_hour_initial_turn" class="form-control" id="date_hour_initial_turn" value="" required>
     </div>
-    <div class="col-lg-3">
-        <label for="name" class="control-label requerido">Hora Ingreso:</label>
-        <input name="hour_initial_turn" class="form-control" id="hour_initial_turn" value="" required>
+    <div class="col-lg-4">
+        <label for="name" class="control-label requerido">Fecha y Hora Salida:</label>
+        <input class="form-control" name="date_hour_end_turn" id="date_hour_end_turn" value="" required>
     </div>
-    <div class="col-lg-3">
-        <label for="name" class="control-label requerido">Hora Salida:</label>
-        <input class="form-control" name="hour_end_turn" id="hour_end_turn" value="" required>
-    </div>
-    <div class="col-lg-3">
+    <div class="col-lg-4">
     <label for="working_type" class="col-xs-2 control-label requerido">Jornada</label>
         <select name="working_type" id="working_type" class="form-control select2bs4" style="width: 100%;" required>
             <option value="">---Seleccione el Jornada---</option>

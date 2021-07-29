@@ -39,9 +39,8 @@
       <tr>
             <th>action</th>
             <th>ID</th>
-            <th>Fecha</th>
-            <th>Hora Ingreso</th>
-            <th>Hora Salida</th>
+            <th>Fecha y Hora Ingreso</th>
+            <th>Fecha y Hora Salida</th>
             <th>Horas Laboradas</th>
             <th>Jornada</th>
             <th>Observación</th>
@@ -88,21 +87,22 @@
 <script>
  $(document).ready(function(){
 
-        $('#hour_initial_turn').timepicker(
+        $('#date_hour_initial_turn').datetimepicker(
           {
           footer: true,
           modal: true,
-          format: 'HH:MM'
+
+          format: 'yyyy-mm-dd HH:MM'
 
           });
 
 
 
-        $('#hour_end_turn').timepicker(
+        $('#date_hour_end_turn').datetimepicker(
           {
           footer: true,
           modal: true,
-          format: 'HH:MM'
+          format: 'yyyy-mm-dd HH:MM'
 
           });
 
@@ -122,9 +122,8 @@
           {data:'action',
            orderable: false},
           {data:'id'},
-          {data:'date_turn'},
-          {data:'hour_initial_turn'},
-          {data:'hour_end_turn'},
+          {data:'date_hour_initial_turn'},
+          {data:'date_hour_end_turn'},
           {data:'hours'},
           {data:'working_type'},
           {data:'observation'},
@@ -184,7 +183,7 @@ $('#form-general').on('submit', function(event){
     var url = '';
     var icon = '';
 
-if( $('#date_turn').val() == '' ||  $('#hour_initial_turn').val() == '' ||  $('#hour_end_turn').val() == '' ||  $('#working_type').val() == ''){
+if($('#date_hour_initial_turn').val() == '' ||  $('#date_hour_end_turn').val() == '' ||  $('#working_type').val() == ''){
 
     Swal.fire({
                   icon: 'warning',
@@ -192,6 +191,15 @@ if( $('#date_turn').val() == '' ||  $('#hour_initial_turn').val() == '' ||  $('#
                   showConfirmButton: true,
                   timer: 1500
             });
+
+ }else if($('#date_hour_initial_turn').val() > $('#date_hour_end_turn').val()){
+
+Swal.fire({
+              icon: 'error',
+              title: 'La fecha y hora inicial debe ser menor que la fecha y hora final',
+              showConfirmButton: true,
+              timer: 1500
+        });
 
 }else{
 
@@ -264,6 +272,17 @@ if( $('#date_turn').val() == '' ||  $('#hour_initial_turn').val() == '' ||  $('#
                       )
 
 
+                    } else if(data.success == 'repeat') {
+                     $('#registro').DataTable().ajax.reload();
+                     Swal.fire(
+                        {
+                          icon: 'error',
+                          title: 'No puedes registrar 2 turnos con la misma fecha',
+                          showConfirmButton: true,
+                          timer: 1500
+                        }
+                      )
+
                     }
                     $('#form_result').html(html)
               }
@@ -285,9 +304,8 @@ $(document).on('click', '.edit', function(){
     url:"/hoursxuser/"+idh+"/editar",
     dataType:"json",
     success:function(data){
-      $('#date_turn').val(data.result.date_turn);
-      $('#hour_initial_turn').val(data.result.hour_initial_turn);
-      $('#hour_end_turn').val(data.result.hour_end_turn);
+      $('#date_hour_initial_turn').val(data.result.date_hour_initial_turn);
+      $('#date_hour_end_turn').val(data.result.date_hour_end_turn);
       $('#working_type').val(data.result.working_type);;
       $('#observation').val(data.result.observation);
       $('.card-title').text('Editar Turno');

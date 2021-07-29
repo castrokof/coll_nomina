@@ -12,8 +12,8 @@ class Hoursxuser extends Model
 
     protected $fillable = [
         'date_turn',
-        'hour_initial_turn',
-        'hour_end_turn',
+        'date_hour_initial_turn',
+        'date_hour_end_turn',
         'working_type',
         'hours',
         'observation',

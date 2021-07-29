@@ -301,11 +301,42 @@
 
                       }
                    ],
+
+                   "columnDefs": [
+                                    // {
+                                    // "render": function ( data, type, row ) {
+                                    //         return data +' - '+row["papellido"]+' '+' - '+row["sapellido"];
+                                    //     },
+                                    //     "targets":[2]
+                                    // },
+                                    // { "visible": false,  "targets": [4] },
+                                    // { "visible": false,  "targets": [5] },
+                                    {
+
+                                    "render": function ( data, type, row ) {
+                                        if (row["activo"] == 1) {
+                                           return data +' - Activo';
+                                             }else{
+
+                                            return data +' - Inactivo';
+
+                                        }
+
+                                        },
+                                        "targets":[12]
+                                    }
+
+
+
+
+                                    ],
+
                  "createdRow": function(row, data, dataIndex) {
-                 if (data["activo"] == "1") {
-                  $(row).addClass("success");
+                 if (data["activo"] == 1) {
+                    $($(row).find("td")[12]).addClass("btn btn-sm btn-success rounded-lg");
                   }else{
-                  $(row).addClass("warning");}
+                    $($(row).find("td")[12]).addClass("btn btn-sm btn-warning rounded-lg");
+                }
 
                  }
 
