@@ -42,6 +42,15 @@ class PositionController extends Controller
     }
 
 
+    public function select()
+    {
+        if(request()->ajax())
+        {
+          $positions=Position::orderBy('id')->get();
+            return response()->json($positions);
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.

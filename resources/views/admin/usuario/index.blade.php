@@ -301,6 +301,14 @@
 
                       }
                    ],
+                 "createdRow": function(row, data, dataIndex) {
+                 if (data["activo"] == "1") {
+                  $(row).addClass("success");
+                  }else{
+                  $(row).addClass("warning");}
+
+                 }
+
 
 
 
