@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Nomina\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PositionController extends Controller
 {
@@ -70,7 +71,32 @@ class PositionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+            $rules = array(
+                'position'  => 'required',
+                'salary'  => 'required',
+
+            );
+
+            $error = Validator::make($request->all(), $rules);
+
+            if($error->fails()) {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+
+                Position::create([
+                'position'  => $request->position,
+                'salary'  => $request->salary,
+                'value_hour'  => $request->value_hour,
+                'value_hour_add'  => $request->value_hour_add,
+                'value_patient_attended' => $request->value_hour_add,
+                'value_hour_night'  => $request->value_hour_night
+
+                ]);
+
+                return response()->json(['success' => 'ok']);
+
+            //
     }
 
     /**
