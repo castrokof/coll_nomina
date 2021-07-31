@@ -10,6 +10,90 @@
 <link href="{{asset("assets/css/select2-bootstrap.min.css")}}" rel="stylesheet" type="text/css"/>
 
 
+
+<style>
+
+
+
+
+/* // Colores para las tarjetas widget */
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1), 0 0.9375rem 1.40625rem rgba(90,97,105,0.1), 0 0.25rem 0.53125rem rgba(90,97,105,0.12), 0 0.125rem 0.1875rem rgba(90,97,105,0.1);
+}
+
+.l-bg-blue-dark-card {
+    background-color: linear-gradient(to right, #373b44, #4286f4) !important;
+    color: #fff;
+}
+
+
+
+.l-bg-cherry {
+    background: linear-gradient(to right, #493240, #f09) !important;
+    color: #fff;
+}
+
+.l-bg-blue-dark {
+    background: linear-gradient(to right, #373b44, #4286f4) !important;
+    color: #fff;
+}
+
+.l-bg-green-dark {
+    background: linear-gradient(to right, #0a504a, #38ef7d) !important;
+    color: #fff;
+}
+
+.l-bg-orange-dark {
+    background: linear-gradient(to right, #a86008, #ffba56) !important;
+    color: #fff;
+}
+
+.l-bg-red-dark {
+    background: linear-gradient(to right, #a80d08, #ff6756) !important;
+    color: #fff;
+}
+
+.card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
+    font-size: 110px;
+}
+
+.card .card-statistic-3 .card-icon {
+    text-align: center;
+    line-height: 50px;
+    margin-left: 15px;
+    color: #000;
+    position: absolute;
+    right: -5px;
+    top: 20px;
+    opacity: 0.1;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+
+.l-bg-green {
+    background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+    color: #fff;
+}
+
+.l-bg-orange {
+    background: linear-gradient(to right, #f9900e, #ffba56) !important;
+    color: #fff;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+</style>
+
 @endsection
 
 
@@ -58,21 +142,24 @@
 <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-3 col-6" id="detalle">
+          <div class="col-lg-2 col-6" id="detalle">
           </div>
-          <div class="col-lg-3 col-6" id="detalle1">
+          <div class="col-lg-2 col-6" id="detalle3">
           </div>
-          <div class="col-lg-3 col-6" id="detalle2">
+          <div class="col-lg-2 col-6" id="detalle4">
           </div>
-          <div class="col-lg-3 col-6" id="detalle3">
+          <div class="col-lg-2 col-6" id="detalle1">
           </div>
-
+          <div class="col-lg-2 col-6" id="detalle5">
+          </div>
+          <div class="col-lg-2 col-6" id="detalle2">
+          </div>
         </div>
       </div>
 
       <div class="row">
         <div class="col-12">
-          <div class="card card-primary card-tabs">
+          <div class="card shadow-lg p-3 mb-5 card-info card-tabs">
             <div class="card-header p-0 pt-1">
               <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                 <li class="nav-item">
@@ -119,28 +206,34 @@
 <script>
   $(document).ready(function() {
 
+    $("#selectall").on('click', function() {
+    $(".case").prop("checked", this.checked);
+    });
+
+
+
 // funcion para cargar el select de position
-$.get('select_user',
-    function(usuarios)
-    {
-        $('#usuario').empty();
-        $('#usuario').append("<option value=''>---seleccione usuario---</option>")
-        $.each(usuarios, function(usuarios1, value){
-        $('#usuario').append("<option value='" + value.id + "'>" + value.pnombre +' '+ value.papellido +' '+ value.sapellido +"</option>")
-        });
+    $.get('select_user',
+        function(usuarios)
+        {
+            $('#usuario').empty();
+            $('#usuario').append("<option value=''>---seleccione usuario---</option>")
+            $.each(usuarios, function(usuarios1, value){
+            $('#usuario').append("<option value='" + value.id + "'>" + value.pnombre +' '+ value.papellido +' '+ value.sapellido +"</option>")
+            });
 
-  });
+    });
 
-//--------- select2 -------//
-$("#usuario").select2({
-    theme: "bootstrap"
-               });
-
-
+    //--------- select2 -------//
+    $("#usuario").select2({
+        theme: "bootstrap"
+                });
 
 
-fill_datatable_tabla();
-fill_datatable1_resumen();
+
+
+    fill_datatable_tabla();
+    fill_datatable1_resumen();
 
 
  function fill_datatable_tabla(fechaini = '', fechafin = '', usuario = '' )
@@ -253,6 +346,8 @@ fill_datatable1_resumen();
 
 $('#buscar').click(function(){
 
+    $("#selectall").prop("checked", false);
+
        var fechaini = $('#fechaini').val();
        var fechafin = $('#fechafin').val();
        var usuario = $('#usuario').val();
@@ -301,59 +396,93 @@ function fill_datatable1_resumen(fechaini = '', fechafin = '', usuario = '' )
  $("#detalle1").empty();
  $("#detalle2").empty();
  $("#detalle3").empty();
+ $("#detalle4").empty();
+ $("#detalle5").empty();
   $.ajax({
   url:"{{route('hoursinfoc')}}",
   data:{fechaini:fechaini, fechafin:fechafin, usuario:usuario },
   dataType:"json",
   success:function(data){
+
+
+    //Widget Total Horas
     $.each(data.result, function(i, item){
 
     $("#detalle").append(
-        '<div class="small-box bg-info"><div class="inner">'+
+        '<div class="small-box shadow-lg  l-bg-cherry"><div class="inner">'+
         '<h5>TOTAL HORAS</h5>'+
         '<p><h5><i class="far fa-clock"></i> '+item.horas+'</h5></p>'+
         '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
      );
 
   })
-  $.each(data.result1, function(i, item1){
+
+
+  //Widget Turnos Nocturnos
+ $.each(data.result1, function(i, item1){
 
     $("#detalle1").append(
 
-          '<div class="small-box bg-light"><div class="inner">'+
-          '<h5>TURNOS NOCTURNOS<sup style="font-size: 20px"></sup></h5>'+
-          '<p><h5><i class="fas fa-calendar-day"></i> '+item1.turnos+'</h5></p>'+
-          '</div><div class="icon"><i class="fas fa-cloud-moon"></i></div></div>'
-     );
+        '<div class="small-box shadow-lg l-bg-blue-dark"><div class="inner">'+
+        '<h5>TURNOS NOCTURNOS<sup style="font-size: 20px"></sup></h5>'+
+        '<p><h5><i class="fas fa-calendar-day"></i> '+item1.turnos+'</h5></p>'+
+        '</div><div class="icon"><i class="fas fa-cloud-moon"></i></div></div>'
+    );
 
     })
     $("#detalle2").append(
 
-            '<div class="small-box bg-warning"><div class="inner">'+
+            '<div class="small-box shadow-lg l-bg-red-dark"><div class="inner">'+
             '<h5>TOTAL A PAGAR</h5>'+
             '<p><h5><i class="fas fa-dollar-sign"></i> '+data.result2+'</h5></p>'+
             '</div><div class="icon"><i class="fas fa-money-bill-alt"></i></div></div>'
 
          );
 
+     //Widget Horas Base
 
-//     $.each(data.result3, function(i, item3){
 
-//       $("#detalle3").append(
+        $("#detalle3").append(
 
-//             '<div class="small-box bg-danger"><div class="inner">'+
-//             '<h5>TOTAL SALARIO</h5>'+
-//             '<p><h5><i class="fas fa-dollar-sign"></i>'+item3.gastos+'</h5></p>'+
-//             '</div><div class="icon"><i class="fas fa-route"></i></div></div>'
+            '<div class="small-box shadow-lg l-bg-green-dark"><div class="inner">'+
+            '<h5>HORAS BASE<sup style="font-size: 20px"></sup></h5>'+
+            '<p><h5><i class="far fa-clock"></i> '+data.result3+'</h5></p>'+
+            '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
+        );
 
-//          );
 
-//       });
-  }
 
-});
-}
+        //Widget Horas Adicionales
 
+
+        $("#detalle4").append(
+
+            '<div class="small-box shadow-lg l-bg-cyan"><div class="inner">'+
+            '<h5>HORAS ADICIONALES<sup style="font-size: 20px"></sup></h5>'+
+            '<p><h5><i class="far fa-clock"></i> '+data.result4+'</h5></p>'+
+            '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
+        );
+
+
+                //Widget Turnos Nocturnos
+        $.each(data.result1, function(i, item1){
+
+        $("#detalle5").append(
+
+            '<div class="small-box shadow-lg l-bg-orange-dark"><div class="inner">'+
+            '<h5>PACIENTES ATENDIDOS<sup style="font-size: 20px"></sup></h5>'+
+            '<p><h5><i class="fas fa-calendar-day"></i> '+item1.turnos+'</h5></p>'+
+            '</div><div class="icon"><i class="fas fa-hospital"></i></div></div>'
+        );
+
+        })
+
+
+
+    }
+  })
+
+};
    var idioma_espanol =
                  {
                 "sProcessing":     "Procesando...",
@@ -383,7 +512,6 @@ function fill_datatable1_resumen(fechaini = '', fechafin = '', usuario = '' )
                     "colvis": "Visibilidad"
                 }
                 } ;
-
 
 
 

@@ -5,7 +5,7 @@
         <table id="tturnos" class="table table-hover  text-nowrap">
           <thead>
           <tr>
-            <th>action</th>
+            <th class="width40"><input name="selectall" id="selectall" type="checkbox" class="select-all" /> Select/Deselect All</th>
             <th>ID</th>
             <th>1Nombre</th>
             <th>2Nombre</th>
