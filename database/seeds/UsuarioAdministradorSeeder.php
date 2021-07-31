@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class UsuarioAdministradorSeeder extends Seeder
@@ -23,7 +24,8 @@ class UsuarioAdministradorSeeder extends Seeder
             'value_hour'=>12500,
             'value_hour_add'=>12500,
             'value_patient_attended'=>0,
-            'value_hour_night'=>22500
+            'value_hour_night'=>22500,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
               ]);
 
 
@@ -44,8 +46,10 @@ class UsuarioAdministradorSeeder extends Seeder
             'observacion'=>strtoupper('Prueba'),
             'ips'=>strtoupper('atencion fidem s.a.s'),
             'activo'=>'1',
-            'cargo_id'=>1
+            'cargo_id'=>1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
 
 
 
@@ -104,12 +108,67 @@ class UsuarioAdministradorSeeder extends Seeder
         DB::table('menu')->insert([
 
             'menu_id'=> 0,
-            'nombre'=>'Usuario',
+            'nombre'=>'Registro Usuarios',
             'url'=>'#',
-            'orden'=>4,
+            'orden'=>2,
             'icono'=>'fa fa-users'
         ]);
+        DB::table('menu')->insert([
 
+            'menu_id'=> 0,
+            'nombre'=>'Registrar Turnos',
+            'url'=>'#',
+            'orden'=>5,
+            'icono'=>'fas fa-clinic-medical'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 7,
+            'nombre'=>'Reporte Turnos',
+            'url'=>'hoursxuser',
+            'orden'=>1,
+            'icono'=>'fas fa-book-medical'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 6,
+            'nombre'=>'Registrar Usuario',
+            'url'=>'usuario',
+            'orden'=>1,
+            'icono'=>'fas fa-user-plus'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 0,
+            'nombre'=>'Registro Cargos',
+            'url'=>'usuario',
+            'orden'=>3,
+            'icono'=>'fas fa-chart-line'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 10,
+            'nombre'=>'Registrar Cargo',
+            'url'=>'position',
+            'orden'=>1,
+            'icono'=>'fas fa-plus-circle'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 0,
+            'nombre'=>'Supervisar Turnos',
+            'url'=>'#',
+            'orden'=>4,
+            'icono'=>'fas fa-tasks'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 12,
+            'nombre'=>'Validar Turnos',
+            'url'=>'informesh',
+            'orden'=>1,
+            'icono'=>'fas fa-check-double'
+        ]);
 
 
         //Relación menu-rol
@@ -139,6 +198,65 @@ class UsuarioAdministradorSeeder extends Seeder
             'rol_id'=> 1,
             'menu_id'=> 5
         ]);
+        DB::table('menu_rol')->insert([
 
+            'rol_id'=> 1,
+            'menu_id'=> 7
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 8
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 6
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 9
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 2,
+            'menu_id'=> 6
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 2,
+            'menu_id'=> 9
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 2,
+            'menu_id'=> 7
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 2,
+            'menu_id'=> 8
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 10
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 11
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 12
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 13
+        ]);
     }
 }

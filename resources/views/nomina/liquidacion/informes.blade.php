@@ -6,6 +6,9 @@
 
 @section("styles")
 <link href="{{asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css")}}" rel="stylesheet" type="text/css"/>
+<link href="{{asset("assets/css/select2.css")}}" rel="stylesheet" type="text/css"/>
+<link href="{{asset("assets/css/select2-bootstrap.min.css")}}" rel="stylesheet" type="text/css"/>
+
 
 @endsection
 
@@ -87,10 +90,10 @@
               <div class="tab-content" id="custom-tabs-one-tabContent">
                 <div class="tab-pane fade active show" id="custom-tabs-one-datos-del-pago" role="tabpanel" aria-labelledby="custom-tabs-one-datos-del-pago-tab">
 
-                  <form  id="form-general" class="form-horizontal" method="POST">
+
                       @csrf
                       @include('nomina.liquidacion.form-turnos')
-                  </form>
+
                 </div>
                </div>
 
@@ -111,9 +114,30 @@
 @section("scriptsPlugins")
 <script src="{{asset("assets/$theme/plugins/datatables/jquery.dataTables.js")}}" type="text/javascript"></script>
 <script src="{{asset("assets/$theme/plugins/datatables-bs4/js/dataTables.bootstrap4.js")}}" type="text/javascript"></script>
+<script src="{{asset("assets/js/jquery-select2/select2.min.js")}}" type="text/javascript"></script>
 
 <script>
   $(document).ready(function() {
+
+// funcion para cargar el select de position
+$.get('select_user',
+    function(usuarios)
+    {
+        $('#usuario').empty();
+        $('#usuario').append("<option value=''>---seleccione usuario---</option>")
+        $.each(usuarios, function(usuarios1, value){
+        $('#usuario').append("<option value='" + value.id + "'>" + value.pnombre +' '+ value.papellido +' '+ value.sapellido +"</option>")
+        });
+
+  });
+
+//--------- select2 -------//
+$("#usuario").select2({
+    theme: "bootstrap"
+               });
+
+
+
 
 fill_datatable_tabla();
 fill_datatable1_resumen();
@@ -127,48 +151,41 @@ fill_datatable1_resumen();
               lengthMenu: [ -1],
               processing: true,
               serverSide: true,
-              aaSorting: [[ 5, "asc" ]],
+              aaSorting: [[ 2, "asc" ]],
 
 
           ajax:{
-                url:"{{route('informesp')}}",
+               url:"{{route('hoursinfo')}}",
                 data:{fechaini:fechaini, fechafin:fechafin,usuario:usuario }
               },
               columns: [
-                {
-                    data:'pid',
-                    name:'pid'
-                },
-                {
-                    data:'cli',
-                    name:'cli'
-                },
-                {
-                  data:'va',
-                  name:'va'
+          {data:'action',
+           orderable: false},
+          {data:'id'},
+          {data:'pnombre'},
+          {data:'snombre'},
+          {data:'papellido'},
+          {data:'sapellido'},
+          {data:'date_hour_initial_turn'},
+          {data:'date_hour_end_turn'},
+          {data:'hours'},
+          {data:'working_type'},
+          {data:'observation'},
+          {data:'created_at'}
+        ],
+        "columnDefs": [
+                                    {
+                                    "render": function ( data, type, row ) {
+                                            return data +' '+row["papellido"]+' '+row["sapellido"];
+                                        },
+                                        "targets":[2]
+                                    },
+                                    { "visible": false,  "targets": [3] },
+                                    { "visible": false,  "targets": [4] },
+                                    { "visible": false,  "targets": [5] }
 
-                },
-                {
-                  data:'vc',
-                  name:'vc'
-                },
-                {
-                    data:'c',
-                    name:'c'
-                },
-                {
-                    data:'fhp',
-                    name:'fhp'
-                },
-                {
-                    data:'obsp',
-                    name:'obsp'
-                },
-                {
-                    data:'emp',
-                    name:'emp'
-                }
-              ],
+
+                      ],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
 
@@ -181,15 +198,15 @@ fill_datatable1_resumen();
             // };
 
 
-            valorp = api
-                .column(2, { page: 'current'})
+            hourst = api
+                .column(8, { page: 'current'})
                 .data()
                 .reduce(function (a, b) {
                     return parseInt(a) + parseInt(b);
                 }, 0);
 
 
-            $(api.column(2).footer()).html(valorp);
+            $(api.column(8).footer()).html(hourst);
 
 
           },
@@ -285,55 +302,53 @@ function fill_datatable1_resumen(fechaini = '', fechafin = '', usuario = '' )
  $("#detalle2").empty();
  $("#detalle3").empty();
   $.ajax({
-  url:"{{route('informes')}}",
-  data:{fechaini:fechaini, fechafin:fechafin,usuario:usuario },
+  url:"{{route('hoursinfoc')}}",
+  data:{fechaini:fechaini, fechafin:fechafin, usuario:usuario },
   dataType:"json",
   success:function(data){
     $.each(data.result, function(i, item){
 
     $("#detalle").append(
         '<div class="small-box bg-info"><div class="inner">'+
-        '<h5>TOTAL HORAS DIURNAS</h5>'+
-        '<p><h5><i class="fas fa-dollar-sign"></i>'+item.cobrado+'</h5></p>'+
-        '</div><div class="icon"><i class="fas fa-motorcycle"></i></div></div>'
+        '<h5>TOTAL HORAS</h5>'+
+        '<p><h5><i class="far fa-clock"></i> '+item.horas+'</h5></p>'+
+        '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
      );
 
-  }),
+  })
   $.each(data.result1, function(i, item1){
 
     $("#detalle1").append(
 
-          '<div class="small-box bg-success"><div class="inner">'+
-          '<h5>TOTAL HORAS ADICIONALES<sup style="font-size: 20px"></sup></h5>'+
-          '<p><h5><i class="fas fa-dollar-sign"></i>'+item1.atrasado+'</h5></p>'+
-          '</div><div class="icon"><i class="fas fa-handshake"></i></div></div>'
+          '<div class="small-box bg-light"><div class="inner">'+
+          '<h5>TURNOS NOCTURNOS<sup style="font-size: 20px"></sup></h5>'+
+          '<p><h5><i class="fas fa-calendar-day"></i> '+item1.turnos+'</h5></p>'+
+          '</div><div class="icon"><i class="fas fa-cloud-moon"></i></div></div>'
      );
 
-    }),
-    $.each(data.result2, function(i, item2){
-
-      $("#detalle2").append(
+    })
+    $("#detalle2").append(
 
             '<div class="small-box bg-warning"><div class="inner">'+
-            '<h5>TOTAL HORAS NOCTURNAS</h5>'+
-            '<p><h5><i class="fas fa-dollar-sign"></i>'+item2.prestamos+'</h5></p>'+
+            '<h5>TOTAL A PAGAR</h5>'+
+            '<p><h5><i class="fas fa-dollar-sign"></i> '+data.result2+'</h5></p>'+
             '</div><div class="icon"><i class="fas fa-money-bill-alt"></i></div></div>'
 
          );
 
-      }),
-    $.each(data.result3, function(i, item3){
 
-      $("#detalle3").append(
+//     $.each(data.result3, function(i, item3){
 
-            '<div class="small-box bg-danger"><div class="inner">'+
-            '<h5>TOTAL SALARIO</h5>'+
-            '<p><h5><i class="fas fa-dollar-sign"></i>'+item3.gastos+'</h5></p>'+
-            '</div><div class="icon"><i class="fas fa-route"></i></div></div>'
+//       $("#detalle3").append(
 
-         );
+//             '<div class="small-box bg-danger"><div class="inner">'+
+//             '<h5>TOTAL SALARIO</h5>'+
+//             '<p><h5><i class="fas fa-dollar-sign"></i>'+item3.gastos+'</h5></p>'+
+//             '</div><div class="icon"><i class="fas fa-route"></i></div></div>'
 
-      });
+//          );
+
+//       });
   }
 
 });

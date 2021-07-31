@@ -95,15 +95,23 @@ Route::post('hoursxuser', 'Nomina\HoursxuserController@store')->name('guardar_tu
 Route::get('hoursxuser/{id}/editar', 'Nomina\HoursxuserController@edit')->name('editar_turno')->middleware('superEditor');
 Route::put('hoursxuser/{id}', 'Nomina\HoursxuserController@update')->name('actualizar_turno')->middleware('superEditor');
 
+//RUTA PARA CONSULTA DE INFORMES
+Route::get('informesh', 'Nomina\HoursxuserController@informes')->name('hoursinfo')->middleware('superEditor');
+Route::get('informeshc', 'Nomina\HoursxuserController@informes1')->name('hoursinfoc')->middleware('superEditor');
+Route::get('select_user', 'UsuarioController@select')->name('select_user');
+
 Route::get('select_position', 'Nomina\PositionController@select')->name('select_position');
+
+/* RUTAS DE LISTAR CARGOS */
+Route::get('position', 'Nomina\PositionController@index')->name('position');
+Route::post('position', 'Nomina\PositionController@store')->name('guardar_cargo')->middleware('superEditor');
 
 
 });
 
-/* RUTAS DE LISTAR CARGOS */
 
-Route::get('position', 'Nomina\PositionController@index')->name('position');
-Route::post('position', 'Nomina\PositionController@store')->name('guardar_cargo')->middleware('superEditor');
+
+
 
 
 

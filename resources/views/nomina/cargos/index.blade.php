@@ -168,7 +168,7 @@ $('#form-general').on('submit', function(event){
 
   if($('#action').val() == 'Add')
   {
-    url = "{{route('guardar_turno')}}";
+    url = "{{route('guardar_cargo')}}";
     method = 'post';
     text = "Estás por crear un Cargo";
   }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Nomina;
 
 use App\Http\Controllers\Controller;
 use App\Models\Nomina\Hoursxuser;
+use App\Models\Seguridad\Usuario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,9 +54,129 @@ class HoursxuserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function informes(Request $request )
     {
-        //
+
+
+        if($request->ajax()){
+
+
+             //Variables donde se extrae solo la fecha
+
+        $fechaini = new Carbon($request->fechaini);
+        $fechaini = $fechaini->toDateString();
+
+        $fechafin = new Carbon($request->fechafin);
+        $fechafin = $fechafin->toDateString();
+
+            $usuario = $request->usuario;
+
+
+            $datas = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->select('hoursxuser.id as id', 'usuario.pnombre as pnombre',  'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido', 'hoursxuser.date_hour_initial_turn as date_hour_initial_turn', 'hoursxuser.date_hour_end_turn as date_hour_end_turn', 'hoursxuser.hours as hours',
+            'hoursxuser.working_type as working_type', 'hoursxuser.observation as observation', 'hoursxuser.created_at as created_at')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']])
+            ->orderBy('hoursxuser.id')
+            ->get();
+
+            return  DataTables()->of($datas)
+                ->addColumn('action', function($datas){
+                $button ='<input type="checkbox" name="case[]"  value="'.$datas->id.'" class="case btn btn-primary btn-sm tooltipsC" title="Selecciona Orden"/>';
+                return $button;
+
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+
+
+
+        }
+
+
+        return view('nomina.liquidacion.informes');
+
+
+    }
+
+
+    public function informes1(Request $request )
+    {
+
+       if($request->ajax()){
+
+        $fechaini = new Carbon($request->fechaini);
+        $fechaini = $fechaini->toDateString();
+
+        $fechafin = new Carbon($request->fechafin);
+        $fechafin = $fechafin->toDateString();
+
+        $usuario = $request->usuario;
+
+
+            $datas = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+            ])
+            ->select(DB::raw('sum(hoursxuser.hours) as horas'))
+            ->get();
+
+
+            $turn_night = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.working_type', '=', 'Nocturno']
+            ])
+            ->select(DB::raw('count(hoursxuser.working_type) as turnos'))
+            ->get();
+
+            if($usuario != null){
+            //Consulta para traer el valor de la hora del usuario
+            $valor_hora = DB::table('usuario')
+            ->join('position', 'usuario.cargo_id', '=', 'position.id')
+            ->where('usuario.id', $usuario)
+            ->select(DB::raw('position.value_hour as hora'))
+            ->first();
+
+            //Consulta para traer la suma de total horas del usuario
+            $payment = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->join('position', 'usuario.cargo_id', '=', 'position.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+                       ])
+            ->select(DB::raw('sum(hoursxuser.hours) as sumhour'))
+            ->first();
+
+               $payment_day = $valor_hora->hora * $payment->sumhour;
+
+            }else{
+
+                $payment_day = 0;
+            }
+
+
+
+            return response()->json(['result' => $datas, 'result1' => $turn_night, 'result2' => $payment_day]);
+
+
+          }
+
+
+
+
+
     }
 
     /**
