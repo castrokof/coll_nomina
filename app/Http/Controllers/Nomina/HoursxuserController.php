@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Nomina;
 
 use App\Http\Controllers\Controller;
 use App\Models\Nomina\Hoursxuser;
+use App\Models\Seguridad\Usuario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class HoursxuserController extends Controller
 {
+
+//Function para mostrar datos en el index de turnos
     /**
      * Display a listing of the resource.
      *
@@ -48,16 +51,171 @@ class HoursxuserController extends Controller
 
     }
 
+//Function para traer tabla de empleados a informes
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function informes(Request $request )
     {
-        //
+
+
+        if($request->ajax()){
+
+
+             //Variables donde se extrae solo la fecha
+
+        $fechaini = new Carbon($request->fechaini);
+        $fechaini = $fechaini->toDateString();
+
+        $fechafin = new Carbon($request->fechafin);
+        $fechafin = $fechafin->toDateString();
+
+            $usuario = $request->usuario;
+
+
+            $datas = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->select('hoursxuser.id as id', 'usuario.pnombre as pnombre',  'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido', 'hoursxuser.date_hour_initial_turn as date_hour_initial_turn', 'hoursxuser.date_hour_end_turn as date_hour_end_turn', 'hoursxuser.hours as hours',
+            'hoursxuser.working_type as working_type', 'hoursxuser.observation as observation', 'hoursxuser.created_at as created_at')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']])
+            ->orderBy('hoursxuser.id')
+            ->get();
+
+            return  DataTables()->of($datas)
+                ->addColumn('action', function($datas){
+                $button ='<input type="checkbox" name="case[]"  value="'.$datas->id.'" class="case btn btn-primary btn-sm tooltipsC" title="Selecciona Orden"/>';
+                return $button;
+
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+
+
+
+        }
+
+
+        return view('nomina.liquidacion.informes');
+
+
     }
 
+
+//Function para informes del supervisor widgets
+   public function informes1(Request $request )
+    {
+
+       if($request->ajax()){
+
+        $fechaini = new Carbon($request->fechaini);
+        $fechaini = $fechaini->toDateString();
+
+        $fechafin = new Carbon($request->fechafin);
+        $fechafin = $fechafin->toDateString();
+
+        $usuario = $request->usuario;
+        $valor_hora_add = 0;
+
+ //Consulta de suma de total horas
+            $datas = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+            ])
+            ->select(DB::raw('sum(hoursxuser.hours) as horas'))
+            ->get();
+
+  //Consulta de cuenta de turnos de noche
+            $turn_night = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.working_type', '=', 'Nocturno']
+            ])
+            ->select(DB::raw('count(hoursxuser.working_type) as turnos'))
+            ->get();
+
+  //Consulta de totas horas - horas base
+            $horas_base = 0;
+            $hours_total = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+            ])
+            ->select(DB::raw('sum(hoursxuser.hours) as horas'))
+            ->first();
+
+            if($hours_total->horas <= 0 ){
+
+            $horas_add = 0;
+
+            }else if($hours_total->horas <= 96 && $hours_total->horas > 0){
+
+            $horas_add = 0;
+            $horas_base = $hours_total->horas;
+
+            }else{
+
+            $horas_add = $hours_total->horas - 96;
+            $horas_base = $hours_total->horas - $horas_add;
+            }
+
+
+  // validación para controlar el error de hora
+
+            if($usuario != null){
+            //Consulta para traer el valor de la hora del usuario
+            $valor_hora = DB::table('usuario')
+            ->join('position', 'usuario.cargo_id', '=', 'position.id')
+            ->where('usuario.id', $usuario)
+            ->select(DB::raw('position.value_hour as hora'))
+            ->first();
+
+            //Consulta para traer la suma de total horas del usuario
+            $payment = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->join('position', 'usuario.cargo_id', '=', 'position.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+                       ])
+            ->select(DB::raw('sum(hoursxuser.hours) as sumhour'))
+            ->first();
+
+               $payment_day = $valor_hora->hora * $payment->sumhour;
+               $valor_hora_add = $valor_hora->hora;
+            }else{
+
+                $payment_day = 0;
+            }
+
+
+
+
+            return response()->json(['result' => $datas, 'result1' => $turn_night, 'result2' => $payment_day, 'result3' => $horas_base, 'result4' => $horas_add, 'valor_hora' => $valor_hora_add]);
+
+
+          }
+
+
+
+
+
+    }
+
+//Guardar turnos
     /**
      * Store a newly created resource in storage.
      *
@@ -127,6 +285,7 @@ class HoursxuserController extends Controller
 
     }
 
+//Mostrar turnos
     /**
      * Display the specified resource.
      *
@@ -144,7 +303,9 @@ class HoursxuserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+
+//Consultar turno a editar
+     public function edit($id)
     {
 
 
@@ -157,6 +318,7 @@ class HoursxuserController extends Controller
 
     }
 
+//Update de turno
     /**
      * Update the specified resource in storage.
      *
@@ -196,9 +358,9 @@ class HoursxuserController extends Controller
         $datef = new Carbon($request->date_hour_end_turn);
         $datef = $datef->toDateString();
 
-        if($datei >= $datef){
+        if($datei > $datef){
 
-            return response()->json(['errors' => ['La fecha y hora inicial debe ser menor que la fecha y hora final']]);
+            return response()->json(['errors' => ['La fecha y hora inicial debe ser menor que la fecha y hora final'], 'datei'=>$datei, 'datef'=>$datef]);
 
         }
 
@@ -229,7 +391,7 @@ class HoursxuserController extends Controller
             }
 
     }
-
+// Funtion para eliminar turno
     /**
      * Remove the specified resource from storage.
      *

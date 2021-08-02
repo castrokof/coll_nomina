@@ -86,7 +86,18 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function crear()
+
+    public function select()
+    {
+        if(request()->ajax())
+        {
+          $usuarios=Usuario::orderBy('id')->get();
+            return response()->json($usuarios);
+        }
+    }
+
+
+     public function crear()
     {
         return view('admin.usuario.crear');
     }

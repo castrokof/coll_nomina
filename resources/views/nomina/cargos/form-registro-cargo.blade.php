@@ -26,6 +26,6 @@
         <input class="form-control" name="value_hour_night" id="hour_envalue_hour_nightd_turn" value="" >
     </div>
     </div>
-    <input type="hidden" name="user_id" id="user_id" class="form-control" value="{{Session()->get('usuario_id')}}" >
+
 </div>
 

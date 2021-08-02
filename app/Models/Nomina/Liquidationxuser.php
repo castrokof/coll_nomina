@@ -17,6 +17,8 @@ class Liquidationxuser extends Model
                 'hour_add',
                 'turn_night',
                 'pay_period',
+                'pay_off_obs',
+                'off_pay',
                 'total_payment',
                 'user_id'
                 ];

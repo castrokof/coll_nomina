@@ -20,6 +20,8 @@ class CreatePositionTable extends Migration
             $table->Integer('value_hour');
             $table->Integer('value_hour_add')->nullable();
             $table->Integer('value_patient_attended')->nullable();
+            $table->Integer('value_hour_night')->nullable();
+            $table->Integer('value_add_security_social')->nullable();
             $table->timestamps();
         });
     }
