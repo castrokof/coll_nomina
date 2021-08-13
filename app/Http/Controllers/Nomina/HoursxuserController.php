@@ -132,6 +132,9 @@ class HoursxuserController extends Controller
             ->select(DB::raw('sum(hoursxuser.hours) as horas'))
             ->get();
 
+
+
+
   //Consulta de cuenta de turnos de noche
             $turn_night = DB::table('hoursxuser')
             ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')

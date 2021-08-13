@@ -407,11 +407,16 @@ function fill_datatable1_resumen(fechaini = '', fechafin = '', usuario = '' )
 
     //Widget Total Horas
     $.each(data.result, function(i, item){
-
+    var a = item.horas;
+        if(a == null){
+            a = 0;
+        }else{
+            a = item.horas;
+        }
     $("#detalle").append(
         '<div class="small-box shadow-lg  l-bg-cherry"><div class="inner">'+
         '<h5>TOTAL HORAS</h5>'+
-        '<p><h5><i class="far fa-clock"></i> '+item.horas+'</h5></p>'+
+        '<p><h5><i class="far fa-clock"></i> '+a+'</h5></p>'+
         '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
      );
 
