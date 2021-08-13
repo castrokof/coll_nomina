@@ -89,7 +89,7 @@ class PositionController extends Controller
                 'salary'  => $request->salary,
                 'value_hour'  => $request->value_hour,
                 'value_hour_add'  => $request->value_hour_add,
-                'value_patient_attended' => $request->value_hour_add,
+                'value_patient_attended' => $request->value_patient_attended,
                 'value_hour_night'  => $request->value_hour_night
 
                 ]);
