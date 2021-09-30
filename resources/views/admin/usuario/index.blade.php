@@ -106,9 +106,10 @@
     <div class="row">
         <div class="col-lg-12">
 
-           <div class="card card-warning">
+           <div class="card card-info">
             <div class="card-header">
               <h3 class="card-title">Editar Contraseña</h3>
+
               <div class="card-tools pull-right">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -119,31 +120,32 @@
                 <div class="form-group row col-lg-12">
                     <div class="col-lg-6">
                         <label for="password" class="col-xs-12 control-label requerido">Usuario</label>
-                        <input   type="Usuario" name="usuario_id" id="usuario_id" class="form-control" value=""  minlength="6" required >
+                        <input   type="Usuario" name="usuario_id" id="usuario_id" class="form-control" value=""  minlength="6" required readonly>
                     </div>
 
                 </div>
                 <div class="form-group row col-lg-12">
                     <div class="col-lg-6">
                     <label for="password" class="col-xs-12 control-label requerido">Password</label>
-                    <input   type="password" name="password1" id="password1" class="form-control" value=""  minlength="6" required >
+                    <input   type="password" name="password1" id="pass" class="form-control" value=""  minlength="6" required >
                     </div>
                     <div class="col-lg-6">
                         <label for="remenber_token" class="col-xs-12 control-label requerido">repita el password</label>
-                        <input   type="password" name="remenber_token1" id="remenber_token1" class="form-control" value=""  minlength="6" required >
+                        <input   type="password" name="remenber" id="remenber" class="form-control" value=""  minlength="6" required >
                     </div>
 
-
+                    <input type="hidden" name="idpass" id="idpass" class="form-control" value=""  required >
                 </div>
+
 
               </div>
                             <!-- /.card-body -->
-                            <div class="card-footer">
-                                <div class="col-lg-3"></div>
-                                <div class="col-lg-6">
-                                    <button type="button" id="actualizarpass" name="actualizar" class="btn btn-success">Actualizar</button>
-                            </div>
-                             </div>
+                <div class="card-footer">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <button type="button" id="actualizarpass" name="actualizar" class="btn btn-success">Actualizar</button>
+                </div>
+                    </div>
                             <!-- /.card-footer -->
                 </form>
 
@@ -530,18 +532,22 @@ if (jqXHR.status === 403) {
 
 $(document).on('click', '.epassword', function(){
     var id = $(this).attr('id');
-     $('#usuario_id').val(id);
+    var usuario = $(this).attr('usuario1');
+
+     $('#usuario_id').val(usuario);
+     $('#idpass').val(id);
      $('#modal-xlpass').modal('show');
+
 
 });
 
 
 //Actualizacion de password desde listado de usuarios
     $('#actualizarpass').click(function(){
-    event.preventDefault();
-
-       var password = $('#password1').val();
-       var remenber_token = $('#remenber_token1').val();
+//    event.preventDefault();
+       var  id = $('#idpass').val();
+       var password = $('#pass').val();
+       var remenber_token = $('#remenber').val();
 
        if(password != remenber_token){
 
@@ -570,7 +576,7 @@ $(document).on('click', '.epassword', function(){
          if(result.value){
 
             $.ajax({
-                  url:"actualizar_password1/"+id+"/editar",
+                  url:"password1/"+id+"",
                   method:'put',
                   data:{password:password, remenber_token:remenber_token,
 
@@ -580,9 +586,9 @@ $(document).on('click', '.epassword', function(){
                   success:function(respuesta)
                   {
                     if(respuesta.mensaje ='ok') {
-                      $('#modal-xl').modal('hide');
-                      $('#password1').val('');
-                      $('#remenber_token1').val('');
+                      $('#modal-xlpass').modal('hide');
+                      $('#pass').val('');
+                      $('#remenber').val('');
                       Manteliviano.notificaciones('Password actualizado correctamente', 'Sistema Catastro de usuario','success');
 
                   }else if(respuesta.mensaje ='ng'){

@@ -17,6 +17,8 @@ class Hoursxuser extends Model
         'working_type',
         'hours',
         'observation',
+        'supervisor',
+        'quincena',
         'user_id'
         ];
 

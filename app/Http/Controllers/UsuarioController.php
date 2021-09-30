@@ -41,7 +41,7 @@ class UsuarioController extends Controller
             ->addColumn('action', function($datas){
             $button = '<button type="button" name="edit" id="'.$datas->id.'"
             class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="fas fa-user-edit"></i></button>';
-            $button .='&nbsp;<button type="button" name="editpass" id="'.$datas->id.'"
+            $button .='&nbsp;<button type="button" name="editpass" id="'.$datas->id.'" usuario1="'.$datas->usuario.'"
             class = "epassword btn-float  bg-gradient-warning btn-sm tooltipsC" title="Editar password"><i class="fas fa-key"></i></button>';
 
           return $button;

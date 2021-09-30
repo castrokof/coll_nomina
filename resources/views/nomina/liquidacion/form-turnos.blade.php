@@ -15,6 +15,7 @@
             <th>Fecha y Hora Salida</th>
             <th>Horas Laboradas</th>
             <th>Jornada</th>
+            <th>Quincena</th>
             <th>Observación</th>
             <th>Fecha y hora de registro</th>
           </tr>

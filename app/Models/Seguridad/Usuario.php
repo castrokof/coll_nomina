@@ -37,7 +37,8 @@ class Usuario extends Authenticatable
 
 
 
-    protected $hidden = ['password'];
+    protected $hidden = ['password', 'remenber_token'];
+
 
 
     public function cargos(){
