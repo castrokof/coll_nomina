@@ -22,6 +22,11 @@
         <div class="col-lg-9">
     <label for="observacion" class="col-xs-3 control-label ">Observación</label>
     <textarea name="observation" id="observation" class="form-control" rows="2" placeholder="Enter ..." value="{{old('observacion')}}"></textarea>
+
+    </div>
+    <div class="col-lg-3">
+        <label for="observacion" class="col-xs-3 control-label ">Quincena</label>
+        <input class="form-control" name="quincena" id="quincena" value="" readonly>
     </div>
 
     <input type="hidden" name="user_id" id="user_id" class="form-control" value="{{Session()->get('usuario_id')}}" >

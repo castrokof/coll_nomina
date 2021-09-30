@@ -29,8 +29,9 @@ class HoursxuserController extends Controller
             $datas = DB::table('hoursxuser')
             ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
             ->select('hoursxuser.id as id', 'hoursxuser.date_hour_initial_turn as date_hour_initial_turn', 'hoursxuser.date_hour_end_turn as date_hour_end_turn', 'hoursxuser.hours as hours',
-            'hoursxuser.working_type as working_type', 'hoursxuser.observation as observation', 'hoursxuser.created_at as created_at')
-            ->where('hoursxuser.user_id', $usuario_id)
+            'hoursxuser.working_type as working_type', 'hoursxuser.quincena as quincena', 'hoursxuser.observation as observation', 'hoursxuser.created_at as created_at')
+            ->where([['hoursxuser.user_id', $usuario_id],
+                     ['hoursxuser.supervisor', "=", null]])
             ->orderBy('hoursxuser.id')
             ->get();
             return  DataTables()->of($datas)
@@ -78,11 +79,13 @@ class HoursxuserController extends Controller
             $datas = DB::table('hoursxuser')
             ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
             ->select('hoursxuser.id as id', 'usuario.pnombre as pnombre',  'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido', 'hoursxuser.date_hour_initial_turn as date_hour_initial_turn', 'hoursxuser.date_hour_end_turn as date_hour_end_turn', 'hoursxuser.hours as hours',
-            'hoursxuser.working_type as working_type', 'hoursxuser.observation as observation', 'hoursxuser.created_at as created_at')
+            'hoursxuser.working_type as working_type', 'hoursxuser.quincena as quincena', 'hoursxuser.observation as observation', 'hoursxuser.created_at as created_at')
             ->where([
             ['hoursxuser.user_id', $usuario],
             ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
-            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']])
+            ['hoursxuser.date_hour_initial_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.supervisor', '=', null]])
+
             ->orderBy('hoursxuser.id')
             ->get();
 
@@ -127,7 +130,8 @@ class HoursxuserController extends Controller
             ->where([
             ['hoursxuser.user_id', $usuario],
             ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
-            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+            ['hoursxuser.date_hour_initial_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.supervisor', '=', null]
             ])
             ->select(DB::raw('sum(hoursxuser.hours) as horas'))
             ->get();
@@ -141,20 +145,34 @@ class HoursxuserController extends Controller
             ->where([
             ['hoursxuser.user_id', $usuario],
             ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
-            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59'],
-            ['hoursxuser.working_type', '=', 'Nocturno']
+            ['hoursxuser.date_hour_initial_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.working_type', '=', 'Nocturno'],
+            ['hoursxuser.supervisor', '=', null]
             ])
             ->select(DB::raw('count(hoursxuser.working_type) as turnos'))
             ->get();
+  //Consulta de cuenta de turnos de noche
+            $turn_night1 = DB::table('hoursxuser')
+            ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
+            ->where([
+            ['hoursxuser.user_id', $usuario],
+            ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
+            ['hoursxuser.date_hour_initial_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.working_type', '=', 'Nocturno'],
+            ['hoursxuser.supervisor', '=', null]
+            ])
+            ->select(DB::raw('count(hoursxuser.working_type) as turnos1'))
+            ->first();
 
-  //Consulta de totas horas - horas base
+  //Consulta de total horas - horas base
             $horas_base = 0;
             $hours_total = DB::table('hoursxuser')
             ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
             ->where([
             ['hoursxuser.user_id', $usuario],
             ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
-            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+            ['hoursxuser.date_hour_initial_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.supervisor', '=', null]
             ])
             ->select(DB::raw('sum(hoursxuser.hours) as horas'))
             ->first();
@@ -184,6 +202,12 @@ class HoursxuserController extends Controller
             ->where('usuario.id', $usuario)
             ->select(DB::raw('position.value_hour as hora'))
             ->first();
+             //Consulta para traer el valor del turno de noche
+             $valor_turn_night = DB::table('usuario')
+             ->join('position', 'usuario.cargo_id', '=', 'position.id')
+             ->where('usuario.id', $usuario)
+             ->select(DB::raw('position.value_hour_night as night'))
+             ->first();
 
             //Consulta para traer la suma de total horas del usuario
             $payment = DB::table('hoursxuser')
@@ -192,13 +216,16 @@ class HoursxuserController extends Controller
             ->where([
             ['hoursxuser.user_id', $usuario],
             ['hoursxuser.date_hour_initial_turn', '>=', $fechaini.' 00:00:00'],
-            ['hoursxuser.date_hour_end_turn', '<=', $fechafin.' 23:59:59']
+            ['hoursxuser.date_hour_initial_turn', '<=', $fechafin.' 23:59:59'],
+            ['hoursxuser.supervisor', '=', null]
                        ])
             ->select(DB::raw('sum(hoursxuser.hours) as sumhour'))
             ->first();
 
-               $payment_day = $valor_hora->hora * $payment->sumhour;
-               $valor_hora_add = $valor_hora->hora;
+                $valor_turn_night_add = $valor_turn_night->night * $turn_night1->turnos1;
+
+                $payment_day = ($valor_hora->hora * $payment->sumhour) + $valor_turn_night_add;
+                $valor_hora_add = $valor_hora->hora;
             }else{
 
                 $payment_day = 0;
@@ -217,6 +244,46 @@ class HoursxuserController extends Controller
 
 
     }
+
+// Revisión de supervisor
+
+public function supervisar(Request $request)
+{
+
+  if (request()->ajax()) {
+
+    $ids = $request->input('id');
+
+
+if($request->supervisor != null){
+
+  foreach ($ids as $id ) {
+
+            DB::table('hoursxuser')
+            ->where([
+                     ['id', '=', $id],
+                    ])
+            ->update(['supervisor' => $request->supervisor]);
+
+         }
+
+
+        return response()->json(['success1' => 'ok1']);
+
+
+    }else{
+
+        return response()->json(['success1' => 'ng']);
+    }
+
+  }
+
+
+}
+
+
+
+
 
 //Guardar turnos
     /**
@@ -276,6 +343,7 @@ class HoursxuserController extends Controller
             'date_hour_initial_turn'  => $request->date_hour_initial_turn,
             'date_hour_end_turn'  => $request->date_hour_end_turn,
             'working_type'  => $request->working_type,
+            'quincena'  => $request->quincena,
             'observation'  => $request->observation,
             'hours' => $hours,
             'user_id'  => $request->user_id,
@@ -383,6 +451,7 @@ class HoursxuserController extends Controller
                 'date_hour_initial_turn'  => $request->date_hour_initial_turn,
                 'date_hour_end_turn'  => $request->date_hour_end_turn,
                 'working_type'  => $request->working_type,
+                'quincena'  => $request->quincena,
                 'observation'  => $request->observation,
                 'hours' => $hours,
                 'user_id'  => $request->user_id,

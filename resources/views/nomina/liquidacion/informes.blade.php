@@ -92,6 +92,43 @@
     background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
     color: #fff;
 }
+
+
+
+/*btn flotante*/
+.btn-flotante {
+	font-size: 14px; /* Cambiar el tamaño de la tipografia */
+	text-transform: uppercase; /* Texto en mayusculas */
+	font-weight: bold; /* Fuente en negrita o bold */
+	color: #ffffff; /* Color del texto */
+	border-radius: 120px; /* Borde del boton */
+	letter-spacing: 2px; /* Espacio entre letras */
+    background: linear-gradient(to right, #a80d08, #ff6756) !important; /* Color de fondo */
+	/*background-color: #e9321e; /* Color de fondo */
+	padding: 18px 30px; /* Relleno del boton */
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	transition: all 300ms ease 0ms;
+	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.5);
+	z-index: 99;
+    border:none;
+    outline:none;
+}
+.btn-flotante:hover {
+	background-color: #2c2fa5; /* Color de fondo al pasar el cursor */
+	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+	transform: translateY(-7px);
+}
+@media only screen and (max-width: 600px) {
+ 	.btn-flotante {
+		font-size: 14px;
+		padding: 12px 20px;
+		bottom: 20px;
+		right: 20px;
+	}
+}
+
 </style>
 
 @endsection
@@ -140,6 +177,10 @@
 
     <!-- Main content -->
 <section class="content">
+
+
+
+
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-2 col-6" id="detalle">
@@ -156,6 +197,7 @@
           </div>
         </div>
       </div>
+
 
       <div class="row">
         <div class="col-12">
@@ -174,6 +216,7 @@
               </ul>
             </div>
 
+
               <div class="tab-content" id="custom-tabs-one-tabContent">
                 <div class="tab-pane fade active show" id="custom-tabs-one-datos-del-pago" role="tabpanel" aria-labelledby="custom-tabs-one-datos-del-pago-tab">
 
@@ -187,13 +230,17 @@
             <!-- /.card -->
           </div>
         </div>
+        <button type="button" class="btn-flotante tooltipsC" id="liquidar" title="Liquidar turno"><i class="fas fa-save fa-2x"></i></button>
 
       </div>
+
+
 </section>
     <!-- /.content -->
 
 </div>
 </div>
+
 
 
 @endsection
@@ -204,7 +251,21 @@
 <script src="{{asset("assets/js/jquery-select2/select2.min.js")}}" type="text/javascript"></script>
 
 <script>
-  $(document).ready(function() {
+
+$(document).ready(function() {
+
+// variables globales
+  var fechaini = '';
+  var fechafin = '';
+  var usuario = '';
+
+
+// Btn flotante
+    $('.botonF1').hover(function(){
+
+    })
+
+
 
     $("#selectall").on('click', function() {
     $(".case").prop("checked", this.checked);
@@ -224,7 +285,7 @@
 
     });
 
-    //--------- select2 -------//
+//--------- select2 -------//
     $("#usuario").select2({
         theme: "bootstrap"
                 });
@@ -235,6 +296,40 @@
     fill_datatable_tabla();
     fill_datatable1_resumen();
 
+
+// Callback para filtrar los datos de la tabla y detalle
+    $('#buscar').click(function(){
+
+    fechaini = $('#fechaini').val();
+    fechafin = $('#fechafin').val();
+    usuario = $('#usuario').val();
+
+    $("#selectall").prop("checked", false);
+
+        if(fechaini != '' && fechafin != '' && usuario != ''){
+
+            $('#tturnos').DataTable().destroy();
+
+            fill_datatable_tabla(fechaini, fechafin, usuario);
+            fill_datatable1_resumen(fechaini, fechafin, usuario);
+
+
+        }else{
+
+            Swal.fire({
+            title: 'Debes digitar fecha inicial, fecha final y usuario',
+            icon: 'warning',
+            buttons:{
+                cancel: "Cerrar"
+
+                    }
+            })
+        }
+
+    });
+
+
+// Función para filtrar cargar los datos en la tabla
 
  function fill_datatable_tabla(fechaini = '', fechafin = '', usuario = '' )
          {
@@ -263,6 +358,7 @@
           {data:'date_hour_end_turn'},
           {data:'hours'},
           {data:'working_type'},
+          {data:'quincena'},
           {data:'observation'},
           {data:'created_at'}
         ],
@@ -306,6 +402,7 @@
               //Botones----------------------------------------------------------------------
         "dom":'Brtip',
                buttons: [
+
                    {
 
                extend:'copyHtml5',
@@ -340,154 +437,226 @@
                   }
                ]
              });
-}
+ }
+
+
+// Función para limpiar los inputs
 
 
 
-$('#buscar').click(function(){
-
-    $("#selectall").prop("checked", false);
-
-       var fechaini = $('#fechaini').val();
-       var fechafin = $('#fechafin').val();
-       var usuario = $('#usuario').val();
-
-        if(fechaini != '' && fechafin != '' && usuario != ''){
-
+    $('#reset').click(function(){
+            $('#fechaini').val('');
+            $('#fechafin').val('');
+            $('#usuario').val('');
             $('#tturnos').DataTable().destroy();
+            fill_datatable_tabla();
+            fill_datatable1_resumen();
+
+        });
+    });
 
 
-            fill_datatable_tabla(fechaini, fechafin, usuario);
-            fill_datatable1_resumen(fechaini, fechafin, usuario);
 
 
+// Función para liquidar los turnos seleccionados
 
-        }else{
+    $('#liquidar').click(function(){
 
-             swal({
-            title: 'Debes digitar fecha inicial, fecha final y usuario',
+    var id = [];
+    var supervisor ="{{Session()->get('usuario') ?? ''}}";
+
+    fechaini = $('#fechaini').val();
+    fechafin = $('#fechafin').val();
+    usuario = $('#usuario').val();
+
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Estás por liquidar los turnos seleccionados",
+        icon: "warning",
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'Aceptar',
+        }).then((result)=>{
+        if(result.value){
+        $('input:checkbox:checked').each(function() {
+        id.push($(this).val());
+
+            });
+
+        if(id.length > 0)
+        {
+        Swal.fire({
+                title: 'Espere por favor !',
+                html: 'Realizando la liquidación',// add html attribute if you want or remove
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                willOpen: () => {
+                    Swal.showLoading()
+                    },
+            }),
+        $.ajax({
+                url:"{{ route('liquidar')}}",
+                method:'post',
+                data:{id:id, supervisor:supervisor,
+
+                "_token": $("meta[name='csrf-token']").attr("content")
+
+                },
+                success:function(data)
+                {
+                if(data.success1 = 'ok') {
+                    $('#tturnos').DataTable().ajax.reload();
+                    $("#detalle").empty();
+                    $("#detalle1").empty();
+                    $("#detalle2").empty();
+                    $("#detalle3").empty();
+                    $("#detalle4").empty();
+                    $("#detalle5").empty();
+                    fill_datatable1_resumen(fechaini, fechafin, usuario);
+                Swal.fire(
+                            {
+                            icon: 'success',
+                            title: 'Liquidación registrada correctamente',
+                            showConfirmButton: true,
+                            timer: 1500
+                            }
+                        )
+
+                }else if(data.success1 = 'ng') {
+                $('#tturnos').DataTable().ajax.reload();
+                Swal.fire(
+                            {
+                            icon: 'success',
+                            title: 'No se pudo realizar la liquidación',
+                            showConfirmButton: true,
+                            timer: 1500
+                            }
+                        )
+
+                }
+                }
+                });
+
+        }
+        else
+        {
+
+        Swal.fire({
+            title: 'Por favor seleccione un turno del checkbox',
             icon: 'warning',
             buttons:{
                 cancel: "Cerrar"
 
                     }
-              })
+            })
+            }
+        }});
         }
-
-});
-
-
-$('#reset').click(function(){
-        $('#fechaini').val('');
-        $('#fechafin').val('');
-        $('#usuario').val('');
-        $('#tturnos').DataTable().destroy();
-        fill_datatable_tabla();
-        fill_datatable1_resumen();
-
-      });
-});
-
-//Detalle turnos
-
-function fill_datatable1_resumen(fechaini = '', fechafin = '', usuario = '' )
-{
- $("#detalle").empty();
- $("#detalle1").empty();
- $("#detalle2").empty();
- $("#detalle3").empty();
- $("#detalle4").empty();
- $("#detalle5").empty();
-  $.ajax({
-  url:"{{route('hoursinfoc')}}",
-  data:{fechaini:fechaini, fechafin:fechafin, usuario:usuario },
-  dataType:"json",
-  success:function(data){
-
-
-    //Widget Total Horas
-    $.each(data.result, function(i, item){
-    var a = item.horas;
-        if(a == null){
-            a = 0;
-        }else{
-            a = item.horas;
-        }
-    $("#detalle").append(
-        '<div class="small-box shadow-lg  l-bg-cherry"><div class="inner">'+
-        '<h5>TOTAL HORAS</h5>'+
-        '<p><h5><i class="far fa-clock"></i> '+a+'</h5></p>'+
-        '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
-     );
-
-  })
-
-
-  //Widget Turnos Nocturnos
- $.each(data.result1, function(i, item1){
-
-    $("#detalle1").append(
-
-        '<div class="small-box shadow-lg l-bg-blue-dark"><div class="inner">'+
-        '<h5>TURNOS NOCTURNOS<sup style="font-size: 20px"></sup></h5>'+
-        '<p><h5><i class="fas fa-calendar-day"></i> '+item1.turnos+'</h5></p>'+
-        '</div><div class="icon"><i class="fas fa-cloud-moon"></i></div></div>'
     );
 
+
+
+
+//función para traer el resumen de los widget del Detalle turnos
+
+    function fill_datatable1_resumen(fechaini = '', fechafin = '', usuario = '' )
+    {
+    $("#detalle").empty();
+    $("#detalle1").empty();
+    $("#detalle2").empty();
+    $("#detalle3").empty();
+    $("#detalle4").empty();
+    $("#detalle5").empty();
+    $.ajax({
+    url:"{{route('hoursinfoc')}}",
+    data:{fechaini:fechaini, fechafin:fechafin, usuario:usuario },
+    dataType:"json",
+    success:function(data){
+
+
+        //Widget Total Horas
+        $.each(data.result, function(i, item){
+        var a = item.horas;
+            if(a == null){
+                a = 0;
+            }else{
+                a = item.horas;
+            }
+        $("#detalle").append(
+            '<div class="small-box shadow-lg  l-bg-cherry"><div class="inner">'+
+            '<h5>TOTAL HORAS</h5>'+
+            '<p><h5><i class="far fa-clock"></i> '+a+'</h5></p>'+
+            '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
+        );
+
     })
-    $("#detalle2").append(
-
-            '<div class="small-box shadow-lg l-bg-red-dark"><div class="inner">'+
-            '<h5>TOTAL A PAGAR</h5>'+
-            '<p><h5><i class="fas fa-dollar-sign"></i> '+data.result2+'</h5></p>'+
-            '</div><div class="icon"><i class="fas fa-money-bill-alt"></i></div></div>'
-
-         );
-
-     //Widget Horas Base
 
 
-        $("#detalle3").append(
+    //Widget Turnos Nocturnos
+    $.each(data.result1, function(i, item1){
 
-            '<div class="small-box shadow-lg l-bg-green-dark"><div class="inner">'+
-            '<h5>HORAS BASE<sup style="font-size: 20px"></sup></h5>'+
-            '<p><h5><i class="far fa-clock"></i> '+data.result3+'</h5></p>'+
-            '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
-        );
+        $("#detalle1").append(
 
-
-
-        //Widget Horas Adicionales
-
-
-        $("#detalle4").append(
-
-            '<div class="small-box shadow-lg l-bg-cyan"><div class="inner">'+
-            '<h5>HORAS ADICIONALES<sup style="font-size: 20px"></sup></h5>'+
-            '<p><h5><i class="far fa-clock"></i> '+data.result4+'</h5></p>'+
-            '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
-        );
-
-
-                //Widget Turnos Nocturnos
-        $.each(data.result1, function(i, item1){
-
-        $("#detalle5").append(
-
-            '<div class="small-box shadow-lg l-bg-orange-dark"><div class="inner">'+
-            '<h5>PACIENTES ATENDIDOS<sup style="font-size: 20px"></sup></h5>'+
+            '<div class="small-box shadow-lg l-bg-blue-dark"><div class="inner">'+
+            '<h5>TURNOS NOCTURNOS<sup style="font-size: 20px"></sup></h5>'+
             '<p><h5><i class="fas fa-calendar-day"></i> '+item1.turnos+'</h5></p>'+
-            '</div><div class="icon"><i class="fas fa-hospital"></i></div></div>'
+            '</div><div class="icon"><i class="fas fa-cloud-moon"></i></div></div>'
         );
 
         })
+        $("#detalle2").append(
+
+                '<div class="small-box shadow-lg l-bg-red-dark"><div class="inner">'+
+                '<h5>TOTAL A PAGAR</h5>'+
+                '<p><h5><i class="fas fa-dollar-sign"></i> '+data.result2+'</h5></p>'+
+                '</div><div class="icon"><i class="fas fa-money-bill-alt"></i></div></div>'
+
+            );
+
+        //Widget Horas Base
+
+
+            $("#detalle3").append(
+
+                '<div class="small-box shadow-lg l-bg-green-dark"><div class="inner">'+
+                '<h5>HORAS BASE<sup style="font-size: 20px"></sup></h5>'+
+                '<p><h5><i class="far fa-clock"></i> '+data.result3+'</h5></p>'+
+                '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
+            );
 
 
 
-    }
-  })
+            //Widget Horas Adicionales
 
-};
+
+            $("#detalle4").append(
+
+                '<div class="small-box shadow-lg l-bg-cyan"><div class="inner">'+
+                '<h5>HORAS ADICIONALES<sup style="font-size: 20px"></sup></h5>'+
+                '<p><h5><i class="far fa-clock"></i> '+data.result4+'</h5></p>'+
+                '</div><div class="icon"><i class="fas fa-business-time"></i></div></div>'
+            );
+
+
+                    //Widget Turnos Nocturnos
+            $.each(data.result1, function(i, item1){
+
+            $("#detalle5").append(
+
+                '<div class="small-box shadow-lg l-bg-orange-dark"><div class="inner">'+
+                '<h5>PACIENTES ATENDIDOS<sup style="font-size: 20px"></sup></h5>'+
+                '<p><h5><i class="fas fa-calendar-day"></i> '+0+'</h5></p>'+
+                '</div><div class="icon"><i class="fas fa-hospital"></i></div></div>'
+            );
+
+            })
+
+
+
+        }
+    })
+
+    };
    var idioma_espanol =
                  {
                 "sProcessing":     "Procesando...",

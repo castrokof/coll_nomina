@@ -43,6 +43,7 @@
             <th>Fecha y Hora Salida</th>
             <th>Horas Laboradas</th>
             <th>Jornada</th>
+            <th>Quincena</th>
             <th>Observación</th>
             <th>Fecha y hora de registro</th>
 
@@ -107,6 +108,40 @@
           });
 
 
+// Calcular quincena
+function quincena(){
+    var fecha = new Date($('#date_hour_initial_turn').val());
+
+    var dia = fecha.getDate();
+    var mes = parseFloat(fecha.getMonth());
+    var año = fecha.getFullYear();
+    var rango = "";
+
+    var meses = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV', 'DIC'];
+
+    if(dia >= 1 && dia <= 15){
+
+    rango = '1Q';
+
+    }else{
+
+    rango = '2Q';
+
+    };
+
+   var mesd = meses[mes];
+
+   var quincena = rango.concat(mesd).concat(año);
+
+   $("#quincena").val(quincena);
+
+}
+
+$("#date_hour_initial_turn").change(quincena);
+
+
+
+
 // Funcion para pintar con data table
   var datatable =
         $('#registro').DataTable({
@@ -126,6 +161,7 @@
           {data:'date_hour_end_turn'},
           {data:'hours'},
           {data:'working_type'},
+          {data:'quincena'},
           {data:'observation'},
           {data:'created_at'}
         ],
@@ -306,7 +342,8 @@ $(document).on('click', '.edit', function(){
     success:function(data){
       $('#date_hour_initial_turn').val(data.result.date_hour_initial_turn);
       $('#date_hour_end_turn').val(data.result.date_hour_end_turn);
-      $('#working_type').val(data.result.working_type);;
+      $('#quincena').val(data.result.quincena);
+      $('#working_type').val(data.result.working_type);
       $('#observation').val(data.result.observation);
       $('.card-title').text('Editar Turno');
       $('#form-card').removeClass('card card-info');

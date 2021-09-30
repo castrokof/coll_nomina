@@ -88,12 +88,14 @@ Route::put('usuario/{id}', 'UsuarioController@actualizar')->name('actualizar_usu
 Route::put('password/{id}', 'UsuarioController@actualizarpassword')->name('actualizar_password')->middleware('superEditor');
 Route::put('password1/{id}', 'UsuarioController@actualizarpassword1')->name('actualizar_password1');
 
+
 /* RUTAS DE HORAS X USUARIO */
 
 Route::get('hoursxuser', 'Nomina\HoursxuserController@index')->name('hours')->middleware('superEditor');
 Route::post('hoursxuser', 'Nomina\HoursxuserController@store')->name('guardar_turno')->middleware('superEditor');
 Route::get('hoursxuser/{id}/editar', 'Nomina\HoursxuserController@edit')->name('editar_turno')->middleware('superEditor');
 Route::put('hoursxuser/{id}', 'Nomina\HoursxuserController@update')->name('actualizar_turno')->middleware('superEditor');
+Route::post('liquidar', 'Nomina\HoursxuserController@supervisar')->name('liquidar');
 
 //RUTA PARA CONSULTA DE INFORMES
 Route::get('informesh', 'Nomina\HoursxuserController@informes')->name('hoursinfo')->middleware('superEditor');
@@ -105,6 +107,11 @@ Route::get('select_position', 'Nomina\PositionController@select')->name('select_
 /* RUTAS DE LISTAR CARGOS */
 Route::get('position', 'Nomina\PositionController@index')->name('position');
 Route::post('position', 'Nomina\PositionController@store')->name('guardar_cargo')->middleware('superEditor');
+
+
+/* RUTAS DE LISTAR CARGOS */
+
+
 
 
 });
