@@ -169,6 +169,14 @@ class UsuarioAdministradorSeeder extends Seeder
             'orden'=>1,
             'icono'=>'fas fa-check-double'
         ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 12,
+            'nombre'=>'Informe Liquidado',
+            'url'=>'informe-liquid',
+            'orden'=>2,
+            'icono'=>'fas fa-file-invoice-dollar fa-2x'
+        ]);
 
 
         //Relación menu-rol
@@ -257,6 +265,11 @@ class UsuarioAdministradorSeeder extends Seeder
 
             'rol_id'=> 1,
             'menu_id'=> 13
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 14
         ]);
     }
 }
