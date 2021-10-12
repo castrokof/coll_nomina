@@ -20,20 +20,20 @@
 @section('contenido')
 <div class="row">
   <div class="col-lg-12">
-      <div class="card card-info" id="form-card">
-      <span id="form_result"></span>
+      <div class="card bg-info" id="form-card">
+
       <div class="card-header with-border">
         <h3 class="card-title">Registrar Turnos</h3>
+      </div>
         <form  id="form-general" class="form-horizontal" method="POST">
             @csrf
         <div class="card-body">
             @include('nomina.control_turnos.form-registro')
             @include('nomina.control_turnos.boton-registrar-turno')
         </div>
-    </form>
+       </form>
       </div>
     <div class="card-body table-responsive p-2">
-
     <table id="registro" class="table table-hover display responsive" cellspacing="0" width="100%">
      <thead>
       <tr>
@@ -58,7 +58,7 @@
   <!-- /.card-body -->
 </div>
 </div>
-</div>
+
 
 
 
@@ -386,8 +386,8 @@ $(document).on('click', '.edit', function(){
       $('#working_type').val(data.result.working_type);
       $('#observation').val(data.result.observation);
       $('.card-title').text('Editar Turno');
-      $('#form-card').removeClass('card card-info');
-      $('#form-card').addClass('card card-warning');
+      $('#form-card').removeClass('card bg-info');
+      $('#form-card').addClass('card bg-warning');
       $('#action_button').val('Editar').removeClass('btn-sucess')
       $('#action_button').addClass('btn-danger')
       $('#cancelar_button').css("display", "block")
@@ -404,8 +404,8 @@ $(document).on('click', '.edit', function(){
 
 $('#form-general').on('reset', function(event){
       $('.card-title').text('Registrar Turnos');
-      $('#form-card').removeClass('card card-warning');
-      $('#form-card').addClass('card card-info');
+      $('#form-card').removeClass('card bg-warning');
+      $('#form-card').addClass('card bg-info');
       $('#action_button').val('Guardar').removeClass('btn-danger')
       $('#action_button').addClass('btn-success')
       $('#cancelar_button').css("display", "none")
