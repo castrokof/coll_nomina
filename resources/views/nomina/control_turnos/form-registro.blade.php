@@ -11,11 +11,12 @@
     </div>
     <div class="col-lg-4">
     <label for="working_type" class="col-xs-2 control-label requerido">Jornada</label>
-        <select name="working_type" id="working_type" class="form-control select2bs4" style="width: 100%;" required>
+        <input class="form-control" name="working_type" id="working_type" value="" readonly>
+        {{-- <select name="working_type" id="working_type" class="form-control select2bs4" style="width: 100%;" required>
             <option value="">---Seleccione el Jornada---</option>
             <option value="Diurno">Diurno</option>
             <option value="Nocturno">Nocturno</option>
-        </select>
+        </select> --}}
     </div>
 </div>
 <div class="form-group row">

@@ -108,6 +108,46 @@
           });
 
 
+
+// Calcular jornada
+function jornada(){
+    var fechaini = new Date($('#date_hour_initial_turn').val());
+    var fechafin = new Date($('#date_hour_end_turn').val());
+
+    var horaini = fechaini.getHours();
+    var horafin = fechafin.getHours();
+
+    var diaini = fechaini.getDate();
+    var diafin = fechafin.getDate();
+    var diac = diafin - diaini;
+
+    console.log(horaini);
+   if(horaini >= 0 && horafin <=13 && diac == 0){
+    var working_type = "Mañana";
+   }else if(horaini > 12 && horafin <=23 && diac == 0){
+
+    var working_type = "Tarde";
+   }else if(horaini >= 0 && horafin <=19 && diac == 0){
+
+    var working_type = "Diurno";
+
+   }else if(horaini > 12 && horafin < 12 && diac == 1){
+
+    var working_type = "Nocturno";
+   }
+
+
+   $("#working_type").val(working_type);
+
+}
+
+$("#date_hour_initial_turn").change(jornada);
+$("#date_hour_end_turn").change(jornada);
+
+
+
+
+
 // Calcular quincena
 function quincena(){
     var fecha = new Date($('#date_hour_initial_turn').val());

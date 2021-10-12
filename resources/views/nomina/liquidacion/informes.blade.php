@@ -339,7 +339,7 @@ $(document).ready(function() {
               lengthMenu: [ -1],
               processing: true,
               serverSide: true,
-              aaSorting: [[ 2, "asc" ]],
+              aaSorting: [[ 6, "asc" ]],
 
 
           ajax:{

@@ -108,8 +108,11 @@ Route::get('select_position', 'Nomina\PositionController@select')->name('select_
 Route::get('position', 'Nomina\PositionController@index')->name('position');
 Route::post('position', 'Nomina\PositionController@store')->name('guardar_cargo')->middleware('superEditor');
 
+//RUTA PARA CONSULTA DE INFORMES DE LIQUIDACION
+Route::get('informe-liquid', 'Nomina\LiquidationxuserController@informes')->name('liquidinfo')->middleware('superEditor');
+Route::get('informe-liquidc', 'Nomina\LiquidationxuserController@informes1')->name('liquidinfoc')->middleware('superEditor');
+Route::get('select_quincena', 'Nomina\LiquidationxuserController@select')->name('select_quincena');
 
-/* RUTAS DE LISTAR CARGOS */
 
 
 
