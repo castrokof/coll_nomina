@@ -164,7 +164,12 @@ class HoursxuserController extends Controller
             ->select(DB::raw('count(hoursxuser.working_type) as turnos1'))
             ->first();
 
+<<<<<<< HEAD
+
+  //Consulta de totas horas - horas base
+=======
   //Consulta de total horas - horas base
+>>>>>>> b0bae0d2c0609a2f2d21ca4ed6ae0989b3d78f1a
             $horas_base = 0;
             $hours_total = DB::table('hoursxuser')
             ->join('usuario', 'hoursxuser.user_id', '=', 'usuario.id')
