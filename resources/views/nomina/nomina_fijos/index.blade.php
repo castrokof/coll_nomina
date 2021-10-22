@@ -1,14 +1,49 @@
 @extends("theme.$theme.layout")
 
 @section('titulo')
-    Control de turnos
+    Creación de nomina
 @endsection
 @section("styles")
 <link href="{{asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css")}}" rel="stylesheet" type="text/css"/>
 <link href="{{asset("assets/js/gijgo-combined-1.9.13/css/gijgo.min.css")}}" rel="stylesheet" type="text/css"/>
 <link href="{{asset("assets/css/select2-bootstrap.min.css")}}" rel="stylesheet" type="text/css"/>
 <link href="{{asset("assets/css/select2.min.css")}}" rel="stylesheet" type="text/css"/>
+<style>
 
+    /*btn flotante*/
+.btn-flotante {
+	font-size: 14px; /* Cambiar el tamaño de la tipografia */
+	text-transform: uppercase; /* Texto en mayusculas */
+	font-weight: bold; /* Fuente en negrita o bold */
+	color: #ffffff; /* Color del texto */
+	border-radius: 120px; /* Borde del boton */
+	letter-spacing: 2px; /* Espacio entre letras */
+    background: linear-gradient(to right, #a80d08, #ff6756) !important; /* Color de fondo */
+	/*background-color: #e9321e; /* Color de fondo */
+	padding: 18px 30px; /* Relleno del boton */
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	transition: all 300ms ease 0ms;
+	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.5);
+	z-index: 99;
+    border:none;
+    outline:none;
+}
+.btn-flotante:hover {
+	background-color: #2c2fa5; /* Color de fondo al pasar el cursor */
+	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+	transform: translateY(-7px);
+}
+@media only screen and (max-width: 600px) {
+.btn-flotante {
+    font-size: 14px;
+    padding: 12px 20px;
+    bottom: 20px;
+    right: 20px;
+}
+}
+</style>
 
 @endsection
 
@@ -23,43 +58,44 @@
       <div class="card bg-info" id="form-card">
 
       <div class="card-header with-border">
-        <h3 class="card-title">Registrar Turnos</h3>
+        <h3 class="card-title">Crear nomina</h3>
       </div>
         <form  id="form-general" class="form-horizontal" method="POST">
             @csrf
         <div class="card-body">
-            @include('nomina.control_turnos.form-registro')
-            @include('nomina.control_turnos.boton-registrar-turno')
+            @include('nomina.nomina_fijos.form-usuario')
+            @include('nomina.nomina_fijos.boton-consultar-usuario-fijo')
         </div>
        </form>
       </div>
     <div class="card-body table-responsive p-2">
-    <table id="registro" class="table table-hover display responsive" cellspacing="0" width="100%">
-     <thead>
-      <tr>
-            <th>action</th>
-            <th>ID</th>
-            <th>Fecha y Hora Ingreso</th>
-            <th>Fecha y Hora Salida</th>
-            <th>Horas Laboradas</th>
-            <th>Jornada</th>
-            <th>Quincena</th>
-            <th>Observación</th>
-            <th>Fecha y hora de registro</th>
+        <table id="usuarios" class="table table-hover  text-nowrap">
+            <thead>
+            <tr>
+                  <th>Acciones</th>
+                  <th>Id</th>
+                  <th>1Nombre</th>
+                  <th>2Nombre</th>
+                  <th>1Apellido</th>
+                  <th>2Apellido</th>
+                  <th>Tipo documento</th>
+                  <th>Documento</th>
+                  <th>Ips</th>
+                  <th>Cargo</th>
+                  <th>Tipo de salario</th>
+                  <th>Salario</th>
+                  <th>Activo</th>
 
-
-      </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
   </div>
   <!-- /.card-body -->
 </div>
+<button type="button" class="btn-flotante tooltipsC" id="liquidar" title="adicionar nomina"><i class="fas fa-save fa-2x"></i></button>
 </div>
-
-
 
 
 
@@ -88,6 +124,17 @@
 <script>
  $(document).ready(function(){
 
+    // Btn flotante
+    $('.botonF1').hover(function(){
+
+})
+
+
+
+$("#selectall").on('click', function() {
+$(".case").prop("checked", this.checked);
+});
+
         $('#date_hour_initial_turn').datetimepicker(
           {
           footer: true,
@@ -110,35 +157,10 @@
 
 // Calcular jornada
 function jornada(){
-    var fechaini = new Date($('#date_hour_initial_turn').val());
-    var fechafin = new Date($('#date_hour_end_turn').val());
-
-    var horaini = fechaini.getHours();
-    var horafin = fechafin.getHours();
-
-    var diaini = fechaini.getDate();
-    var diafin = fechafin.getDate();
-    var diac = diafin - diaini;
-
-    console.log(horaini);
-   if(horaini >= 0 && horafin <=13 && diac == 0){
-    var working_type = "Mañana";
-   }else if(horaini > 12 && horafin <=23 && diac == 0){
-
-    var working_type = "Tarde";
-   }else if(horaini >= 0 && horafin <=19 && diac == 0){
-
-    var working_type = "Diurno";
-
-   }else if(horaini > 12 && horafin < 12 && diac == 1){
-
-    var working_type = "Nocturno";
+     var working_type = "PagoFijo";
+     $("#working_type").val(working_type);
    }
 
-
-   $("#working_type").val(working_type);
-
-}
 
 $("#date_hour_initial_turn").change(jornada);
 $("#date_hour_end_turn").change(jornada);
@@ -179,30 +201,92 @@ function quincena(){
 $("#date_hour_initial_turn").change(quincena);
 
 
+fill_datatable_tabla();
+//Callback para consultar los datos por filtro desede la funcion fill_datatable_tabla
+
+$('#consultar_button').click(function(){
+
+ips = $('#ips').val();
+
+$("#selectall").prop("checked", false);
+
+    if(ips != ''){
+
+        $('#usuarios').DataTable().destroy();
+
+        fill_datatable_tabla(ips);
 
 
-// Funcion para pintar con data table
-  var datatable =
-        $('#registro').DataTable({
+    }else{
+
+        Swal.fire({
+        title: 'Debes seleccionar una ips',
+        icon: 'warning',
+        buttons:{
+            cancel: "Cerrar"
+
+                }
+        })
+    }
+
+});
+
+
+// Funcion para pintar con data table y parametro de ips
+function fill_datatable_tabla(ips = '')
+         {
+
+
+  var datatable = $('#usuarios').DataTable({
         language: idioma_espanol,
         processing: true,
         lengthMenu: [ [25, 50, 100, 500, -1 ], [25, 50, 100, 500, "Mostrar Todo"] ],
         processing: true,
         serverSide: true,
         ajax:{
-          url:"{{route('hours')}}",
+          url:"{{route('nominaf')}}",
+          data:{ips:ips}
               },
         columns: [
           {data:'action',
-           orderable: false},
-          {data:'id'},
-          {data:'date_hour_initial_turn'},
-          {data:'date_hour_end_turn'},
-          {data:'hours'},
-          {data:'working_type'},
-          {data:'quincena'},
-          {data:'observation'},
-          {data:'created_at'}
+           orderable: false
+          },
+          {data:'id',
+          name: 'id'
+          },
+          {data:'pnombre',
+          name: 'pnombre'
+          },
+          {data:'snombre',
+           name:'snombre'
+          },
+          {data:'papellido',
+          name:'papellido'
+          },
+          {data:'sapellido',
+          name:'sapellido'
+          },
+          {data:'tipo_documento',
+          name:'tipo_documento'
+          },
+          {data:'documento',
+           name:'documento'
+          },
+          {data:'ips',
+           name:'ips'
+          },
+          {data:'cargo',
+           name:'cargo'
+          },
+          {data:'type_salary',
+           name:'type_salary'
+          },
+          {data:'salario', render: $.fn.dataTable.render.number( ',', '.' ),
+           name:'salario'
+          },
+          {data:'activo',
+           name:'activo'
+          },
         ],
 
          //Botones----------------------------------------------------------------------
@@ -245,56 +329,110 @@ $("#date_hour_initial_turn").change(quincena);
 
                       }
                    ],
+                   "columnDefs": [
+
+                                    {
+
+                                    "render": function ( data, type, row ) {
+                                        if (row["activo"] == 1) {
+                                           return data +' - Activo';
+                                             }else{
+
+                                            return data +' - Inactivo';
+
+                                        }
+
+                                        },
+                                        "targets":[12]
+                                    },
+                                    {
+
+                                    "render": function ( data, type, row ) {
+                                        if (row["type_salary"] == 1) {
+                                        return data +' - Fijo';
+                                            }else{
+
+                                            return data +' - Por horas';
+
+                                        }
+
+                                        },
+                                        "targets":[10]
+                                    }
+
+
+
+
+                                    ],
+
+                 "createdRow": function(row, data, dataIndex) {
+                 if (data["activo"] == 1) {
+                    $($(row).find("td")[12]).addClass("btn btn-sm btn-success rounded-lg");
+                  }else{
+                    $($(row).find("td")[12]).addClass("btn btn-sm btn-warning rounded-lg");
+                }
+                if (data["type_salary"] == 1) {
+                    $($(row).find("td")[10]).addClass("btn btn-sm btn-info rounded-lg");
+                  }else{
+                    $($(row).find("td")[10]).addClass("btn btn-sm btn-dark rounded-lg");
+                    }
+
+                 }
+
 
 
 
 
         });
+    }
+
+
 
 //funciona para guardar el formulario
 
-$('#form-general').on('submit', function(event){
-    event.preventDefault();
+$('#liquidar').click(function(){
+
+    var id = [];
+    var supervisor ="{{Session()->get('usuario') ?? ''}}";
+    var dateini = $('#date_hour_initial_turn').val();
+    var datefin = $('#date_hour_end_turn').val();
+    var quincena = $("#quincena").val();
+    var jornada = $("#working_type").val();
+    var observation = $("#observation").val();
     var url = '';
     var icon = '';
 
-if($('#date_hour_initial_turn').val() == '' ||  $('#date_hour_end_turn').val() == '' ||  $('#working_type').val() == ''){
+    var fecha = new Date($('#date_hour_initial_turn').val());
+    var fechaf = new Date($('#date_hour_end_turn').val());
+
+    var mes = parseFloat(fecha.getMonth());
+    var mesf = parseFloat(fechaf.getMonth());
+    var dia = fecha.getDate();
+    var diaf = fechaf.getDate();
+    var año = fecha.getFullYear();
+
+    var mesadd = parseFloat(fecha.getMonth()+1);
+
+    var diasxmes = new Date(año, mesadd, 0).getDate();
+
+    if($('#date_hour_initial_turn').val() > $('#date_hour_end_turn').val()){
 
     Swal.fire({
-                  icon: 'warning',
-                  title: 'Debes rellenar los campos obligatorios',
-                  showConfirmButton: true,
-                  timer: 1500
+                icon: 'error',
+                title: 'La fecha y hora inicial debe ser menor que la fecha y hora final',
+                showConfirmButton: true,
+                timer: 1500
             });
 
- }else if($('#date_hour_initial_turn').val() > $('#date_hour_end_turn').val()){
+    }else if((dia == 1 && mes == mesf && diaf == 15) || (dia == 16 && mes == mesf && diasxmes == 30 && diaf > 29 && diaf < 31) || (dia == 16 && mes == mesf && diasxmes == 31 && diaf > 30) || (dia == 16 && mes == mesf &&  mes == 1 && diaf == 28) || (dia == 16 && mes == mesf &&  mes == 1 && diaf == 29)) {
 
-Swal.fire({
-              icon: 'error',
-              title: 'La fecha y hora inicial debe ser menor que la fecha y hora final',
-              showConfirmButton: true,
-              timer: 1500
-        });
 
-}else{
-
-    if($('#action').val() == 'Add')
-  {
-    url = "{{route('guardar_turno')}}";
+    url = "{{route('guardar_nomina')}}";
     method = 'post';
-    text = "Estás por registrar un turno";
+    text = "Estás por crear una nomina";
     icon = "warning";
-  }
 
-  if($('#action').val() == 'Edit')
-  {
-    var updateid = $('#hidden_id').val();
-    url = "/hoursxuser/"+updateid;
-    method = 'put';
-    text = "Estás por actualizar un turno";
-    icon = "danger";
-  }
-    Swal.fire({
+   Swal.fire({
      title: "¿Estás seguro?",
      text: text,
      icon: "warning",
@@ -303,10 +441,31 @@ Swal.fire({
      confirmButtonText: 'Aceptar',
      }).then((result)=>{
     if(result.value){
+        $('input:checkbox:checked').each(function() {
+        id.push($(this).val());
+
+            });
+
+        if(id.length > 0)
+        {
+        Swal.fire({
+                title: 'Espere por favor !',
+                html: 'Realizando la nomina',// add html attribute if you want or remove
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                willOpen: () => {
+                    Swal.showLoading()
+                    },
+            }),
+
     $.ajax({
            url:url,
            method:method,
-           data:$(this).serialize(),
+           data:{id:id, supervisor:supervisor,date_hour_initial_turn:dateini, date_hour_end_turn:datefin, working_type:jornada, quincena:quincena,observation:observation,
+
+            "_token": $("meta[name='csrf-token']").attr("content")
+
+           },
            dataType:"json",
            success:function(data){
               var html = '';
@@ -323,36 +482,21 @@ Swal.fire({
                     html += '</div>';
                     }
                     else if(data.success == 'ok') {
-                      $('#form-general')[0].reset();
-                      $('#registro').DataTable().ajax.reload();
+                     $('#usuarios').DataTable().ajax.reload();
                       Swal.fire(
                         {
                           icon: 'success',
-                          title: 'Turno registrado correctamente',
+                          title: 'Nomina creada correctamente',
                           showConfirmButton: true,
                           timer: 1500
                         }
                       )
 
-                    }else if(data.success == 'ok1'){
-                      $('#form-general')[0].reset();
-                      $('#registro').DataTable().ajax.reload();
-                      Swal.fire(
-                        {
-                          icon: 'success',
-                          title: 'Turno actualizado correctamente',
-                          showConfirmButton: true,
-                          timer: 1500
-                        }
-                      )
-
-
-                    } else if(data.success == 'repeat') {
-                     $('#registro').DataTable().ajax.reload();
-                     Swal.fire(
+                    }else if(data.success == 'repeat') {
+                    Swal.fire(
                         {
                           icon: 'error',
-                          title: 'No puedes registrar 2 turnos con la misma fecha',
+                          title: 'No puedes registrar 2 quincenas iguales al mismo usuario',
                           showConfirmButton: true,
                           timer: 1500
                         }
@@ -364,9 +508,30 @@ Swal.fire({
 
 
            });
+
+        }else{
+
+        Swal.fire({
+            title: 'Por favor seleccione un turno del checkbox',
+            icon: 'warning',
+            buttons:{
+                cancel: "Cerrar"
+
+                    }
+            })
+            }
           }
         });
 
+    }else{
+
+        Swal.fire(
+                        {
+                          icon: 'error',
+                          title: 'Solo puedes escoger un rango quincenal del mismo mes',
+                          showConfirmButton: true,
+                          timer: 1500
+                        })
     }
   });
 

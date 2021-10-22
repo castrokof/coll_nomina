@@ -7,11 +7,14 @@
           <tr>
             <th class="width40"><input name="selectall" id="selectall" type="checkbox" class="select-all" /> Select/Deselect All</th>
             <th>ID</th>
+            <th>Ips</th>
             <th>1Nombre</th>
             <th>2Nombre</th>
             <th>1Apellido</th>
             <th>2Apellido</th>
             <th>Quincena</th>
+            <th>Tipo de pago</th>
+            <th>Salario</th>
             <th>Horas Laboradas</th>
             <th>Valor hora</th>
             <th>Turnos nocturnos</th>
@@ -27,6 +30,9 @@
           <tfoot>
             <tr>
 
+              <th></th>
+              <th></th>
+              <th></th>
               <th></th>
               <th></th>
               <th></th>

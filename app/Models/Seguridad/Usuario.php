@@ -31,7 +31,8 @@ class Usuario extends Authenticatable
         'observacion',
         'ips',
         'activo',
-        'cargo_id'
+        'cargo_id',
+        'type_salary'
     ];
 
 

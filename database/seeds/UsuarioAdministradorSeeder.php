@@ -177,6 +177,23 @@ class UsuarioAdministradorSeeder extends Seeder
             'orden'=>2,
             'icono'=>'fas fa-file-invoice-dollar fa-2x'
         ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 0,
+            'nombre'=>'Nomina fijos',
+            'url'=>'#',
+            'orden'=>5,
+            'icono'=>'fas fa-file-invoice-dollar fa-2x'
+        ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 15,
+            'nombre'=>'Crear nomina',
+            'url'=>'nominaf',
+            'orden'=>1,
+            'icono'=>'fas fa-money-check-alt'
+        ]);
+
 
 
         //Relación menu-rol
@@ -270,6 +287,16 @@ class UsuarioAdministradorSeeder extends Seeder
 
             'rol_id'=> 1,
             'menu_id'=> 14
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 15
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 16
         ]);
     }
 }

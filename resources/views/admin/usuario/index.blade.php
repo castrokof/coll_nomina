@@ -47,6 +47,7 @@
               <th>Activo</th>
               <th>Rol</th>
               <th>Cargo</th>
+              <th>Tipo de salario</th>
               <th>Fecha de creacion</th>
 
         </tr>
@@ -256,6 +257,9 @@
           {data:'cargo',
            name:'cargo'
           },
+          {data:'type_salary',
+           name:'type_salary'
+          },
           {data:'created_at',
            name:'created_at'
           },
@@ -305,14 +309,6 @@
                    ],
 
                    "columnDefs": [
-                                    // {
-                                    // "render": function ( data, type, row ) {
-                                    //         return data +' - '+row["papellido"]+' '+' - '+row["sapellido"];
-                                    //     },
-                                    //     "targets":[2]
-                                    // },
-                                    // { "visible": false,  "targets": [4] },
-                                    // { "visible": false,  "targets": [5] },
                                     {
 
                                     "render": function ( data, type, row ) {
@@ -326,6 +322,20 @@
 
                                         },
                                         "targets":[12]
+                                    },
+                                    {
+
+                                        "render": function ( data, type, row ) {
+                                        if (row["type_salary"] == 1) {
+                                        return data +' - Fijo';
+                                            }else{
+
+                                            return data +' - Por horas';
+
+                                        }
+
+                                        },
+                                        "targets":[15]
                                     }
 
 
@@ -339,6 +349,11 @@
                   }else{
                     $($(row).find("td")[12]).addClass("btn btn-sm btn-warning rounded-lg");
                 }
+                if (data["type_salary"] == 1) {
+                    $($(row).find("td")[15]).addClass("btn btn-sm btn-info rounded-lg");
+                  }else{
+                    $($(row).find("td")[15]).addClass("btn btn-sm btn-dark rounded-lg");
+                    }
 
                  }
 

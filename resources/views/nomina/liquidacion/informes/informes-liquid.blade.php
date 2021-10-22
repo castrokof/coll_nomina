@@ -250,18 +250,21 @@ $.get('select_quincena',
           {data:'action',
            orderable: false},
           {data:'id'},
+          {data:'ips'},
           {data:'pnombre'},
           {data:'snombre'},
           {data:'papellido'},
           {data:'sapellido'},
           {data:'quincena'},
+          {data:'type_salary'},
+          {data:'salary', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'horas'},
-          {data:'valor_hora'},
+          {data:'valor_hora', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'turnos'},
-          {data:'noches'},
-          {data:'total_noches'},
-          {data:'total'},
-          {data:'total_pagar'}
+          {data:'noches', render: $.fn.dataTable.render.number( ',', '.' )},
+          {data:'total_noches', render: $.fn.dataTable.render.number( ',', '.' )},
+          {data:'total', render: $.fn.dataTable.render.number( ',', '.' )},
+          {data:'total_pagar', render: $.fn.dataTable.render.number( ',', '.' )}
 
         ],
         "columnDefs": [
@@ -314,7 +317,36 @@ $.get('select_quincena',
 
 
                   }
-               ]
+               ],
+               "columnDefs": [
+                                    {
+
+                                    "render": function ( data, type, row ) {
+                                        if (row["type_salary"] == 1) {
+                                        return data +' - Fijo';
+                                            }else{
+
+                                            return data +' - Por horas';
+
+                                        }
+
+                                        },
+                                        "targets":[8]
+                                    }
+
+
+
+
+                                    ],
+
+                 "createdRow": function(row, data, dataIndex) {
+                 if (data["type_salary"] == 1) {
+                    $($(row).find("td")[8]).addClass("btn btn-sm btn-info rounded-lg");
+                  }else{
+                    $($(row).find("td")[8]).addClass("btn btn-sm btn-dark rounded-lg");
+                    }
+
+                 }
              });
  }
 

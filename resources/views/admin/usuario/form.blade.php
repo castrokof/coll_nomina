@@ -67,7 +67,7 @@
     </div>
 </div>
 <div class="form-group row">
-   <div class="col-lg-3">
+    <div class="col-lg-3">
         <label for="ips" class="col-xs-4 control-label requerido">Ips</label>
                     <select name="ips" id="ips" class="form-control select2bs4" style="width: 100%;">
                     <option value="">---seleccione la ips---</option>
@@ -94,9 +94,13 @@
                     <option value="0">inactivo</option>
                     </select>
     </div>
-    <div class="col-lg-3">
-        <label for="observacion" class="col-xs-8 control-label requerido">Observación</label>
-        <textarea name="observacion" id="observacion" class="form-control" rows="3" placeholder="Enter ..." value="{{old('observacion')}}"></textarea>
+     <div class="col-lg-3">
+        <label for="type_salary" class="col-xs-4 control-label requerido">Tipo de Salario</label>
+        <select name="type_salary" id="type_salary" class="form-control select2bs4" style="width: 100%;" required>
+            <option value="">---seleccione---</option>
+            <option value="1">FIJO</option>
+            <option value="2">POR HORAS</option>
+        </select>
     </div>
 
 </div>

@@ -33,7 +33,7 @@ class UsuarioController extends Controller
             ->Join('rol', 'usuario_rol.rol_id', '=', 'rol.id')
             ->select('usuario.id as id', 'usuario.pnombre as pnombre', 'usuario.snombre as snombre', 'usuario.papellido as papellido','usuario.sapellido as sapellido', 'rol.nombre as nombre',
             'usuario.tipo_documento as tipo_documento', 'usuario.documento as documento', 'usuario.usuario as usuario', 'position.position as cargo', 'usuario.celular as celular',
-            'usuario.email as email', 'usuario.ips as ips', 'usuario.activo as activo', 'usuario.created_at as created_at')
+            'usuario.email as email', 'usuario.ips as ips', 'usuario.activo as activo', 'usuario.type_salary as type_salary', 'usuario.created_at as created_at')
             ->orderBy('usuario.id')
             ->get();
 
@@ -59,7 +59,7 @@ class UsuarioController extends Controller
             ->where('usuario.id',  $usuario_id )
             ->select('usuario.id as id', 'usuario.pnombre as pnombre', 'usuario.snombre as snombre', 'usuario.papellido as papellido','usuario.sapellido as sapellido', 'rol.nombre as nombre',
             'usuario.tipo_documento as tipo_documento', 'usuario.documento as documento', 'usuario.usuario as usuario','position.position as cargo', 'usuario.celular as celular',
-            'usuario.email as email', 'usuario.ips as ips','usuario.activo as activo', 'usuario.created_at as created_at')
+            'usuario.email as email', 'usuario.ips as ips','usuario.activo as activo', 'usuario.type_salary as type_salary', 'usuario.created_at as created_at')
             ->orderBy('usuario.id')
             ->get();
 
@@ -154,7 +154,7 @@ class UsuarioController extends Controller
             ->Join('rol', 'usuario_rol.rol_id', '=', 'rol.id')
             ->select('usuario.id as id', 'usuario.pnombre as pnombre', 'usuario.snombre as snombre', 'usuario.papellido as papellido','usuario.sapellido as sapellido', 'rol.nombre as nombre',
             'usuario.tipo_documento as tipo_documento', 'usuario.documento as documento', 'usuario.usuario as usuario', 'usuario.celular as celular',
-            'usuario.email as email', 'usuario.ips as ips', 'usuario.cargo_id as cargo_id', 'usuario.activo as activo','usuario.password as password','usuario.remenber_token as remenber_token', 'rol.id as rol_id', 'usuario.created_at as created_at')
+            'usuario.email as email', 'usuario.ips as ips', 'usuario.cargo_id as cargo_id', 'usuario.activo as activo', 'usuario.type_salary as type_salary', 'usuario.password as password','usuario.remenber_token as remenber_token', 'rol.id as rol_id', 'usuario.created_at as created_at')
             ->orderBy('usuario.id')
             ->where('usuario.id', $id)
             ->first();

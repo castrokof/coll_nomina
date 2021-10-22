@@ -97,6 +97,14 @@ Route::get('hoursxuser/{id}/editar', 'Nomina\HoursxuserController@edit')->name('
 Route::put('hoursxuser/{id}', 'Nomina\HoursxuserController@update')->name('actualizar_turno')->middleware('superEditor');
 Route::post('liquidar', 'Nomina\HoursxuserController@supervisar')->name('liquidar');
 
+/* RUTAS DE NOMINA FIJA */
+
+Route::get('nominaf', 'Nomina\HoursxuserController@index_nominaf')->name('nominaf')->middleware('superEditor');
+Route::post('nominaf_guardar', 'Nomina\HoursxuserController@store_nominaf')->name('guardar_nomina')->middleware('superEditor');
+// Route::get('hoursxuser/{id}/editar', 'Nomina\HoursxuserController@edit')->name('editar_turno')->middleware('superEditor');
+// Route::put('hoursxuser/{id}', 'Nomina\HoursxuserController@update')->name('actualizar_turno')->middleware('superEditor');
+// Route::post('liquidar', 'Nomina\HoursxuserController@supervisar')->name('liquidar');
+
 //RUTA PARA CONSULTA DE INFORMES
 Route::get('informesh', 'Nomina\HoursxuserController@informes')->name('hoursinfo')->middleware('superEditor');
 Route::get('informeshc', 'Nomina\HoursxuserController@informes1')->name('hoursinfoc')->middleware('superEditor');
