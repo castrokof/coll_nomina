@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0.2",
+        "ext-gd": "*",
         "barryvdh/laravel-dompdf": "^0.8.6",
         "doctrine/dbal": "^2.10",
         "facade/ignition": "^2.0",

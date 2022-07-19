@@ -18,7 +18,7 @@ function ajaxRequest (url, data) {
         type: 'POST',
         data: data,
         success: function (respuesta) {
-            Manteliviano.notificaciones(respuesta.respuesta, 'Manteliviano', 'info');
+            Manteliviano.notificaciones(respuesta.respuesta, 'Control Turnos', 'info');
         }
     });
 }

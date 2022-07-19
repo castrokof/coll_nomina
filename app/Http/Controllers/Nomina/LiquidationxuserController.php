@@ -42,14 +42,14 @@ class LiquidationxuserController extends Controller
             ->select(
             DB::raw("SUM(CASE WHEN hoursxuser.working_type = 'nocturno' THEN 1 ELSE 0 END) AS turnos"),
             DB::raw("position.value_hour_night * SUM(CASE WHEN hoursxuser.working_type = 'nocturno' THEN 1 ELSE 0 END) AS total_noches"),
-            DB::raw("sum(position.value_hour * hoursxuser.hours + (position.salary/2) +position.value_hour_night * CASE WHEN hoursxuser.working_type = 'nocturno' THEN 1 ELSE 0 END ) as total_pagar"),
+            DB::raw("sum(position.value_hour * hoursxuser.hours + (position.salary/2) +position.value_hour_night * CASE WHEN hoursxuser.working_type = 'nocturno' THEN 1 ELSE 0 END - ((position.salary/2) * 0.08)) as total_pagar"),
             DB::raw('sum(hoursxuser.hours) as horas'),
             'usuario.id as id','usuario.type_salary as type_salary', 'position.value_hour_night as noches', 'usuario.pnombre as pnombre', 'position.value_hour as valor_hora', DB::raw('position.value_hour * sum(hoursxuser.hours) as total'),
-            'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido','hoursxuser.quincena as quincena', DB::raw('position.salary / 2 as salary'), 'usuario.ips as ips')
+            'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido','hoursxuser.quincena as quincena', DB::raw('position.salary / 2 as salary'), 'usuario.ips as ips', DB::raw('position.salary/2 * 0.08 as parafiscales'))
             ->where([
             ['hoursxuser.quincena', $quincena],
             ['hoursxuser.supervisor', '!=', null]])
-            ->groupBy('pnombre', 'id', 'snombre', 'papellido', 'sapellido', 'quincena', 'value_hour', 'value_hour_night', 'salary', 'type_salary', 'ips')
+            ->groupBy('pnombre', 'id', 'snombre', 'papellido', 'sapellido', 'quincena', 'value_hour', 'value_hour_night', 'salary', 'type_salary', 'ips', 'parafiscales')
             ->get();
 
             return  DataTables()->of($datas)

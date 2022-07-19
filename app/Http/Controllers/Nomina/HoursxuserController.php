@@ -380,7 +380,8 @@ if($request->supervisor != null){
             'quincena'  => $request->quincena,
             'observation'  => $request->observation,
             'hours' => 120,
-            'user_id'  => $id
+            'user_id'  => $id,
+            'supervisor'  => $request->supervisor
 
 
             ]);

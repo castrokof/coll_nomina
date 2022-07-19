@@ -40,8 +40,8 @@ var Manteliviano = function(){
             })
         },
         notificaciones: function(mensaje, titulo, tipo){
-            
-            
+
+
             const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -53,40 +53,38 @@ var Manteliviano = function(){
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           });
-       
-        /*toastr.options = {
-            closeButton: true,
-            newestOnTop: true,
-            positioClass: 'toast-top-right',
-            preventDuplicates: true,
-            timeOut: '5000'
-            
-        };*/
+
+
         if (tipo == 'success'){
             Toast.fire({
-                icon: tipo, 
-                title: mensaje
-                });    
+                icon: tipo,
+                title: titulo,
+                text: mensaje
+                });
         }else if(tipo == 'error'){
             Toast.fire({
-                icon: tipo, 
-                title: mensaje});
+                icon: tipo,
+                title: titulo,
+                text: mensaje});
         }else if(tipo == 'info'){
             Toast.fire({
-                icon: tipo, 
-                title: mensaje});
+                icon: tipo,
+                title: titulo,
+                text: mensaje});
         }else if(tipo == 'warning'){
             Toast.fire({
-                icon: tipo, 
-                title: mensaje
+                icon: tipo,
+                title: titulo,
+                text: mensaje
                 });
         }else if(tipo == 'danger'){
             Toast.fire({
-                icon: tipo, 
-                title: mensaje
+                icon: tipo,
+                title: titulo,
+                text: mensaje
                 });
-        }        
-       
+        }
+
     },
 
     }

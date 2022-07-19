@@ -258,6 +258,7 @@ $.get('select_quincena',
           {data:'quincena'},
           {data:'type_salary'},
           {data:'salary', render: $.fn.dataTable.render.number( ',', '.' )},
+          {data:'parafiscales', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'horas'},
           {data:'valor_hora', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'turnos'},
@@ -268,15 +269,6 @@ $.get('select_quincena',
 
         ],
         "columnDefs": [
-                                    {
-                                    "render": function ( data, type, row ) {
-                                            return data +' '+row["papellido"]+' '+row["sapellido"];
-                                        },
-                                        "targets":[2]
-                                    },
-                                    { "visible": false,  "targets": [3] },
-                                    { "visible": false,  "targets": [4] },
-                                    { "visible": false,  "targets": [5] }
 
 
                       ],
@@ -332,7 +324,19 @@ $.get('select_quincena',
 
                                         },
                                         "targets":[8]
-                                    }
+                                    },
+                                    {
+                                    "render": function ( data, type, row ) {
+                                            return data +' '+row["papellido"]+' '+row["sapellido"];
+                                        },
+                                        "targets":[3]
+                                    },
+                                    { "visible": false,  "targets": [4] },
+                                    { "visible": false,  "targets": [5] },
+                                    { "visible": false,  "targets": [6] },
+                                    { "visible": false,  "targets": [0] }
+
+
 
 
 
@@ -340,13 +344,20 @@ $.get('select_quincena',
                                     ],
 
                  "createdRow": function(row, data, dataIndex) {
-                 if (data["type_salary"] == 1) {
-                    $($(row).find("td")[8]).addClass("btn btn-sm btn-info rounded-lg");
-                  }else{
-                    $($(row).find("td")[8]).addClass("btn btn-sm btn-dark rounded-lg");
+                    if (data["type_salary"] == 1) {
+                        $($(row).find("td")[4]).addClass("btn btn-sm btn-info rounded-lg");
+                    }else{
+                        $($(row).find("td")[4]).addClass("btn btn-sm btn-dark rounded-lg");
+                        }
+                    if (data["total_pagar"] > 1) {
+                    $($(row).find("td")[13]).addClass("btn btn-sm btn-success rounded-lg");
+                  }
+                  if (data["parafiscales"] > 1) {
+                        $($(row).find("td")[6]).addClass("btn btn-sm btn-danger rounded-lg");
                     }
 
                  }
+
              });
  }
 

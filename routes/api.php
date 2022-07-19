@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 return $request->user();
 });
 
-Route::post('medidoresout','Admin\OrdenesmtlasignarController@medidorall');
-Route::post('medidores','Admin\OrdenEjecutadaController@medidorejecutado');
-Route::post('marcas','Admin\MarcasController@marcasall');
-Route::post('loginMovil1','Seguridad\LoginController@loginMovil');
+// Route::post('medidoresout','Admin\OrdenesmtlasignarController@medidorall');
+// Route::post('medidores','Admin\OrdenEjecutadaController@medidorejecutado');
+// Route::post('marcas','Admin\MarcasController@marcasall');
+// Route::post('loginMovil1','Seguridad\LoginController@loginMovil');
+
+
