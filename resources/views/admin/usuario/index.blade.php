@@ -520,6 +520,10 @@ $(document).on('click', '.edit', function(){
       $('#rol_id').val(data.result.rol_id);
       $('#activo').val(data.result.activo);
       $('#cargo_id').val(data.result.cargo_id);
+      $('#name_bank').val(data.result.name_bank);
+      $('#type_account').val(data.result.type_account);
+      $('#account').val(data.result.account);
+      $('#type_salary').val(data.result.type_salary);
       $('#observacion').val(data.result.observacion);
       $('#password').val(data.result.password).prop('disabled', true).prop('required', false);
       $('#remenber_token').val(data.result.remenber_token).prop('disabled', true).prop('required', false);

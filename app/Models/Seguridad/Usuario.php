@@ -38,6 +38,9 @@ class Usuario extends Authenticatable
         'ips',
         'activo',
         'cargo_id',
+        'type_account',
+        'name_bank',
+        'account',
         'type_salary'
     ];
 

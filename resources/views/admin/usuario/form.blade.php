@@ -71,8 +71,6 @@
         <label for="ips" class="col-xs-4 control-label requerido">Ips</label>
                     <select name="ips" id="ips" class="form-control select2bs4" style="width: 100%;">
                     <option value="">---seleccione la ips---</option>
-                    <option value="ATENCION FIDEM S.A.S">ATENCION FIDEM S.A.S</option>
-                    <option value="TEMPUS ATENCION INTEGRAL EN SALUD EU">TEMPUS ATENCION INTEGRAL EN SALUD EU</option>
                     <option value="OPORTUNIDAD DE VIDAD S.A.S">OPORTUNIDAD DE VIDAD S.A.S</option>
                     </select>
     </div>
@@ -101,6 +99,24 @@
             <option value="1">FIJO</option>
             <option value="2">POR HORAS</option>
         </select>
+    </div>
+
+</div>
+
+
+<div class="form-group row">
+    <div class="col-lg-3">
+    <label for="name_bank" class="col-xs-4 control-label requerido">Banco</label>
+    <input type="text" name="name_bank" id="name_bank" class="form-control" value="{{old('name_bank')}}" minlength="6" required >
+    </div>
+
+    <div class="col-lg-3">
+    <label for="type_account" class="col-xs-4 control-label requerido">Tipo de Cuenta</label>
+    <input type="text" name="type_account" id="type_account" class="form-control" value="{{old('type_account')}}"  minlength="6" required >
+    </div>
+    <div class="col-lg-3">
+        <label for="account" class="col-xs-4 control-label requerido">No. Cuenta</label>
+        <input type="text" name="account" id="account" class="form-control" value="{{old('account')}}" required >
     </div>
 
 </div>

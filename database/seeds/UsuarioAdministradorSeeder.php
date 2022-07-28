@@ -47,6 +47,7 @@ class UsuarioAdministradorSeeder extends Seeder
             'ips'=>strtoupper('atencion fidem s.a.s'),
             'activo'=>'1',
             'cargo_id'=>1,
+            'type_salary'=>1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
 
