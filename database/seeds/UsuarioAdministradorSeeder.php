@@ -20,11 +20,11 @@ class UsuarioAdministradorSeeder extends Seeder
 
          DB::table('position')->insert([
             'position'=>strtoupper('INGENIERO'),
-            'salary'=>3700000,
-            'value_hour'=>12500,
-            'value_hour_add'=>12500,
+            'salary'=>3120000,
+            'value_hour'=>13000,
+            'value_hour_add'=>13000,
             'value_patient_attended'=>0,
-            'value_hour_night'=>22500,
+            'value_hour_night'=>22750,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s')
               ]);
 
@@ -32,19 +32,19 @@ class UsuarioAdministradorSeeder extends Seeder
 
 
        DB::table('usuario')->insert([
-            'papellido'=>strtoupper('Castro'),
-            'sapellido'=>strtoupper('Galeano'),
-            'pnombre'=>strtoupper('Jhonnathan'),
-            'snombre'=>null,
+            'papellido'=>strtoupper('RODRIGUEZ'),
+            'sapellido'=>strtoupper('LIZARAZO'),
+            'pnombre'=>strtoupper('JULIAN'),
+            'snombre'=>strtoupper('ANDRES'),
             'tipo_documento'=>strtoupper('CC'),
-            'documento'=>'1130629762',
-            'usuario'=>'jcastro',
-            'password'=>bcrypt('123456'),
-            'remenber_token'=>bcrypt('123456'),
-            'email'=>'castrokof@gmail.com',
-            'celular'=>'3175018125',
-            'observacion'=>strtoupper('Prueba'),
-            'ips'=>strtoupper('atencion fidem s.a.s'),
+            'documento'=>'16942518',
+            'usuario'=>'Juliandrp',
+            'password'=>bcrypt('135790'),
+            'remenber_token'=>bcrypt('135790'),
+            'email'=>'sistemas@oportunidaddevida.com.co',
+            'celular'=>'3008294892',
+            'observacion'=>strtoupper('Ingeniero de Sistemas'),
+            'ips'=>strtoupper('Oportunidad de Vida IPS'),
             'activo'=>'1',
             'cargo_id'=>1,
             'type_salary'=>1,
