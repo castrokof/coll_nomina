@@ -27,6 +27,8 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'asset_url' =>  env('ASSET_URL', 'http://localhost:8089/Colnomina/Public'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -167,11 +169,11 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-        
-        
 
 
-        
+
+
+
 
 
         /*
@@ -187,7 +189,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
-       
+
     ],
 
     /*
@@ -240,7 +242,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
-            
+
     ],
 
 ];
