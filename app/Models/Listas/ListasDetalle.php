@@ -21,11 +21,11 @@ class ListasDetalle extends Model
 
     public function userid()
     {
-        return $this->belongsTo(Usuario::class, 'id');
+        return $this->belongsTo(Usuario::class, 'user_id');
     }
 
     public function ListasId()
     {
-                return $this->belongsTo(Listas::class, 'id');
+                return $this->belongsTo(Listas::class, 'listas_id');
     }
 }

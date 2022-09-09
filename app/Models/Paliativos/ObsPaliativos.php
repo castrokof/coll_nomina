@@ -25,12 +25,12 @@ class ObsPaliativos extends Model
 
     public function pacid()
     {
-        return $this->belongsTo(BasePaliativos::class, 'id');
+        return $this->belongsTo(BasePaliativos::class, 'pac_id');
     }
 
 
     public function user_pacid()
     {
-        return $this->belongsTo(Usuario::class, 'id');
+        return $this->belongsTo(Usuario::class, 'user_id');
     }
 }

@@ -9,11 +9,13 @@ use App\Models\Listas\Listas;
 use App\Models\Listas\ListasDetalle;
 use App\Models\Nomina\Hoursxuser;
 use App\Models\Nomina\Liquidationxuser;
+use App\Models\Nomina\Novedades;
 use App\Models\Nomina\Position;
 use App\Models\Paliativos\BasePaliativos;
 use App\Models\Paliativos\ObsPaliativos;
 use App\Models\Psicologica\LineaPsicologica;
 use App\Models\Psicologica\ObservacionesPsicologia;
+use DateTimeInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -38,7 +40,12 @@ class Usuario extends Authenticatable
         'ips',
         'activo',
         'cargo_id',
-        'type_salary'
+        'name_bank',
+        'account',
+        'type_account',
+        'type_salary',
+        'type_contrat',
+        'date_in'
     ];
 
 
@@ -57,6 +64,11 @@ class Usuario extends Authenticatable
 
     }
 
+    public function novedades(){
+        return $this->hasMany(Novedades::class, 'user_id');
+
+    }
+
 
     public function obs_palia(){
         return $this->hasMany(ObsPaliativos::class, 'user_id');
@@ -70,7 +82,7 @@ class Usuario extends Authenticatable
     }
 
     public function cargos(){
-         return $this->belongsTo(Position::class, 'id');
+         return $this->belongsTo(Position::class, 'cargo_id');
     }
 
 
@@ -125,6 +137,11 @@ public function setSession(){
             $this->attributes['remenber_token'] = Hash::make($value);
         }
     }
+
+    protected function serializeDate(DateTimeInterface $date)
+{
+    return $date->format('Y-m-d H:i:s');
+}
 
 
 }

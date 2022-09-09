@@ -48,7 +48,8 @@ class ValidacionUsuario extends FormRequest
             'email'  => 'required|email|max:100|unique:usuario,email,'.$this->route('id'),
             'activo'  => 'required',
             'celular' => 'required',
-            'activo' => 'required',
+            'type_contrat' => 'required',
+            'date_in' => 'required',
             'rol_id' => 'required|integer'
         ];
 
@@ -67,7 +68,8 @@ class ValidacionUsuario extends FormRequest
             'email'  => 'required|email|max:100|unique:usuario,email,'.$this->route('id'),
             'activo'  => 'required',
             'celular' => 'required',
-            'activo' => 'required',
+            'type_contrat' => 'required',
+            'date_in' => 'required',
             'rol_id' => 'required|integer'
 
 

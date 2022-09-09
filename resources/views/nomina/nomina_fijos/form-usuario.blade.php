@@ -3,10 +3,7 @@
     <div class="col-lg-2">
         <label for="ips" class="col-xs-4 control-label requerido">Seleccione la IPS</label>
                     <select name="ips" id="ips" class="form-control select2bs4" style="width: 100%;">
-                    <option value="">---seleccione la ips---</option>
-                    <option value="ATENCION FIDEM S.A.S">ATENCION FIDEM S.A.S</option>
-                    <option value="TEMPUS ATENCION INTEGRAL EN SALUD EU">TEMPUS ATENCION INTEGRAL EN SALUD EU</option>
-                    <option value="OPORTUNIDAD DE VIDAD S.A.S">OPORTUNIDAD DE VIDAD S.A.S</option>
+
                     </select>
     </div>
     <div id="ocultar"

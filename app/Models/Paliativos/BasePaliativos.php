@@ -40,7 +40,7 @@ class BasePaliativos extends Model
 
     public function userid_bdpaliativos()
     {
-        return $this->belongsTo(Usuario::class, 'id');
+        return $this->belongsTo(Usuario::class, 'user_id');
     }
 
     public function obspaliativos(){

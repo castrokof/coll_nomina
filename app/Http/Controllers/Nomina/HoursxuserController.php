@@ -57,8 +57,10 @@ class HoursxuserController extends Controller
     public function index_nominaf(Request $request )
     {
 
-        if($request->ajax()){
+        $fechaAi=now()->toDateString()." 00:00:01";
+        $fechaAf=now()->toDateString()." 23:59:59";
 
+        if($request->ajax()){
 
 
             $datas = DB::table('usuario')
@@ -72,6 +74,7 @@ class HoursxuserController extends Controller
             ->where('usuario.ips', $request->ips)
             ->where('usuario.type_salary', 1)
             ->get();
+
 
             return  DataTables()->of($datas)
            ->addColumn('action', function($datas){
@@ -344,6 +347,9 @@ if($request->supervisor != null){
 
         //Variables donde se extrae solo la fecha
 
+        $usuariosn = null;
+        $usuarios = null;
+
         $datei = new Carbon($request->date_hour_initial_turn);
         $datei = $datei->toDateString();
 
@@ -352,45 +358,61 @@ if($request->supervisor != null){
         $ids = $request->input('id');
 
         foreach ($ids as $id ) {
+
+
+
         $existe = Hoursxuser::where([
-            ['date_hour_initial_turn', 'LIKE', $datei.'%'],
-            ['date_hour_end_turn', 'LIKE', $datef.'%'],
             ['working_type', $request->working_type],
             ['quincena', $request->quincena],
             ['user_id', $id]
             ])->count();
-        }
 
 
-      if($existe > 0){
+      if($existe == 0){
 
-             return response()->json(['success' => 'repeat']);
+
+            Hoursxuser::create([
+               'date_hour_initial_turn'  => $request->date_hour_initial_turn,
+               'date_hour_end_turn'  => $request->date_hour_end_turn,
+               'working_type'  => $request->working_type,
+               'quincena'  => $request->quincena,
+               'observation'  => $request->observation,
+               'hours' => 120,
+               'user_id'  => $id,
+               'supervisor'  => $request->supervisor
+
+
+               ]);
+
+
+            $usuariosn[] = $id ;
+
 
        }else if($datei > $datef){
 
             return response()->json(['errors' => ['La fecha y hora inicial debe ser menor que la fecha y hora final']]);
 
-       }else{
+       }else if ($existe>0) {
 
-        foreach ($ids as $id ) {
-         Hoursxuser::create([
-            'date_hour_initial_turn'  => $request->date_hour_initial_turn,
-            'date_hour_end_turn'  => $request->date_hour_end_turn,
-            'working_type'  => $request->working_type,
-            'quincena'  => $request->quincena,
-            'observation'  => $request->observation,
-            'hours' => 120,
-            'user_id'  => $id,
-            'supervisor'  => $request->supervisor
+            $usuarios[] = $id ;
 
 
-            ]);
+       }
+
+
+
+     }
+        if ($usuarios == 0) {
+            $usuarios = [];# code...
         }
-            return response()->json(['success' => 'ok']);
+        if ($usuariosn == 0) {
+            $usuariosn = [];
+        }
+            return response()->json(['success' => 'ok', 'usuarios' => $usuarios, 'usuarios1' => $usuariosn]);
 
         }
 
-    }
+
 
 
 

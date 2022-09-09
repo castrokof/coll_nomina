@@ -18,13 +18,16 @@ class UsuarioAdministradorSeeder extends Seeder
          //Crear cargo menu-rol
 
 
+
+
+
          DB::table('position')->insert([
-            'position'=>strtoupper('INGENIERO'),
-            'salary'=>3700000,
-            'value_hour'=>12500,
-            'value_hour_add'=>12500,
+            'position'=>strtoupper('JEFE DE SISTEMAS'),
+            'salary'=>2250000,
+            'value_hour'=>0,
+            'value_hour_add'=>0,
             'value_patient_attended'=>0,
-            'value_hour_night'=>22500,
+            'value_hour_night'=>0,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s')
               ]);
 
@@ -47,8 +50,9 @@ class UsuarioAdministradorSeeder extends Seeder
             'ips'=>strtoupper('atencion fidem s.a.s'),
             'activo'=>'1',
             'cargo_id'=>1,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ]);
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'type_salary' => 1
+             ]);
 
 
 
@@ -193,6 +197,24 @@ class UsuarioAdministradorSeeder extends Seeder
             'orden'=>1,
             'icono'=>'fas fa-money-check-alt'
         ]);
+        DB::table('menu')->insert([
+
+            'menu_id'=> 1,
+            'nombre'=>'Listas',
+            'url'=>'#',
+            'orden'=>'5',
+            'icono'=>'fa fa-book'
+        ]);
+
+        DB::table('menu')->insert([
+
+            'menu_id'=> 17,
+            'nombre'=>'Detalle listas',
+            'url'=>'detallelistas',
+            'orden'=>'1',
+            'icono'=>'fa fa-list'
+        ]);
+
 
 
 
@@ -298,5 +320,65 @@ class UsuarioAdministradorSeeder extends Seeder
             'rol_id'=> 1,
             'menu_id'=> 16
         ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 17
+        ]);
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 18
+        ]);
+
+
+        DB::table('listas')->insert([
+            'slug'=>strtoupper('EMP'),
+            'nombre'=>strtoupper('LISTA DE EMPRESAS'),
+            'descripcion'=>strtoupper('LISTADO PARA CREAR LAS EMPRESAS'),
+            'activo'=>'SI',
+            'user_id'=>1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+              ]);
+              DB::table('listas')->insert([
+                'slug'=>strtoupper('BANK'),
+                'nombre'=>strtoupper('BANCOS'),
+                'descripcion'=>strtoupper('LISTA DE BANCOS'),
+                'activo'=>'SI',
+                'user_id'=>1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                  ]);
+                  DB::table('listas')->insert([
+                    'slug'=>strtoupper('TYAC'),
+                    'nombre'=>strtoupper('TYPE_ACCOUNT'),
+                    'descripcion'=>strtoupper('LISTA DE TIPOS DE CUENTA'),
+                    'activo'=>'SI',
+                    'user_id'=>1,
+                    'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                      ]);
+
+
+                      DB::table('listasdetalle')->insert([
+                        ['slug'=>strtoupper('FIDEM'),'nombre'=>strtoupper('ATENCION FIDEM SAS'),'descripcion'=>strtoupper('IPS FIDEM'),
+                        'activo'=>'SI', 'listas_id'=>1,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('MEDCOL'),'nombre'=>strtoupper('SALUD MEDCOL SAS'),'descripcion'=>strtoupper('FARMACIA MEDCOL'),
+                        'activo'=>'SI', 'listas_id'=>1,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('TEMPUS'),'nombre'=>strtoupper('TEMPUS ATENCIÓN INTEGRAL SAS'),'descripcion'=>strtoupper('FARMACIA TEMPUS'),
+                        'activo'=>'SI', 'listas_id'=>1,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+
+                        ['slug'=>strtoupper('DAVA'),'nombre'=>strtoupper('DAVIVIENDA'),'descripcion'=>strtoupper('DAVIVIENDA'),
+                        'activo'=>'SI', 'listas_id'=>2,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('BOGA'),'nombre'=>strtoupper('BANCO DE BOGOTA'),'descripcion'=>strtoupper('BANCO DE BOGOTA'),
+                        'activo'=>'SI', 'listas_id'=>2,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('BANC'),'nombre'=>strtoupper('BANCOLOMBIA'),'descripcion'=>strtoupper('BANCOLOMBIA'),
+                        'activo'=>'SI', 'listas_id'=>2,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('AVVS'),'nombre'=>strtoupper('BANCO AV VILLAS'),'descripcion'=>strtoupper('BANCO AV VILLAS'),
+                        'activo'=>'SI', 'listas_id'=>2,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+
+                        ['slug'=>strtoupper('AHOS'),'nombre'=>strtoupper('AHORROS'),'descripcion'=>strtoupper('AHORROS'),
+                        'activo'=>'SI', 'listas_id'=>3,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('CORE'),'nombre'=>strtoupper('CORRIENTE'),'descripcion'=>strtoupper('CORRIENTE'),
+                        'activo'=>'SI', 'listas_id'=>3,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ]);
     }
 }

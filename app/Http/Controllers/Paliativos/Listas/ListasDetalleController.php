@@ -112,20 +112,71 @@ class ListasDetalleController extends Controller
             return response()->json(['success' => 'ok']);
         }
     }
-    public function select()
+    public function select(Request $request)
     {
-        if(request()->ajax())
+
+        $empresas = [];
+        $typeDocument = [];
+        $type = [];
+        $state = [];
+
+        if($request->has('q'))
         {
+            $term = $request->get('q');
           $typeDocument=ListasDetalle::orderBy('slug')->where([
             ['listas_id', 5],
-            ['activo', 'SI'],])->get();
+            ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
+            ->get();
             $state=ListasDetalle::orderBy('slug')->where([
                 ['listas_id', 6],
-                ['activo', 'SI'],])->get();
+                ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
+                ->get();
                 $type=ListasDetalle::orderBy('id')->where([
                     ['listas_id', 4],
-                    ['activo', 'SI'],])->get();
-            return response()->json([$typeDocument, $state, $type]);
+                    ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
+                    ->get();
+                    $empresas=ListasDetalle::orderBy('slug')->where([
+                        ['listas_id', 1],
+                        ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
+                        ->get();
+                        $bank=ListasDetalle::orderBy('slug')->where([
+                            ['listas_id', 2],
+                            ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
+                            ->get();
+                            $type_acc=ListasDetalle::orderBy('slug')->where([
+                                ['listas_id', 3],
+                                ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
+                                ->get();
+            return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas, 'bank'=>$bank, 'type_acc'=>$type_acc]);
+        }else {
+
+            $typeDocument=ListasDetalle::orderBy('slug')->where([
+                ['listas_id', 5],
+                ['activo', 'SI'],])
+                ->get();
+                $state=ListasDetalle::orderBy('slug')->where([
+                    ['listas_id', 6],
+                    ['activo', 'SI'],])
+                    ->get();
+                    $type=ListasDetalle::orderBy('id')->where([
+                        ['listas_id', 4],
+                        ['activo', 'SI'],])
+                        ->get();
+                        $empresas=ListasDetalle::orderBy('slug')->where([
+                            ['listas_id', 1],
+                            ['activo', 'SI'],])
+                            ->get();
+                            $bank=ListasDetalle::orderBy('slug')->where([
+                                ['listas_id', 2],
+                                ['activo', 'SI'],])
+                                ->get();
+                                $type_acc=ListasDetalle::orderBy('slug')->where([
+                                    ['listas_id', 3],
+                                    ['activo', 'SI'],])
+                                    ->get();
+                return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas,  'bank'=>$bank, 'type_acc'=>$type_acc]);
+
+
         }
     }
 

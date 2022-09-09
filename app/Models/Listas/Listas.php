@@ -20,7 +20,7 @@ class Listas extends Model
 
     public function userid()
     {
-        return $this->belongsTo(Usuario::class, 'id');
+        return $this->belongsTo(Usuario::class, 'user_id');
     }
 
     public function ListasAdd(){
