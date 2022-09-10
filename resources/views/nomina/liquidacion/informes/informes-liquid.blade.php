@@ -122,6 +122,21 @@
       </div>
 
 
+@include('nomina.novedades.modal.modalProcedimientos')
+@include('nomina.novedades.modal.modalProcDetalle')
+
+<!-- Modal para relacionar los profesionales -->
+@include('nomina.novedades.modal.modalProcProfesional')
+<!-- Modal para relacionar los servicios -->
+@include('nomina.novedades.modal.modalProcServicio')
+<!-- Modal para relacionar los contratos -->
+@include('nomina.novedades.modal.modalProcContrato')
+
+<!-- Modal que carga las tablas y los botones para realizar las relaciones -->
+@include('nomina.novedades.modal.modalProcDetalleIndex')
+
+
+
 </section>
     <!-- /.content -->
 
@@ -140,6 +155,58 @@
 <script>
 
 $(document).ready(function() {
+
+    $(document).on('click', '.listasDetalleNove', function() {
+        $('#modal-novedades-detalle').modal('show');
+
+// var idlist = $(this).attr('id');
+// var idlistp = $(this).attr('id');
+// var idlistf = $(this).attr('id');
+// idprocedimiento = $(this).attr('id');
+
+// if (idlistp != '') {
+//     $('#tservicio').DataTable().destroy();
+//     fill_datatable(idlistp);
+// }
+// if (idlistf != '') {
+//     $('#tprofesional').DataTable().destroy();
+//     fill_tableprofe(idlistf);
+// }
+// if (idlistp != '') {
+//     $('#tcontrato').DataTable().destroy();
+//     fill_tablecontrato(idlistp);
+// }
+
+// $.ajax({
+//     url: "editar_procedimientos/" + idlist + "",
+//     dataType: "json",
+//     success: function(result) {
+//         $.each(result, function(i, items) {
+//             $('#title-procedimiento-detalle').text(items.nombre);
+//             $('#modal-procedimiento-detalle').modal({
+
+//                 backdrop: 'static',
+//                 keyboard: false
+//             });
+//             $('#modal-procedimiento-detalle').modal('show');
+
+//         });
+//     }
+
+// }).fail(function(jqXHR, textStatus, errorThrown) {
+
+//     if (jqXHR.status === 403) {
+
+//         Manteliviano.notificaciones('No tienes permisos para realizar esta accion',
+//             'Sistema Historias Clínicas', 'warning');
+//     }
+// });
+
+});
+
+
+
+
 
 // variables globales
   var quincena = '';
@@ -258,12 +325,10 @@ $.get('select_quincena',
           {data:'quincena'},
           {data:'type_salary'},
           {data:'salary', render: $.fn.dataTable.render.number( ',', '.' )},
+          {data:'rodamiento', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'parafiscales', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'horas'},
           {data:'valor_hora', render: $.fn.dataTable.render.number( ',', '.' )},
-          {data:'turnos'},
-          {data:'noches', render: $.fn.dataTable.render.number( ',', '.' )},
-          {data:'total_noches', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'total', render: $.fn.dataTable.render.number( ',', '.' )},
           {data:'total_pagar', render: $.fn.dataTable.render.number( ',', '.' )}
 
@@ -311,20 +376,7 @@ $.get('select_quincena',
                   }
                ],
                "columnDefs": [
-                                    {
 
-                                    "render": function ( data, type, row ) {
-                                        if (row["type_salary"] == 1) {
-                                        return data +' - Fijo';
-                                            }else{
-
-                                            return data +' - Por horas';
-
-                                        }
-
-                                        },
-                                        "targets":[8]
-                                    },
                                     {
                                     "render": function ( data, type, row ) {
                                             return data +' '+row["papellido"]+' '+row["sapellido"];
@@ -334,7 +386,7 @@ $.get('select_quincena',
                                     { "visible": false,  "targets": [4] },
                                     { "visible": false,  "targets": [5] },
                                     { "visible": false,  "targets": [6] },
-                                    { "visible": false,  "targets": [0] }
+
 
 
 
@@ -344,16 +396,16 @@ $.get('select_quincena',
                                     ],
 
                  "createdRow": function(row, data, dataIndex) {
-                    if (data["type_salary"] == 1) {
-                        $($(row).find("td")[4]).addClass("btn btn-sm btn-info rounded-lg");
+                    if (data["type_salary"] == 'FIJO-QUINCENAL') {
+                        $($(row).find("td")[5]).addClass("btn btn-sm btn-info rounded-lg");
                     }else{
-                        $($(row).find("td")[4]).addClass("btn btn-sm btn-dark rounded-lg");
+                        $($(row).find("td")[5]).addClass("btn btn-sm btn-dark rounded-lg");
                         }
                     if (data["total_pagar"] > 1) {
-                    $($(row).find("td")[13]).addClass("btn btn-sm btn-success rounded-lg");
+                    $($(row).find("td")[12]).addClass("btn btn-sm btn-success rounded-lg");
                   }
                   if (data["parafiscales"] > 1) {
-                        $($(row).find("td")[6]).addClass("btn btn-sm btn-danger rounded-lg");
+                        $($(row).find("td")[8]).addClass("btn btn-sm btn-danger rounded-lg");
                     }
 
                  }

@@ -5,7 +5,7 @@
         <table id="tturnos" class="table table-hover  text-nowrap table-striped">
           <thead>
           <tr>
-            <th class="width40"><input name="selectall" id="selectall" type="checkbox" class="select-all" /> Select/Deselect All</th>
+            <th>Actions</th>
             <th>ID</th>
             <th>Ips</th>
             <th>1Nombre</th>
@@ -15,12 +15,10 @@
             <th>Quincena</th>
             <th>Tipo de pago</th>
             <th>Salario</th>
+            <th>Aux No Prest.</th>
             <th>Parafiscales</th>
             <th>Horas Laboradas</th>
             <th>Valor hora</th>
-            <th>Turnos nocturnos</th>
-            <th>Valor nocturno</th>
-            <th>Total pago nocturno</th>
             <th>Total pago horas</th>
             <th>Total a pagar</th>
 
@@ -46,9 +44,7 @@
               <th></th>
               <th></th>
               <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+
 
             </tr>
           </tfoot>

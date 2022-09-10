@@ -19,7 +19,8 @@ class Position extends Model
         'value_patient_attended',
         'value_hour_night',
         'value_add_security_social',
-        'value_salary_add'
+        'value_salary_add',
+        'value_transporte'
         ];
 
 

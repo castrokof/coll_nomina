@@ -40,22 +40,27 @@ class LiquidationxuserController extends Controller
             ->join('position', 'usuario.cargo_id', '=', 'position.id')
 
             ->select(
-            DB::raw("SUM(CASE WHEN hoursxuser.working_type = 'nocturno' THEN 1 ELSE 0 END) AS turnos"),
-            DB::raw("position.value_hour_night * SUM(CASE WHEN hoursxuser.working_type = 'nocturno' THEN 1 ELSE 0 END) AS total_noches"),
-            DB::raw("sum(position.value_hour * hoursxuser.hours + (position.salary/2) +position.value_hour_night * CASE WHEN hoursxuser.working_type = 'nocturno' THEN 1 ELSE 0 END - ((position.salary/2) * 0.08)) as total_pagar"),
-            DB::raw('sum(hoursxuser.hours) as horas'),
-            'usuario.id as id','usuario.type_salary as type_salary', 'position.value_hour_night as noches', 'usuario.pnombre as pnombre', 'position.value_hour as valor_hora', DB::raw('position.value_hour * sum(hoursxuser.hours) as total'),
-            'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido','hoursxuser.quincena as quincena', DB::raw('position.salary / 2 as salary'), 'usuario.ips as ips', DB::raw('position.salary/2 * 0.08 as parafiscales'))
+            DB::raw("CASE WHEN usuario.type_salary = 'FIJO-QUINCENAL' THEN SUM((position.salary/2) + (position.value_salary_add/2) - ((position.salary/2) * 0.08)) WHEN
+            usuario.type_salary = 'FIJO-MENSUAL' THEN SUM(position.salary + position.value_salary_add - (position.salary * 0.08)) ELSE 0 END as total_pagar"),
+            DB::raw("CASE WHEN usuario.type_salary = 'FIJO-QUINCENAL' THEN hoursxuser.hours WHEN usuario.type_salary = 'FIJO-MENSUAL' THEN hoursxuser.hours*2 ELSE 0 END as horas"),
+            DB::raw('(position.value_salary_add/2) as rodamiento'),
+            DB::raw('position.value_hour * sum(hoursxuser.hours) as total'),
+            DB::raw("CASE WHEN usuario.type_salary = 'FIJO-QUINCENAL' THEN position.salary/2 WHEN usuario.type_salary = 'FIJO-MENSUAL' THEN position.salary ELSE 0 END as salary"),
+            DB::raw("CASE WHEN usuario.type_salary = 'FIJO-QUINCENAL' THEN position.salary/2 * 0.08 WHEN usuario.type_salary = 'FIJO-MENSUAL' THEN position.salary * 0.08 ELSE 0 END as parafiscales"),
+            'hoursxuser.id as id','usuario.type_salary as type_salary', 'usuario.pnombre as pnombre', 'position.value_hour as valor_hora',
+            'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido','hoursxuser.quincena as quincena',
+             'usuario.ips as ips')
             ->where([
             ['hoursxuser.quincena', $quincena],
             ['hoursxuser.supervisor', '!=', null]])
-            ->groupBy('pnombre', 'id', 'snombre', 'papellido', 'sapellido', 'quincena', 'value_hour', 'value_hour_night', 'salary', 'type_salary', 'ips', 'parafiscales')
+            ->groupBy('pnombre', 'id', 'snombre', 'papellido', 'sapellido', 'quincena', 'value_hour', 'salary', 'type_salary', 'ips', 'parafiscales', 'position.value_salary_add', 'horas')
             ->get();
 
             return  DataTables()->of($datas)
                 ->addColumn('action', function($datas){
-                $button ='<input type="checkbox" name="case[]"  value="'.$datas->id.'" class="case btn btn-primary btn-sm tooltipsC" title="Selecciona Orden"/>';
-                return $button;
+                    $button ='<button type="button" name="novedad" id="'.$datas->id.'" class="listasDetalleNove btn btn-app bg-success tooltipsC" title="Adicionar Novedad"  ><span class="badge bg-teal">+Add</span><i class="fas fa-list-ul"></i>Novedades</button>';
+
+                    return $button;
 
             })
             ->rawColumns(['action'])
