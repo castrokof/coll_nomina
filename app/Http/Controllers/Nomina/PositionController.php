@@ -105,9 +105,15 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function editar($id)
     {
-        //
+        if (request()->ajax()) {
+
+            $data = Position::where('id', $id)->first();
+
+            return response()->json(['result' => $data]);
+        }
+        return view('nomina.cargos.index');
     }
 
     /**
@@ -116,9 +122,37 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function actualizar(Request $request, $id)
     {
-        //
+        $rules = array(
+            'position'  => 'required|max:255',
+            'salary'  => 'required',
+            'value_hour'  => 'required',
+            'value_hour_add',
+            'value_patient_attended',
+            'value_hour_night',
+            'value_add_security_social'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $data = DB::table('position')->where('id', '=', $id)
+            ->update([
+                'position' => $request->position,
+                'salary' => $request->salary,
+                'value_hour' => $request->value_hour,
+                'value_hour_add' => $request->value_hour_add,
+                'value_patient_attended' => $request->value_patient_attended,
+                'value_hour_night' => $request->value_hour_night,
+                'value_add_security_social' => $request->value_add_security_social,
+                'updated_at' => now()
+            ]);
+        //$data->update($request->all());
+        return response()->json(['success' => 'ok1']);
     }
 
     /**

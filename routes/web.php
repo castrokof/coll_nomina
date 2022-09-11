@@ -117,6 +117,8 @@ Route::group(['middleware' => ['auth']], function () {
     /* RUTAS DE LISTAR CARGOS */
     Route::get('position', 'Nomina\PositionController@index')->name('position');
     Route::post('position', 'Nomina\PositionController@store')->name('guardar_cargo')->middleware('superEditor');
+    Route::get('position/{id}/editar', 'Nomina\PositionController@editar')->name('editar_position')->middleware('superEditor');
+Route::put('position/{id}', 'Nomina\PositionController@actualizar')->name('actualizar_position')->middleware('superEditor');
 
     //RUTA PARA CONSULTA DE INFORMES DE LIQUIDACION
     Route::get('informe-liquid', 'Nomina\LiquidationxuserController@informes')->name('liquidinfo')->middleware('superEditor');

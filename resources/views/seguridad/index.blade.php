@@ -79,7 +79,7 @@
         <img src="{{asset("assets/img/coll_nomina_logo.svg")}}") alt="User Avatar" class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center img-size-500 mr-12 " >
        <p class="login-box-msg"> <b>Registro de turnos</b></p>
        <div class="card"></div><hr />
-      <p class="login-box-msg">Inicie sesión</p>
+      <p class="login-box-msg">Inicie sesión </p>
       @if ($errors->any())
       <div class="alert alert-danger alert-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
