@@ -47,18 +47,18 @@ class LiquidationxuserController extends Controller
             DB::raw('position.value_hour * sum(hoursxuser.hours) as total'),
             DB::raw("CASE WHEN usuario.type_salary = 'FIJO-QUINCENAL' THEN position.salary/2 WHEN usuario.type_salary = 'FIJO-MENSUAL' THEN position.salary ELSE 0 END as salary"),
             DB::raw("CASE WHEN usuario.type_salary = 'FIJO-QUINCENAL' THEN position.salary/2 * 0.08 WHEN usuario.type_salary = 'FIJO-MENSUAL' THEN position.salary * 0.08 ELSE 0 END as parafiscales"),
-            'hoursxuser.id as id','usuario.type_salary as type_salary', 'usuario.pnombre as pnombre', 'position.value_hour as valor_hora',
+            'hoursxuser.id as id','usuario.id as idu', 'usuario.type_salary as type_salary', 'usuario.pnombre as pnombre', 'position.value_hour as valor_hora',
             'usuario.snombre as snombre', 'usuario.papellido as papellido', 'usuario.sapellido as sapellido','hoursxuser.quincena as quincena',
              'usuario.ips as ips')
             ->where([
             ['hoursxuser.quincena', $quincena],
             ['hoursxuser.supervisor', '!=', null]])
-            ->groupBy('pnombre', 'id', 'snombre', 'papellido', 'sapellido', 'quincena', 'value_hour', 'salary', 'type_salary', 'ips', 'parafiscales', 'position.value_salary_add', 'horas')
+            ->groupBy('pnombre', 'id', 'snombre', 'papellido', 'idu', 'sapellido', 'quincena', 'value_hour', 'salary', 'type_salary', 'ips', 'parafiscales', 'position.value_salary_add', 'horas')
             ->get();
 
             return  DataTables()->of($datas)
                 ->addColumn('action', function($datas){
-                    $button ='<button type="button" name="novedad" id="'.$datas->id.'" class="listasDetalleNove btn btn-app bg-success tooltipsC" title="Adicionar Novedad"  ><span class="badge bg-teal">+Add</span><i class="fas fa-list-ul"></i>Novedades</button>';
+                    $button ='<button type="button" name="novedad" id="'.$datas->id.'" value="'.$datas->idu.'" class="listasDetalleNove btn btn-sm bg-success tooltipsC" title="Adicionar Novedad"  ><span class="badge bg-teal"><i class="fa fa-fw fa-plus-circle"></i>Add</span></button>';
 
                     return $button;
 

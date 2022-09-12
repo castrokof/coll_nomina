@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="card card-primary">
                         <div class="card-header with-border">
-                            <h3 class="card-title" id="title-procedimiento-detalle"></h3>
+                            <h3 class="card-title" id="title-novedades-detalle"></h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="maximize">
@@ -33,14 +33,12 @@
                                             <ul class="nav nav-tabs nav-justified" id="custom-tabs-one-tab" role="tablist">
 
                                                 <li class="nav-item">
-                                                    <a class="nav-link active" id="custom-tabs-one-profesional-tab" data-toggle="pill" href="#custom-tabs-one-profesional" role="tab" aria-controls="custom-tabs-one-profesional" aria-selected="false">Profesional</a>
+                                                    <a class="nav-link active" id="custom-tabs-one-profesional-tab" data-toggle="pill" href="#custom-tabs-one-profesional" role="tab" aria-controls="custom-tabs-one-profesional" aria-selected="false">Novedades</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="custom-tabs-one-servicios-tab" data-toggle="pill" href="#custom-tabs-one-servicios" role="tab" aria-controls="custom-tabs-one-servicios" aria-selected="false">Servicios</a>
+                                                    <a class="nav-link" id="custom-tabs-one-servicios-tab" data-toggle="pill" href="#custom-tabs-one-servicios" role="tab" aria-controls="custom-tabs-one-servicios" aria-selected="false">Cuentas de cobro</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="custom-tabs-one-contrato-tab" data-toggle="pill" href="#custom-tabs-one-contrato" role="tab" aria-controls="custom-tabs-one-contrato" aria-selected="false">Contrato</a>
-                                                </li>
+
                                             </ul>
                                         </div>
 
@@ -52,35 +50,27 @@
                                                     <div class="card-body">
 
                                                         @csrf
-                                                        @include('nomina.novedades.tablas.table-profesionales')
+                                                        @include('nomina.novedades.form.formnovedades')
+                                                        @include('nomina.novedades.tablas.table-novedades')
 
                                                     </div>
                                                     <button type="button" class="btn relacion_profesional btn-success" name="relacion_profesional" id="relacion_profesional">
-                                                        <i class="fa fa-fw fa-plus-circle"></i>Adicionar Salario PS
+                                                        <i class="fa fa-fw fa-plus-circle"></i>Guardar Novedad
                                                     </button>
                                                 </div>
                                                 <div class="tab-pane fade" id="custom-tabs-one-servicios" role="tabpanel" aria-labelledby="custom-tabs-one-servicios-tab">
                                                     <div class="card-body">
 
                                                         @csrf
-                                                        @include('nomina.novedades.tablas.table-servicios')
+                                                        @include('nomina.novedades.form.formcuentasdecobro')
+                                                        @include('nomina.novedades.tablas.table-cuentasdecobro')
 
                                                     </div>
                                                     <button type="button" class="btn relacion_servicio btn-success" name="relacion_servicio" id="relacion_servicio">
-                                                        <i class="fa fa-fw fa-plus-circle"></i>Adicionar Horas
+                                                        <i class="fa fa-fw fa-plus-circle"></i>Gurardar Cuenta de cobro
                                                     </button>
                                                 </div>
-                                                <div class="tab-pane fade" id="custom-tabs-one-contrato" role="tabpanel" aria-labelledby="custom-tabs-one-contrato-tab">
-                                                    <div class="card-body">
 
-                                                        @csrf
-                                                        @include('nomina.novedades.tablas.table-contratos')
-
-                                                    </div>
-                                                    <button type="button" class="btn relacion_contrato btn-success" name="relacion_contrato" id="relacion_contrato">
-                                                        <i class="fa fa-fw fa-plus-circle"></i>Adicionar Rodamiento
-                                                    </button>
-                                                </div>
                                             </div>
                                         </div>
                                         <!-- /.card -->

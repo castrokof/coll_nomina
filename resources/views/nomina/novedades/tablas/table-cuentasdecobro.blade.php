@@ -5,13 +5,15 @@
         <div class="card card-info">
             <div class="card-body table-responsive p-2">
 
-                <table id="trelservicio" class="table table-hover  text-nowrap">
+                <table id="tcuentasdecobro" class="table table-hover  text-nowrap">
 
                     <thead>
                         <tr>
-                            <th class="width40"><input id="selectalls" type="checkbox" class="select-all" /> Des/Seleccione Todos</th>
+                            <th>Acciones</th>
                             <th>Código</th>
                             <th>Servicio</th>
+                            <th>Cups</th>
+                            <th>Procedimiento</th>
                         </tr>
                     </thead>
                     <tbody>

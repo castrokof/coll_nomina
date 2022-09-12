@@ -5,15 +5,16 @@
         <div class="card card-info">
             <div class="card-body table-responsive p-2">
 
-                <table id="trelprofesional" class="table table-hover  text-nowrap">
+                <table id="tnovedades" class="table table-hover  text-nowrap">
 
                     <thead>
                         <tr>
-
-                            <th class="width40"><input id="selectallp" type="checkbox" class="select-all" /> Des/Seleccione Todos</th>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Especialidad</th>
+                            <th>Acciones</th>
+                            <th>Contrato</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Cups</th>
+                            <th>Procedimiento</th>
                         </tr>
                     </thead>
                     <tbody>

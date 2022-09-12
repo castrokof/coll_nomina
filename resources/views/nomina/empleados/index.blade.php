@@ -1,7 +1,7 @@
 @extends("theme.$theme.layout")
 
 @section('titulo')
-    Usuarios
+    Empleados
 @endsection
 @section('styles')
     <link href="{{ asset("assets/$theme/plugins/datatables-bs4/css/dataTables.bootstrap4.css") }}" rel="stylesheet" type="text/css" />
@@ -21,17 +21,17 @@
             @include('includes.form-mensaje')
             <div class="card card-info">
                 <div class="card-header with-border">
-                    <h3 class="card-title">Usuarios</h3>
+                    <h3 class="card-title">Empleados</h3>
                     <div class="card-tools pull-right">
                         <button type="button" class="btn btn-default" name="create_usuario" id="create_usuario"
                             data-toggle="modal" data-target="#modal-u"><i class="fa fa-fw fa-plus-circle"></i> Nuevo
-                            Usuario</button>
+                            Empleado</button>
                         </button>
                     </div>
                 </div>
                 <div class="card-body table-responsive p-2">
 
-                    <table id="usuarios" class="table table-hover  text-nowrap">
+                    <table id="empleados" class="table table-hover  text-nowrap">
                         {{-- class="table table-hover table-bordered text-nowrap" --}}
                         <thead>
                             <tr>
@@ -43,12 +43,12 @@
                                 <th>2Apellido</th>
                                 <th>Tipo documento</th>
                                 <th>Documento</th>
-                                <th>Usuario</th>
                                 <th>Celular</th>
                                 <th>Email</th>
                                 <th>Ips</th>
                                 <th>Activo</th>
-                                <th>Rol</th>
+                                <th>Cargo</th>
+                                <th>Tipo de salario</th>
                                 <th>Fecha de creacion</th>
 
                             </tr>
@@ -81,7 +81,7 @@
                             <form id="form-general" class="form-horizontal" method="POST">
                                 @csrf
                                 <div class="card-body">
-                                    @include('admin.usuario.form')
+                                    @include('nomina.empleados.form')
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
@@ -102,69 +102,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" id="modal-xlpass" role="dialog" aria-labelledby="myLargeModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="row">
-                    <div class="col-lg-12">
 
-                        <div class="card card-info">
-                            <div class="card-header">
-                                <h3 class="card-title">Editar Contraseña</h3>
-
-                                <div class="card-tools pull-right">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                            <form action="" id="form-general-pass" class="form-horizontal" method="POST">
-                                @csrf @method('put')
-                                <div class="card-body">
-                                    <div class="form-group row col-lg-12">
-                                        <div class="col-lg-6">
-                                            <label for="password" class="col-xs-12 control-label requerido">Usuario</label>
-                                            <input type="Usuario" name="usuario_id" id="usuario_id" class="form-control"
-                                                value="" minlength="6" required readonly>
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group row col-lg-12">
-                                        <div class="col-lg-6">
-                                            <label for="password" class="col-xs-12 control-label requerido">Password</label>
-                                            <input type="password" name="password1" id="pass" class="form-control"
-                                                value="" minlength="6" required>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label for="remenber_token" class="col-xs-12 control-label requerido">repita el
-                                                password</label>
-                                            <input type="password" name="remenber" id="remenber" class="form-control"
-                                                value="" minlength="6" required>
-                                        </div>
-
-                                        <input type="hidden" name="idpass" id="idpass" class="form-control"
-                                            value="" required>
-                                    </div>
-
-
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <div class="col-lg-3"></div>
-                                    <div class="col-lg-6">
-                                        <button type="button" id="actualizarpass" name="actualizar"
-                                            class="btn btn-success">Actualizar</button>
-                                    </div>
-                                </div>
-                                <!-- /.card-footer -->
-                            </form>
-
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 
@@ -289,7 +227,7 @@
             //     function(positions) {  //initiate dataTables plugin
             // $.each(positions, function(position1, value) {
             var myTable =
-                $('#usuarios').DataTable({
+                $('#empleados').DataTable({
                         language: idioma_espanol,
                         processing: true,
                         lengthMenu: [
@@ -303,7 +241,7 @@
                         ],
 
                         ajax: {
-                            url: "{{ route('usuario') }}",
+                            url: "{{ route('empleado') }}",
                         },
                         columns: [{
                                 data: 'action',
@@ -339,10 +277,6 @@
                                 name: 'documento'
                             },
                             {
-                                data: 'usuario',
-                                name: 'usuario'
-                            },
-                            {
                                 data: 'celular',
                                 name: 'celular'
                             },
@@ -359,11 +293,14 @@
                                 name: 'activo'
                             },
                             {
-                                data: 'roles1[0].nombre',
-                                //name:'nombre'
+                                data: 'position'
+
                             },
 
-
+                            {
+                                data: 'type_salary',
+                                name: 'type_salary'
+                            },
                             {
                                 data: 'created_at',
                                 name: 'created_at'
@@ -459,13 +396,10 @@
 
         // });
 
-        $('#create_usuario').click(function() {
+        $('#create_empleado').click(function() {
             $('#form-general')[0].reset();
-            $('#usuario').prop('disabled', false).prop('required', true);
             $('#email').prop('disabled', false).prop('required', true);
-            $('#password').prop('disabled', false).prop('required', true);
-            $('#remenber_token').prop('disabled', false).prop('required', true);
-            $('.card-title').text('Agregar Nuevo usuario');
+            $('.card-title').text('Agregar Nuevo empleado');
             $('#action_button').val('Add');
             $('#action').val('Add');
             $('#form_result').html('');
@@ -480,15 +414,15 @@
             var text = '';
 
             if ($('#action').val() == 'Add') {
-                text = "Estás por crear un usuario"
-                url = "{{ route('guardar_usuario') }}";
+                text = "Estás por crear un empleado"
+                url = "{{ route('guardar_empleado') }}";
                 method = 'post';
             }
 
             if ($('#action').val() == 'Edit') {
-                text = "Estás por actualizar un usuario"
+                text = "Estás por actualizar un empleado"
                 var updateid = $('#hidden_id').val();
-                url = "/usuario/" + updateid;
+                url = "/empleado/" + updateid;
                 method = 'put';
             }
             Swal.fire({
@@ -509,10 +443,10 @@
                             if (data.success == 'ok') {
                                 $('#form-general')[0].reset();
                                 $('#modal-u').modal('hide');
-                                $('#usuarios').DataTable().ajax.reload();
+                                $('#empleado').DataTable().ajax.reload();
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'usuario creado correctamente',
+                                    title: 'empleado creado correctamente',
                                     showConfirmButton: false,
                                     timer: 1500
 
@@ -522,10 +456,10 @@
                             } else if (data.success == 'ok1') {
                                 $('#form-general')[0].reset();
                                 $('#modal-u').modal('hide');
-                                $('#usuarios').DataTable().ajax.reload();
+                                $('#empleado').DataTable().ajax.reload();
                                 Swal.fire({
                                     icon: 'warning',
-                                    title: 'usuario actualizado correctamente',
+                                    title: 'empleado actualizado correctamente',
                                     showConfirmButton: false,
                                     timer: 1500
 
@@ -551,10 +485,8 @@
                                 errores.push(items.email + '<br>');
                                 errores.push(items.papellido + '<br>');
                                 errores.push(items.pnombre + '<br>');
-                                errores.push(items.password + '<br>');
                                 errores.push(items.position + '<br>');
                                 errores.push(items.tipo_documento + '<br>');
-                                errores.push(items.usuario + '<br>');
 
                                 console.log(errores);
 
@@ -590,7 +522,7 @@
             var id = $(this).attr('id');
 
             $.ajax({
-                url: "/usuario/" + id + "/editar",
+                url: "/empleado/" + id + "/editar",
                 dataType: "json",
                 success: function(data) {
                     $('#pnombre').val(data.result.pnombre);
@@ -646,88 +578,7 @@
 
 
 
-        $(document).on('click', '.epassword', function() {
-            var id = $(this).attr('id');
-            var usuario = $(this).attr('usuario1');
 
-            $('#usuario_id').val(usuario);
-            $('#idpass').val(id);
-            $('#modal-xlpass').modal('show');
-
-
-        });
-
-
-        //Actualizacion de password desde listado de usuarios
-        $('#actualizarpass').click(function() {
-            //    event.preventDefault();
-            var id = $('#idpass').val();
-            var password = $('#pass').val();
-            var remenber_token = $('#remenber').val();
-
-            if (password != remenber_token) {
-
-                $('button[type="button"]').attr('enable', 'disabled');
-
-            } else if (password == '' || remenber_token == '') {
-
-                Swal.fire({
-                    title: 'Los campos no pueden estar vacios',
-                    icon: 'warning',
-                    showCloseButton: true,
-                    confirmButtonText: 'Aceptar',
-                })
-
-
-            } else {
-
-                Swal.fire({
-                    title: "¿Estás seguro?",
-                    text: "Estás por actualizar el password",
-                    icon: "success",
-                    showCancelButton: true,
-                    showCloseButton: true,
-                    confirmButtonText: 'Aceptar',
-                }).then((result) => {
-                    if (result.value) {
-
-                        $.ajax({
-                            url: "password1/" + id + "",
-                            method: 'put',
-                            data: {
-                                password: password,
-                                remenber_token: remenber_token,
-
-                                "_token": $("meta[name='csrf-token']").attr("content")
-
-                            },
-                            success: function(respuesta) {
-                                if (respuesta.mensaje = 'ok') {
-                                    $('#modal-xlpass').modal('hide');
-                                    $('#pass').val('');
-                                    $('#remenber').val('');
-                                    Manteliviano.notificaciones(
-                                        'Password actualizado correctamente',
-                                        'Sistema Catastro de usuario', 'success'
-                                    );
-
-                                } else if (respuesta.mensaje = 'ng') {
-
-
-                                    Manteliviano.notificaciones(
-                                        'Las contraseñas deben coincidir',
-                                        'Sistema Catastro de usuario', 'error');
-                                }
-                            }
-                        });
-
-                    }
-
-
-                });
-
-            }
-        });
 
 
         });

@@ -29,7 +29,7 @@ class UsuarioController extends Controller
 
         if($request->session()->get('rol_id') == 1){
 
-            $datas = Usuario::with('roles1')->with('cargos')->get();
+            $datas = Usuario::with('roles1')->get();
 
            return  DataTables()->of($datas)
             ->addColumn('action', function($datas){
@@ -46,7 +46,7 @@ class UsuarioController extends Controller
 
          }else  if($request->session()->get('rol_id') == 2){
 
-            $datas = Usuario::with('roles1')->with('cargos')
+            $datas = Usuario::with('roles1')
             ->where('id',  $usuario_id )
             ->get();
 
@@ -138,13 +138,10 @@ class UsuarioController extends Controller
 
             $data = DB::table('usuario')
             ->Join('usuario_rol', 'usuario.id', '=', 'usuario_rol.usuario_id')
-            ->Join('position', 'usuario.cargo_id', '=', 'position.id')
             ->Join('rol', 'usuario_rol.rol_id', '=', 'rol.id')
             ->select('usuario.id as id', 'usuario.pnombre as pnombre', 'usuario.snombre as snombre', 'usuario.papellido as papellido','usuario.sapellido as sapellido', 'rol.nombre as nombre',
             'usuario.tipo_documento as tipo_documento', 'usuario.documento as documento', 'usuario.usuario as usuario', 'usuario.celular as celular',
-            'usuario.email as email', 'usuario.ips as ips', 'usuario.cargo_id as cargo_id', 'usuario.activo as activo', 'usuario.type_salary as type_salary',
-            'usuario.password as password','usuario.remenber_token as remenber_token', 'rol.id as rol_id', 'usuario.created_at as created_at', 'usuario.name_bank as name_bank',
-            'usuario.account as account', 'usuario.type_account as type_account', 'usuario.type_contrat as type_contrat', 'usuario.date_in as date_in')
+            'usuario.email as email', 'usuario.ips as ips', 'usuario.activo as activo', 'usuario.password as password','usuario.remenber_token as remenber_token', 'rol.id as rol_id', 'usuario.created_at as created_at')
             ->orderBy('usuario.id')
             ->where('usuario.id', $id)
             ->first();
@@ -217,6 +214,16 @@ class UsuarioController extends Controller
     public function eliminar($id)
     {
         //
+    }
+
+
+    public function consultarusuario($id)
+    {
+        if(request()->ajax())
+        {
+          $result= Usuario::findOrFail($id);
+            return response()->json($result);
+        }
     }
 
 

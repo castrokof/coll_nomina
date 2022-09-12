@@ -2,7 +2,7 @@
 
   <div class="card-body table-responsive p-2">
 
-        <table id="tturnos" class="table table-hover  text-nowrap table-striped">
+        <table id="tturnos" class="display compact table table-hover table-sm text-nowrap table-striped " style="width:100%">
           <thead>
           <tr>
             <th>Actions</th>

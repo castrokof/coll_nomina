@@ -20,20 +20,6 @@ class UsuarioAdministradorSeeder extends Seeder
 
 
 
-
-         DB::table('position')->insert([
-            'position'=>strtoupper('JEFE DE SISTEMAS'),
-            'salary'=>2250000,
-            'value_hour'=>0,
-            'value_hour_add'=>0,
-            'value_patient_attended'=>0,
-            'value_hour_night'=>0,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
-              ]);
-
-
-
-
        DB::table('usuario')->insert([
             'papellido'=>strtoupper('Castro'),
             'sapellido'=>strtoupper('Galeano'),
@@ -49,9 +35,8 @@ class UsuarioAdministradorSeeder extends Seeder
             'observacion'=>strtoupper('Prueba'),
             'ips'=>strtoupper('atencion fidem s.a.s'),
             'activo'=>'1',
-            'cargo_id'=>1,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'type_salary' => 1
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+
              ]);
 
 

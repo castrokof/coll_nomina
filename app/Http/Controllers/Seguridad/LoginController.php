@@ -50,7 +50,7 @@ class LoginController extends Controller
 
         if ($roles1->id == 1 || $roles1->id == 2 || $roles1->id == 3 && $useractivo >= 1) {
             $user->setSession();
-            return redirect('hoursxuser');
+            return redirect('informesh');
 
         }else if ($roles1->id == 4 && $useractivo >= 1) {
            $user->setSession();

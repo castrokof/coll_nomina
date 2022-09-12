@@ -9,6 +9,7 @@ use App\Models\Listas\Listas;
 use App\Models\Listas\ListasDetalle;
 use App\Models\Nomina\Hoursxuser;
 use App\Models\Nomina\Liquidationxuser;
+use App\Models\Nomina\nominaliquid;
 use App\Models\Nomina\Novedades;
 use App\Models\Nomina\Position;
 use App\Models\Paliativos\BasePaliativos;
@@ -38,14 +39,8 @@ class Usuario extends Authenticatable
         'celular',
         'observacion',
         'ips',
-        'activo',
-        'cargo_id',
-        'name_bank',
-        'account',
-        'type_account',
-        'type_salary',
-        'type_contrat',
-        'date_in'
+        'activo'
+
     ];
 
 
@@ -81,13 +76,9 @@ class Usuario extends Authenticatable
 
     }
 
-    public function cargos(){
-         return $this->belongsTo(Position::class, 'cargo_id');
-    }
-
 
     public function hours(){
-        return $this->hasMany(Hoursxuser::class, 'user_id');
+        return $this->hasMany(nominaliquid::class, 'user_id');
     }
 
     public function hoursliquidation(){

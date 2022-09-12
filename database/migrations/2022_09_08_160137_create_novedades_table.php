@@ -15,14 +15,18 @@ class CreateNovedadesTable extends Migration
     {
         Schema::create('novedades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('road', 255)->nullable();
-            $table->longText('nove_observacion')->nullable();
             $table->string('type_nove', 255)->nullable();
-            $table->string('hours')->nullable();
-            $table->string('total_pac')->nullable();
-            $table->string('future3')->nullable();
+            $table->bigInteger('road_v')->nullable();
+            $table->bigInteger('value_ps')->nullable();
+            $table->bigInteger('value_ps_desc')->nullable();
+            $table->bigInteger('prestamo')->nullable();
+            $table->integer('hours')->nullable();
+            $table->integer('total_pac')->nullable();
+            $table->integer('value_inc')->nullable();
+            $table->string('day_inc')->nullable();
+            $table->longText('nove_observacion')->nullable();
             $table->unsignedBigInteger('nove_id');
-            $table->foreign('nove_id', 'fk_novedades_hoursxuser')->references('id')->on('hoursxuser')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('nove_id', 'fk_novedades_nominaliquids')->references('id')->on('nominaliquids')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id', 'fk_novedades_usuario')->references('id')->on('usuario')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();

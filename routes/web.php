@@ -89,34 +89,38 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('usuario/{id}', 'UsuarioController@actualizar')->name('actualizar_usuario')->middleware('superEditor');
     Route::put('password/{id}', 'UsuarioController@actualizarpassword')->name('actualizar_password')->middleware('superEditor');
     Route::put('password1/{id}', 'UsuarioController@actualizarpassword1')->name('actualizar_password1');
+    Route::get('editar_novedades/{id}', 'UsuarioController@consultarusuario')->name('editar_novedades')->middleware('superEditor');
+
+    /* RUTAS DE EMPLEADO */
+
+    Route::get('empleado', 'Nomina\EmpleadosController@index')->name('empleado')->middleware('superEditor');
+    Route::post('empleado', 'Nomina\EmpleadosController@store')->name('guardar_empleado')->middleware('superEditor');
+    Route::get('empleado/{id}/editar', 'Nomina\EmpleadosController@edit')->name('editar_empleado')->middleware('superEditor');
+    Route::put('empleado/{id}', 'Nomina\EmpleadosController@update')->name('actualizar_empleado')->middleware('superEditor');
 
 
     /* RUTAS DE HORAS X USUARIO */
 
-    Route::get('hoursxuser', 'Nomina\HoursxuserController@index')->name('hours')->middleware('superEditor');
-    Route::post('hoursxuser', 'Nomina\HoursxuserController@store')->name('guardar_turno')->middleware('superEditor');
-    Route::get('hoursxuser/{id}/editar', 'Nomina\HoursxuserController@edit')->name('editar_turno')->middleware('superEditor');
-    Route::put('hoursxuser/{id}', 'Nomina\HoursxuserController@update')->name('actualizar_turno')->middleware('superEditor');
-    Route::post('liquidar', 'Nomina\HoursxuserController@supervisar')->name('liquidar');
+    Route::get('nominaliquid', 'Nomina\HoursxuserController@index')->name('hours')->middleware('superEditor');
+    Route::post('nominaliquid', 'Nomina\NominaliquidController@store')->name('guardar_turno')->middleware('superEditor');
+    Route::get('nominaliquid/{id}/editar', 'Nomina\NominaliquidController@edit')->name('editar_turno')->middleware('superEditor');
+    Route::put('nominaliquid/{id}', 'Nomina\NominaliquidController@update')->name('actualizar_turno')->middleware('superEditor');
+    Route::post('liquidar', 'Nomina\NominaliquidController@supervisar')->name('liquidar');
 
     /* RUTAS DE NOMINA FIJA */
 
-    Route::get('nominaf', 'Nomina\HoursxuserController@index_nominaf')->name('nominaf')->middleware('superEditor');
-    Route::post('nominaf_guardar', 'Nomina\HoursxuserController@store_nominaf')->name('guardar_nomina')->middleware('superEditor');
-    // Route::get('hoursxuser/{id}/editar', 'Nomina\HoursxuserController@edit')->name('editar_turno')->middleware('superEditor');
+    Route::get('nominaf', 'Nomina\NominaliquidController@index_nominaf')->name('nominaf')->middleware('superEditor');
+    Route::post('nominaf_guardar', 'Nomina\NominaliquidController@store_nominaf')->name('guardar_nomina')->middleware('superEditor');
+    // Route::get('nominaliquid/{id}/editar', 'Nomina\HoursxuserController@edit')->name('editar_turno')->middleware('superEditor');
     // Route::put('hoursxuser/{id}', 'Nomina\HoursxuserController@update')->name('actualizar_turno')->middleware('superEditor');
     // Route::post('liquidar', 'Nomina\HoursxuserController@supervisar')->name('liquidar');
 
     //RUTA PARA CONSULTA DE INFORMES
-    Route::get('informesh', 'Nomina\HoursxuserController@informes')->name('hoursinfo')->middleware('superEditor');
-    Route::get('informeshc', 'Nomina\HoursxuserController@informes1')->name('hoursinfoc')->middleware('superEditor');
+    Route::get('informesh', 'Nomina\NominaliquidController@informes')->name('hoursinfo')->middleware('superEditor');
+    Route::get('informeshc', 'Nomina\NominaliquidController@informes1')->name('hoursinfoc')->middleware('superEditor');
     Route::get('select_user', 'UsuarioController@select')->name('select_user');
 
-    Route::get('select_position', 'Nomina\PositionController@select')->name('select_position');
 
-    /* RUTAS DE LISTAR CARGOS */
-    Route::get('position', 'Nomina\PositionController@index')->name('position');
-    Route::post('position', 'Nomina\PositionController@store')->name('guardar_cargo')->middleware('superEditor');
 
     //RUTA PARA CONSULTA DE INFORMES DE LIQUIDACION
     Route::get('informe-liquid', 'Nomina\LiquidationxuserController@informes')->name('liquidinfo')->middleware('superEditor');

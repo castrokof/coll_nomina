@@ -69,27 +69,26 @@
         <input type="password" name="remenber_token" id="remenber_token" class="form-control"
             value="{{ old('remenber_token') }}" minlength="6" required>
     </div>
-
+    <div class="col-lg-3">
+        <label for="type_contrat" class="col-xs-4 control-label requerido">Contrato</label>
+        <select name="type_contrat" id="type_contrat" class="form-control select2bs4" style="width: 100%;" required>
+            <option value="">---seleccione---</option>
+            <option value="PS">PRESTACIÓN DE SERVICIOS</option>
+            <option value="CT">CONTRATO DE TRABAJO</option>
+        </select>
+    </div>
+    <div class="col-lg-3">
+        <label for="cargo_id" class="col-xs-4 control-label requerido">Cargo</label>
+        <select name="cargo_id" id="cargo_id" class="form-control select2bs4" style="width: 100%;" required>
+        </select>
+    </div>
+</div>
+<div class="form-group row">
     <div class="col-lg-3">
         <label for="ips" class="col-xs-4 control-label requerido">Ips</label>
         <select name="ips" id="ips" class="form-control select2bs4" style="width: 100%;" required>
         </select>
     </div>
-    <div class="col-lg-3">
-        <label for="rol_id" class="col-xs-4 control-label requerido">Rol</label>
-        <select name="rol_id" id="rol_id" class="form-control select2bs4" style="width: 100%;">
-            <option value="">---seleccione el rol---</option>
-            @foreach ($Rols1 as $id => $nombre)
-                <option value="{{ $id }}"
-                    {{ old('rol_id', $data->roles1[0]->id ?? '') == $id ? 'selected' : '' }}>{{ $nombre }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-</div>
-<div class="form-group row">
-
 
 
     <div class="col-lg-3">
@@ -100,7 +99,46 @@
             <option value="0">inactivo</option>
         </select>
     </div>
+    <div class="col-lg-3">
+        <label for="type_salary" class="col-xs-4 control-label requerido">Tipo de Salario</label>
+        <select name="type_salary" id="type_salary" class="form-control select2bs4" style="width: 100%;" required>
+            <option value="">---seleccione---</option>
+            <option value="FIJO-QUINCENAL">FIJO-QUINCENAL</option>
+            <option value="FIJO-MENSUAL">FIJO-MENSUAL</option>
+            <option value="FIJO-QUINCENAL-MENSUAL">FIJO-QUINCENAL-MENSUAL</option>
+            <option value="HORAS-QUINCENAL">HORAS-QUINCENAL</option>
+            <option value="HORAS-MENSUAL">HORAS-MENSUAL</option>
+            <option value="PACIENTES-QUINCENAL">PACIENTES-QUINCENAL</option>
+        </select>
+    </div>
 
+</div>
 
+<div class="form-group row">
+
+    <div class="col-lg-3">
+        <label for="date_in" class="col-xs-4 control-label requerido">Fecha ingreso</label>
+        <input type="date" name="date_in" id="date_in" class="form-control" value="{{ old('account') }}"
+            required>
+    </div>
+
+    <div class="col-lg-3">
+        <label for="name_bank" class="col-xs-4 control-label requerido">Banco</label>
+        <select name="name_bank" id="name_bank" class="form-control select2bs4" style="width: 100%;" required>
+        </select>
+
+    </div>
+
+    <div class="col-lg-3">
+        <label for="type_account" class="col-xs-4 control-label requerido">Tipo de cuenta</label>
+        <select name="type_account" id="type_account" class="form-control select2bs4" style="width: 100%;" required>
+        </select>
+
+    </div>
+    <div class="col-lg-3">
+        <label for="account" class="col-xs-4 control-label requerido"># de Cuenta</label>
+        <input type="number" name="account" id="account" class="form-control" value="{{ old('account') }}"
+            required>
+    </div>
 
 </div>
