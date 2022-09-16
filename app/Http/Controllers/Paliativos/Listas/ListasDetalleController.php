@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Paliativos\Listas;
 
 use App\Models\Listas\ListasDetalle;
 use App\Http\Controllers\Controller;
+use App\Models\Listas\Listas;
 use App\Models\ListasDetalle\ListasDetalle as ListasDetalleListasDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,75 +116,32 @@ class ListasDetalleController extends Controller
     public function select(Request $request)
     {
 
-        $empresas = [];
-        $typeDocument = [];
-        $type = [];
-        $state = [];
-        $name_cargo = [];
+
+        $array=[];
+
 
         if($request->has('q'))
         {
             $term = $request->get('q');
-          $typeDocument=ListasDetalle::orderBy('slug')->where([
-            ['listas_id', 5],
-            ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
-            ->get();
-            $state=ListasDetalle::orderBy('slug')->where([
-                ['listas_id', 6],
-                ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
-                ->get();
-                $type=ListasDetalle::orderBy('id')->where([
-                    ['listas_id', 4],
-                    ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
-                    ->get();
-                    $empresas=ListasDetalle::orderBy('slug')->where([
-                        ['listas_id', 1],
-                        ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
-                        ->get();
-                        $bank=ListasDetalle::orderBy('slug')->where([
-                            ['listas_id', 2],
-                            ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
-                            ->get();
-                            $type_acc=ListasDetalle::orderBy('slug')->where([
-                                ['listas_id', 3],
-                                ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
-                                ->get();
-                                $name_cargo=ListasDetalle::orderBy('slug')->where([
-                                    ['listas_id', 4],
-                                    ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
-                                    ->get();
-            return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas, 'bank'=>$bank, 'type_acc'=>$type_acc, 'name_cargo'=>$name_cargo]);
+
+
+            array_push($array, ListasDetalle::orderBy('slug')->where([
+             ['activo', 'SI'],['listas_id',$request->get('id')]])->where('nombre', 'LIKE', '%' . $term . '%')
+            ->get());
+
+            return response()->json(['array'=>$array]);
         }else {
 
-            $typeDocument=ListasDetalle::orderBy('slug')->where([
-                ['listas_id', 5],
+
+
+                array_push($array, ListasDetalle::orderBy('slug')->where([
+                ['listas_id',$request->get('id')],
                 ['activo', 'SI'],])
-                ->get();
-                $state=ListasDetalle::orderBy('slug')->where([
-                    ['listas_id', 6],
-                    ['activo', 'SI'],])
-                    ->get();
-                    $type=ListasDetalle::orderBy('id')->where([
-                        ['listas_id', 4],
-                        ['activo', 'SI'],])
-                        ->get();
-                        $empresas=ListasDetalle::orderBy('slug')->where([
-                            ['listas_id', 1],
-                            ['activo', 'SI'],])
-                            ->get();
-                            $bank=ListasDetalle::orderBy('slug')->where([
-                                ['listas_id', 2],
-                                ['activo', 'SI'],])
-                                ->get();
-                                $type_acc=ListasDetalle::orderBy('slug')->where([
-                                    ['listas_id', 3],
-                                    ['activo', 'SI'],])
-                                    ->get();
-                                    $name_cargo=ListasDetalle::orderBy('slug')->where([
-                                        ['listas_id', 4],
-                                        ['activo', 'SI'],])
-                                        ->get();
-                return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas,  'bank'=>$bank, 'type_acc'=>$type_acc, 'name_cargo'=>$name_cargo]);
+                ->get());
+
+
+                return response()->json(['array'=>$array]);
+
 
 
         }

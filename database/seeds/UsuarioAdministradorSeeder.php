@@ -341,6 +341,50 @@ class UsuarioAdministradorSeeder extends Seeder
                     'user_id'=>1,
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                       ]);
+                      DB::table('listas')->insert([
+                        'slug'=>strtoupper('CARG'),
+                        'nombre'=>strtoupper('LISTA DE CARGOS'),
+                        'descripcion'=>strtoupper('LISTA DE CARGOS'),
+                        'activo'=>'SI',
+                        'user_id'=>1,
+                        'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                          ]);
+
+                          DB::table('listas')->insert([
+                            'slug'=>strtoupper('LEPS'),
+                            'nombre'=>strtoupper('LISTA DE EPS'),
+                            'descripcion'=>strtoupper('LISTA DE EPS'),
+                            'activo'=>'SI',
+                            'user_id'=>1,
+                            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                              ]);
+
+                              DB::table('listas')->insert([
+                                'slug'=>strtoupper('LARL'),
+                                'nombre'=>strtoupper('LISTA DE ARL'),
+                                'descripcion'=>strtoupper('LISTA DE ARL'),
+                                'activo'=>'SI',
+                                'user_id'=>1,
+                                'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                                  ]);
+
+                                  DB::table('listas')->insert([
+                                    'slug'=>strtoupper('LAFP'),
+                                    'nombre'=>strtoupper('LISTA DE FONDO DE PENSIONES'),
+                                    'descripcion'=>strtoupper('LISTA DE FONDO DE PENSIONES'),
+                                    'activo'=>'SI',
+                                    'user_id'=>1,
+                                    'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                                      ]);
+                                      DB::table('listas')->insert([
+                                        'slug'=>strtoupper('LFCA'),
+                                        'nombre'=>strtoupper('LISTA DE FONDO DE CESANTIAS'),
+                                        'descripcion'=>strtoupper('LISTA DE FONDO DE CESANTIAS'),
+                                        'activo'=>'SI',
+                                        'user_id'=>1,
+                                        'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                                          ]);
+
 
 
                       DB::table('listasdetalle')->insert([
@@ -364,6 +408,65 @@ class UsuarioAdministradorSeeder extends Seeder
                         'activo'=>'SI', 'listas_id'=>3,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
                         ['slug'=>strtoupper('CORE'),'nombre'=>strtoupper('CORRIENTE'),'descripcion'=>strtoupper('CORRIENTE'),
                         'activo'=>'SI', 'listas_id'=>3,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+
+
+                        ['slug'=>strtoupper('MGRAL'),'nombre'=>strtoupper('MEDICO GENERAL'),'descripcion'=>strtoupper('MEDICO GENERAL'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('MESP'),'nombre'=>strtoupper('MEDICO ESPECIALISTA'),'descripcion'=>strtoupper('MEDICO ESPECIALISTA'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('PSIC'),'nombre'=>strtoupper('PSICOLOGIA'),'descripcion'=>strtoupper('PSICOLOGIA'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('AUXM'),'nombre'=>strtoupper('AUXILIAR DE ENFERMERIA'),'descripcion'=>strtoupper('AUXILIAR DE ENFERMERIA'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('AUXA'),'nombre'=>strtoupper('AUXILIAR ADMINISTRATIVO'),'descripcion'=>strtoupper('AUXILIAR ADMINISTRATIVO'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('MESA'),'nombre'=>strtoupper('MEDICO ESP ANESTESIOLOGIA'),'descripcion'=>strtoupper('MEDICO ESPECIALISTA EN ANESTESIOLOGIA'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('MESA'),'nombre'=>strtoupper('MEDICO ESP ALGOLOGIA'),'descripcion'=>strtoupper('MEDICO ESPECIALISTA EN ALGOLOGIA'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('MESO'),'nombre'=>strtoupper('MEDICO ESP ORTOPEDIA'),'descripcion'=>strtoupper('MEDICO ESPECIALISTA EN ORTOPEDIA'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('MESD'),'nombre'=>strtoupper('MEDICO ESP EN DOLOR Y CUIDADOS PALIATIVOS'),'descripcion'=>strtoupper('MEDICO ESPECIALISTA EN DOLOR Y CUIDADOS PALIATIVOS'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('CSST'),'nombre'=>strtoupper('COORDINADOR DE SST'),'descripcion'=>strtoupper('COORDINADOR DE SST'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('JDES'),'nombre'=>strtoupper('JEFE DE SISTEMAS'),'descripcion'=>strtoupper('JEFE DE SISTEMAS DE INFORMACIÓN'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('GGEN'),'nombre'=>strtoupper('GERENTE'),'descripcion'=>strtoupper('GERENTE'),
+                        'activo'=>'SI', 'listas_id'=>4,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+
+                        ['slug'=>strtoupper('COMF'),'nombre'=>strtoupper('EPS COMFENALCO VALLE'),'descripcion'=>strtoupper('EPS COMFENALCO VALLE'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('SANI'),'nombre'=>strtoupper('EPS SANITAS'),'descripcion'=>strtoupper('EPS SANITAS'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('SURA'),'nombre'=>strtoupper('EPS SURA'),'descripcion'=>strtoupper('EPS SURA'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('COOS'),'nombre'=>strtoupper('COOSALUD EPS'),'descripcion'=>strtoupper('COOSALUD EPS'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('ESOS'),'nombre'=>strtoupper('SOS EPS'),'descripcion'=>strtoupper('SOS EPS'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('COMF'),'nombre'=>strtoupper('COMFANDI EPS'),'descripcion'=>strtoupper('COMFANDI EPS'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('NEPS'),'nombre'=>strtoupper('NUEVA EPS'),'descripcion'=>strtoupper('NUEVA EPS'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+
+                        ['slug'=>strtoupper('PORV'),'nombre'=>strtoupper('PORVENIR'),'descripcion'=>strtoupper('PORVENIR'),
+                        'activo'=>'SI', 'listas_id'=>7,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('COLP'),'nombre'=>strtoupper('COLPENSIONES'),'descripcion'=>strtoupper('COLPENSIONES'),
+                        'activo'=>'SI', 'listas_id'=>7,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('PROT'),'nombre'=>strtoupper('PROTECCION'),'descripcion'=>strtoupper('PROTECCION'),
+                        'activo'=>'SI', 'listas_id'=>7,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+
+                        ['slug'=>strtoupper('PROT'),'nombre'=>strtoupper('PROTECCION'),'descripcion'=>strtoupper('PROTECCION'),
+                        'activo'=>'SI', 'listas_id'=>8,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('COLF'),'nombre'=>strtoupper('COLFONDOS'),'descripcion'=>strtoupper('COLFONDOS'),
+                        'activo'=>'SI', 'listas_id'=>8,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('PORV'),'nombre'=>strtoupper('PORVENIR'),'descripcion'=>strtoupper('PORVENIR'),
+                        'activo'=>'SI', 'listas_id'=>8,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+
+
+
+
                         ]);
     }
 }

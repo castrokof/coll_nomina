@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane fade active " id="custom-tabs-one-datos-del-empleado-af" role="tabpanel"
+                        <div class="tab-pane fade  " id="custom-tabs-one-datos-del-empleado-af" role="tabpanel"
                             aria-labelledby="custom-tabs-one-datos-del-empleado-af-tab">
                             <div class="card-body">
 
@@ -48,7 +48,7 @@
 
                             </div>
                         </div>
-                        <div class="tab-pane fade active " id="custom-tabs-one-datos-del-empleado-contrac"
+                        <div class="tab-pane fade " id="custom-tabs-one-datos-del-empleado-contrac"
                             role="tabpanel" aria-labelledby="custom-tabs-one-datos-del-empleado-contrac-tab">
                             <div class="card-body">
 
@@ -57,7 +57,7 @@
 
                             </div>
                         </div>
-                        <div class="tab-pane fade active " id="custom-tabs-one-datos-del-empleado-salario"
+                        <div class="tab-pane fade"  id="custom-tabs-one-datos-del-empleado-salario"
                             role="tabpanel" aria-labelledby="custom-tabs-one-datos-del-empleado-salario-tab">
                             <div class="card-body">
 
