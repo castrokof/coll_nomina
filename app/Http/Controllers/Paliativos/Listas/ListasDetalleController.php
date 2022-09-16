@@ -119,6 +119,7 @@ class ListasDetalleController extends Controller
         $typeDocument = [];
         $type = [];
         $state = [];
+        $name_cargo = [];
 
         if($request->has('q'))
         {
@@ -147,7 +148,11 @@ class ListasDetalleController extends Controller
                                 ['listas_id', 3],
                                 ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
                                 ->get();
-            return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas, 'bank'=>$bank, 'type_acc'=>$type_acc]);
+                                $name_cargo=ListasDetalle::orderBy('slug')->where([
+                                    ['listas_id', 4],
+                                    ['activo', 'SI'],])->where('nombre', 'LIKE', '%' . $term . '%')
+                                    ->get();
+            return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas, 'bank'=>$bank, 'type_acc'=>$type_acc, 'name_cargo'=>$name_cargo]);
         }else {
 
             $typeDocument=ListasDetalle::orderBy('slug')->where([
@@ -174,7 +179,11 @@ class ListasDetalleController extends Controller
                                     ['listas_id', 3],
                                     ['activo', 'SI'],])
                                     ->get();
-                return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas,  'bank'=>$bank, 'type_acc'=>$type_acc]);
+                                    $name_cargo=ListasDetalle::orderBy('slug')->where([
+                                        ['listas_id', 4],
+                                        ['activo', 'SI'],])
+                                        ->get();
+                return response()->json(['typeDocument'=>$typeDocument, 'state'=>$state, 'type'=>$type, 'empresas'=>$empresas,  'bank'=>$bank, 'type_acc'=>$type_acc, 'name_cargo'=>$name_cargo]);
 
 
         }

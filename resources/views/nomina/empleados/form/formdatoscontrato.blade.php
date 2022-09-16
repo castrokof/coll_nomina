@@ -24,7 +24,6 @@
 
     </div>
 
-
     <div class="col-lg-3">
         <label for="activo" class="col-xs-4 control-label requerido">Estado</label>
         <select name="activo" id="activo" class="form-control select2bs4"

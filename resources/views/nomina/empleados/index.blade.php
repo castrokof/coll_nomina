@@ -16,93 +16,8 @@
 @endsection
 
 @section('contenido')
-    <div class="row">
-        <div class="col-lg-12">
-            @include('includes.form-error')
-            @include('includes.form-mensaje')
-            <div class="card card-info">
-                <div class="card-header with-border">
-                    <h3 class="card-title">Empleados</h3>
-                    <div class="card-tools pull-right">
-                        <button type="button" class="btn btn-default" name="create_usuario" id="create_usuario"
-                            data-toggle="modal" data-target="#modal-u"><i class="fa fa-fw fa-plus-circle"></i> Nuevo
-                            Empleado</button>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body table-responsive p-2">
-
-                    <table id="empleados" class="table table-hover  text-nowrap">
-                        {{-- class="table table-hover table-bordered text-nowrap" --}}
-                        <thead>
-                            <tr>
-                                <th>Acciones</th>
-                                <th>Id</th>
-                                <th>1Nombre</th>
-                                <th>2Nombre</th>
-                                <th>1Apellido</th>
-                                <th>2Apellido</th>
-                                <th>Tipo documento</th>
-                                <th>Documento</th>
-                                <th>Celular</th>
-                                <th>Email</th>
-                                <th>Ips</th>
-                                <th>Activo</th>
-                                <th>Cargo</th>
-                                <th>Tipo de salario</th>
-                                <th>Fecha de creacion</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                </form>
-                <!-- /.card-body -->
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" id="modal-u" role="dialog" aria-labelledby="myLargeModalLabel">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="row">
-                    <div class="col-lg-12">
-                        @include('includes.form-error')
-                        @include('includes.form-mensaje')
-                        <span id="form_result"></span>
-                        <div class="card card-info">
-                            <div class="card-header">
-                                <h3 class="card-title">Formulario de creación de empleado</h3>
-                                <div class="card-tools pull-right">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                            <form id="form-general" class="form-horizontal" method="POST">
-                                @csrf
-                                <div class="card-body">
-                                    @include('nomina.empleados.tabs.tabsempleado')
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-
-                                    <div class="col-lg-3"></div>
-                                    <div class="col-lg-6">
-                                        @include('includes.boton-form-crear-empresa-empleado-usuario')
-                                    </div>
-                                </div>
-                                <!-- /.card-footer -->
-                            </form>
-
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('nomina.empleados.tablas.tablaIndexEmpleados')
+    @include('nomina.empleados.modal.modalEmpleado')
 @endsection
 
 
@@ -112,8 +27,6 @@
     <script src="{{ asset("assets/$theme/plugins/datatables-bs4/js/dataTables.bootstrap4.js") }}" type="text/javascript">
     </script>
     <script src="{{ asset('assets/js/jquery-select2/select2.min.js') }}" type="text/javascript"></script>
-
-
 
     <script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
@@ -170,6 +83,32 @@
             //     $("#rol_id").select2({
             //         theme: "bootstrap4",
             //     });
+
+            //Consulta de datos de la tabla lista-detalle
+            $("#cargo_id").select2({
+                language: "es",
+                theme: "bootstrap4",
+                placeholder: 'Seleccione un cargo',
+                ajax: {
+                    url: "{{ route('selectlist') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data.name_cargo, function(data) {
+
+                                return {
+
+                                    text: data.nombre,
+                                    id: data.nombre
+
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
 
             //Consulta de datos de la tabla lista-detalle
             $("#ips").select2({
@@ -413,10 +352,6 @@
 
 
 
-
-
-
-
                 });
 
             //     });
@@ -564,9 +499,7 @@
                         $('#celular').val(data.result.celular);
                         $('#type_contrat').val(data.result.type_contrat);
                         $('#date_in').val(data.result.date_in);
-                        $('#ips').append("<option value='" + data.result.ips + "'>" + data
-                            .result.ips +
-                            "</option>");
+                        $('#ips').append("<option value='" + data.result.ips + "'>" + data.result.ips + "</option>");
                         $('#rol_id').val(data.result.rol_id).trigger('change.select2');
                         $('#activo').val(data.result.activo);
                         $('#cargo_id').val(data.result.cargo_id).trigger('change.select2');
