@@ -11,7 +11,7 @@
 
 
 @section('scripts')
-    <script src="{{ asset('assets/pages/scripts/admin/usuario/crearuser.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/admin/empleado/crearempleado.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
@@ -494,7 +494,7 @@
             Swal.fire({
                 title: "¿Estás seguro?",
                 text: text,
-                icon: "success",
+                icon: "info",
                 showCancelButton: true,
                 showCloseButton: true,
                 confirmButtonText: 'Aceptar',

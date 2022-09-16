@@ -12,7 +12,7 @@
 
 
 @section('scripts')
-    <script src="{{ asset('assets/pages/scripts/admin/usuario/crearuser.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/pages/scripts/admin/usuario/crearempleado.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
@@ -172,22 +172,30 @@
             //     });
 
             //Consulta de datos de la tabla lista-detalle
+
             $("#ips").select2({
                 language: "es",
                 theme: "bootstrap4",
                 placeholder: 'Seleccione una empresa',
+                allowClear: true,
                 ajax: {
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 1
+                    };
+                },
                     processResults: function(data) {
                         return {
-                            results: $.map(data.empresas, function(data) {
+                              results: $.map(data.array[0], function(datas) {
 
                                 return {
 
-                                    text: data.nombre,
-                                    id: data.nombre
+                                    text: datas.nombre,
+                                    id: datas.nombre
 
                                 }
                             })
@@ -197,23 +205,31 @@
                 }
             });
 
+
             //Consulta de datos de la tabla lista-detalle
             $("#name_bank").select2({
                 language: "es",
                 theme: "bootstrap4",
                 placeholder: 'Seleccione un banco',
+                allowClear: true,
                 ajax: {
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 2
+                    };
+                },
                     processResults: function(data) {
                         return {
-                            results: $.map(data.bank, function(data) {
+                              results: $.map(data.array[0], function(datas) {
 
                                 return {
 
-                                    text: data.nombre,
-                                    id: data.nombre
+                                    text: datas.nombre,
+                                    id: datas.nombre
 
                                 }
                             })
@@ -229,18 +245,25 @@
                 language: "es",
                 theme: "bootstrap4",
                 placeholder: 'Seleccione tipo de cuenta',
-                ajax: {
+                allowClear: true,
+                ajax:{
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 3
+                    };
+                },
                     processResults: function(data) {
                         return {
-                            results: $.map(data.type_acc, function(data) {
+                              results: $.map(data.array[0], function(datas) {
 
                                 return {
 
-                                    text: data.nombre,
-                                    id: data.nombre
+                                    text: datas.nombre,
+                                    id: datas.nombre
 
                                 }
                             })
@@ -250,6 +273,165 @@
                 }
             });
 
+            $("#cargo_id").select2({
+                language: "es",
+                theme: "bootstrap4",
+                placeholder: 'Seleccione un cargo',
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('selectlist') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 4
+                    };
+                },
+                    processResults: function(data) {
+                        return {
+                              results: $.map(data.array[0], function(datas) {
+
+                                return {
+
+                                    text: datas.nombre,
+                                    id: datas.nombre
+
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $("#eps").select2({
+                language: "es",
+                theme: "bootstrap4",
+                placeholder: 'Seleccione una eps',
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('selectlist') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 5
+                    };
+                },
+                    processResults: function(data) {
+                        return {
+                              results: $.map(data.array[0], function(datas) {
+
+                                return {
+
+                                    text: datas.nombre,
+                                    id: datas.nombre
+
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $("#arl").select2({
+                language: "es",
+                theme: "bootstrap4",
+                placeholder: 'Seleccione arl',
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('selectlist') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 6
+                    };
+                },
+                    processResults: function(data) {
+                        return {
+                              results: $.map(data.array[0], function(datas) {
+
+                                return {
+
+                                    text: datas.nombre,
+                                    id: datas.nombre
+
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $("#afp").select2({
+                language: "es",
+                theme: "bootstrap4",
+                placeholder: 'Seleccione afp',
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('selectlist') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 7
+                    };
+                },
+                    processResults: function(data) {
+                        return {
+                              results: $.map(data.array[0], function(datas) {
+
+                                return {
+
+                                    text: datas.nombre,
+                                    id: datas.nombre
+
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $("#fc").select2({
+                language: "es",
+                theme: "bootstrap4",
+                placeholder: 'Seleccione fc',
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('selectlist') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                    return {
+                        q: params.term,
+                        id: 8
+                    };
+                },
+                    processResults: function(data) {
+                        return {
+                              results: $.map(data.array[0], function(datas) {
+
+                                return {
+
+                                    text: datas.nombre,
+                                    id: datas.nombre
+
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
             //     $.get('select_position',
             //     function(positions) {  //initiate dataTables plugin
             // $.each(positions, function(position1, value) {
