@@ -200,6 +200,15 @@ class UsuarioAdministradorSeeder extends Seeder
             'icono'=>'fa fa-list'
         ]);
 
+        DB::table('menu')->insert([
+
+            'menu_id'=> 6,
+            'nombre'=>'Registrar Empleado',
+            'url'=>'empleado',
+            'orden'=>'2',
+            'icono'=>'fas fa-user-plus'
+        ]);
+
 
 
 
@@ -316,6 +325,12 @@ class UsuarioAdministradorSeeder extends Seeder
             'menu_id'=> 18
         ]);
 
+        DB::table('menu_rol')->insert([
+
+            'rol_id'=> 1,
+            'menu_id'=> 19
+        ]);
+
 
         DB::table('listas')->insert([
             'slug'=>strtoupper('EMP'),
@@ -384,6 +399,7 @@ class UsuarioAdministradorSeeder extends Seeder
                                         'user_id'=>1,
                                         'created_at' => Carbon::now()->format('Y-m-d H:i:s')
                                           ]);
+                                          
 
 
 
@@ -447,6 +463,8 @@ class UsuarioAdministradorSeeder extends Seeder
                         'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
                         ['slug'=>strtoupper('COMF'),'nombre'=>strtoupper('COMFANDI EPS'),'descripcion'=>strtoupper('COMFANDI EPS'),
                         'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('STOT'),'nombre'=>strtoupper('EPS SALUD TOTAL'),'descripcion'=>strtoupper('EPS SALUD TOTAL'),
+                        'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
                         ['slug'=>strtoupper('NEPS'),'nombre'=>strtoupper('NUEVA EPS'),'descripcion'=>strtoupper('NUEVA EPS'),
                         'activo'=>'SI', 'listas_id'=>5,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
 
@@ -457,13 +475,18 @@ class UsuarioAdministradorSeeder extends Seeder
                         ['slug'=>strtoupper('PROT'),'nombre'=>strtoupper('PROTECCION'),'descripcion'=>strtoupper('PROTECCION'),
                         'activo'=>'SI', 'listas_id'=>7,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
 
-                        ['slug'=>strtoupper('PROT'),'nombre'=>strtoupper('PROTECCION'),'descripcion'=>strtoupper('PROTECCION'),
-                        'activo'=>'SI', 'listas_id'=>8,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('PROT'),'nombre'=>strtoupper('PROTECCION'),'descripcion'=>strtoupper('PROTECCION'),'activo'=>'SI', 'listas_id'=>8,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
                         ['slug'=>strtoupper('COLF'),'nombre'=>strtoupper('COLFONDOS'),'descripcion'=>strtoupper('COLFONDOS'),
                         'activo'=>'SI', 'listas_id'=>8,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
                         ['slug'=>strtoupper('PORV'),'nombre'=>strtoupper('PORVENIR'),'descripcion'=>strtoupper('PORVENIR'),
                         'activo'=>'SI', 'listas_id'=>8,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
 
+                        ['slug'=>strtoupper('AXA'),'nombre'=>strtoupper('AXA COLPATRIA SEGUROS S.A.'),'descripcion'=>strtoupper('AXA COLPATRIA SEGUROS S.A.'),'activo'=>'SI', 'listas_id'=>6,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('COLM'),'nombre'=>strtoupper('COLMENA SEGUROS S.A.'),'descripcion'=>strtoupper('COLMENA SEGUROS S.A.'),'activo'=>'SI', 'listas_id'=>6,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('AUR'),'nombre'=>strtoupper('COMPAÑÍA DE SEGUROS DE VIDA AURORA S.A.'),'descripcion'=>strtoupper('COMPAÑÍA DE SEGUROS DE VIDA AURORA S.A.'),'activo'=>'SI', 'listas_id'=>6,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('EQU'),'nombre'=>strtoupper('LA EQUIDAD SEGUROS'),'descripcion'=>strtoupper('LA EQUIDAD SEGUROS'),'activo'=>'SI', 'listas_id'=>6,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('POS'),'nombre'=>strtoupper('POSITIVA COMPAÑÍA DE SEGUROS S.A.'),'descripcion'=>strtoupper('POSITIVA COMPAÑÍA DE SEGUROS S.A.'),'activo'=>'SI', 'listas_id'=>6,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                        ['slug'=>strtoupper('SUR'),'nombre'=>strtoupper('SEGUROS GENERALES SURAMERICANA S.A.'),'descripcion'=>strtoupper('SEGUROS GENERALES SURAMERICANA S.A.'),'activo'=>'SI', 'listas_id'=>6,'user_id'=>1,  'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
 
 
 

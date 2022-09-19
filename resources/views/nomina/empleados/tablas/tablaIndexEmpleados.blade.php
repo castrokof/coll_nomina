@@ -4,9 +4,9 @@
             @include('includes.form-mensaje')
             <div class="card card-info">
                 <div class="card-header with-border">
-                    <h3 class="card-title">Empleados</h3>
+                    <h3 class="card-title-1">Empleados</h3>
                     <div class="card-tools pull-right">
-                        <button type="button" class="btn btn-default" name="create_usuario" id="create_usuario"
+                        <button type="button" class="btn btn-default" name="create_empleado" id="create_empleado"
                             data-toggle="modal" data-target="#modal-u"><i class="fa fa-fw fa-plus-circle"></i> Nuevo Empleado</button>
                         </button>
                     </div>

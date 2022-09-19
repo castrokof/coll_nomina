@@ -516,7 +516,7 @@
             $('#create_empleado').click(function() {
                 $('#form-general')[0].reset();
                 $('#email').prop('disabled', false).prop('required', true);
-                $('.card-title').text('Agregar Nuevo empleado');
+                // $('.card-title').text('Agregar Nuevo empleado');
                 $('#action_button').val('Add');
                 $('#action').val('Add');
                 $('#form_result').html('');
