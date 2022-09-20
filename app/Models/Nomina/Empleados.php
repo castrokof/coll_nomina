@@ -26,6 +26,7 @@ class Empleados extends Model
     'afp',
     'fc',
     'salary',
+    'salary_ps',
     'value_hour',
     'value_patient_attended',
     'value_add_security_social',
@@ -35,11 +36,13 @@ class Empleados extends Model
     'account',
     'type_account',
     'type_contrat',
+    'type_salary',
     'date_in',
     'date_out',
     'date_incontrat',
     'date_endcontrat',
-    'activo'
+    'activo',
+    'user_id'
     ];
 
     public function liquidacion()

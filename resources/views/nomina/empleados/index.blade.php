@@ -77,15 +77,15 @@
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 1
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 1
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -111,15 +111,15 @@
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 2
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 2
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -141,19 +141,19 @@
                 theme: "bootstrap4",
                 placeholder: 'Seleccione tipo de cuenta',
                 allowClear: true,
-                ajax:{
+                ajax: {
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 3
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 3
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -177,15 +177,15 @@
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 4
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 4
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -209,15 +209,15 @@
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 5
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 5
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -241,15 +241,15 @@
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 6
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 6
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -273,15 +273,15 @@
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 7
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 7
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -305,15 +305,15 @@
                     url: "{{ route('selectlist') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                    return {
-                        q: params.term,
-                        id: 8
-                    };
-                },
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            id: 8
+                        };
+                    },
                     processResults: function(data) {
                         return {
-                              results: $.map(data.array[0], function(datas) {
+                            results: $.map(data.array[0], function(datas) {
 
                                 return {
 
@@ -465,7 +465,7 @@
                                 }
 
                             },
-                            "targets": [12]
+                            "targets": [11]
                         },
 
 
@@ -476,9 +476,9 @@
 
                     "createdRow": function(row, data, dataIndex) {
                         if (data["activo"] == 1) {
-                            $($(row).find("td")[12]).addClass("btn btn-sm btn-success rounded-lg");
+                            $($(row).find("td")[11]).addClass("btn btn-sm btn-success rounded-lg");
                         } else {
-                            $($(row).find("td")[12]).addClass("btn btn-sm btn-warning rounded-lg");
+                            $($(row).find("td")[11]).addClass("btn btn-sm btn-warning rounded-lg");
                         }
                         if (data["type_salary"] == 1) {
                             $($(row).find("td")[15]).addClass("btn btn-sm btn-info rounded-lg");
@@ -503,13 +503,17 @@
                 $('#action_button').val('Add');
                 $('#action').val('Add');
                 $('#form_result').html('');
-                $('#modal-u').modal({backdrop: 'static', keyboard: false});
-                $('#modal-u').modal('stactic');
+                $('#modal-u').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+
 
 
             });
 
-            $('#form-general').on('submit', function(event) {
+
+            $(document).on('click', '.addempleado', function(event) {
                 event.preventDefault();
                 var url = '';
                 var method = '';
@@ -539,13 +543,13 @@
                         $.ajax({
                             url: url,
                             method: method,
-                            data: $(this).serialize(),
+                            data: $('#form-general').serialize(),
                             dataType: "json",
                             success: function(data) {
                                 if (data.success == 'ok') {
                                     $('#form-general')[0].reset();
                                     $('#modal-u').modal('hide');
-                                    $('#empleado').DataTable().ajax.reload();
+                                    $('#empleados').DataTable().ajax.reload();
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'empleado creado correctamente',
@@ -558,7 +562,7 @@
                                 } else if (data.success == 'ok1') {
                                     $('#form-general')[0].reset();
                                     $('#modal-u').modal('hide');
-                                    $('#empleado').DataTable().ajax.reload();
+                                    $('#empleados').DataTable().ajax.reload();
                                     Swal.fire({
                                         icon: 'warning',
                                         title: 'empleado actualizado correctamente',
@@ -589,6 +593,7 @@
                                     errores.push(items.pnombre + '<br>');
                                     errores.push(items.position + '<br>');
                                     errores.push(items.tipo_documento + '<br>');
+                                    errores.push(items.user_id + '<br>');
 
                                     console.log(errores);
 
@@ -598,7 +603,7 @@
 
                                     console.log(filtered);
                                     Swal.fire({
-                                        icon: 'danger',
+                                        icon: 'error',
                                         title: 'El formulario contiene errores',
                                         html: filtered,
                                         showConfirmButton: true,
@@ -620,44 +625,101 @@
 
             // Edición de cliente
 
-            $(document).on('click', '.edit', function() {
+            $(document).on('click', '.editemployed', function() {
+
+                $('#form-general')[0].reset();
                 var id = $(this).attr('id');
 
                 $.ajax({
                     url: "/empleado/" + id + "/editar",
                     dataType: "json",
                     success: function(data) {
-                        $('#pnombre').val(data.result.pnombre);
-                        $('#snombre').val(data.result.snombre);
-                        $('#papellido').val(data.result.papellido);
-                        $('#sapellido').val(data.result.sapellido);
-                        $('#tipo_documento').val(data.result.tipo_documento);
-                        $('#documento').val(data.result.documento);
-                        $('#usuario').val(data.result.usuario).prop('disabled', true).prop(
-                            'required', false);
-                        $('#email').val(data.result.email).prop('required', false);
-                        $('#celular').val(data.result.celular);
-                        $('#type_contrat').val(data.result.type_contrat);
-                        $('#date_in').val(data.result.date_in);
-                        $('#ips').append("<option value='" + data.result.ips + "'>" + data.result.ips + "</option>");
-                        $('#rol_id').val(data.result.rol_id).trigger('change.select2');
-                        $('#activo').val(data.result.activo);
-                        $('#cargo_id').val(data.result.cargo_id).trigger('change.select2');
-                        $('#type_salary').val(data.result.type_salary);
-                        $('#account').val(data.result.account);
-                        $('#name_bank').append("<option value='" + data.result.name_bank +
-                            "'>" + data.result.name_bank +
-                            "</option>");
-                        $('#type_account').append("<option value='" + data.result.type_account +
-                            "'>" + data.result.type_account +
-                            "</option>");
-                        $('#observacion').val(data.result.observacion);
-                        $('#password').val(data.result.password).prop('disabled', true).prop(
-                            'required', false);
-                        $('#remenber_token').val(data.result.remenber_token).prop('disabled',
-                            true).prop('required', false);
+
+
+                        // Primer form de información empleado
+                        $('#pnombre').val(data.empleado.pnombre);
+                        $('#snombre').val(data.empleado.snombre);
+                        $('#papellido').val(data.empleado.papellido);
+                        $('#sapellido').val(data.empleado.sapellido);
+                        $('#tipo_documento').val(data.empleado.tipo_documento);
+                        $('#documento').val(data.empleado.documento);
+                        $('#email').val(data.empleado.email).prop('required', false);
+                        $('#celular').val(data.empleado.celular);
+
+                        var newips = new Option(data.empleado.ips, data.empleado.ips, true, true);
+                        $('#ips').append(newips).trigger('change');
+
+                        //Segundo form afiliaciones
+                        var newposition = new Option(data.empleado.position, data.empleado.position, true, true);
+                        $('#cargo_id').append(newposition).trigger('change');
+
+                        var neweps = new Option(data.empleado.eps, data.empleado.eps, true, true);
+                        $('#eps').append(neweps).trigger('change');
+
+                        var newfc = new Option(data.empleado.fc, data.empleado.fc, true, true);
+                        $('#fc').append(newfc).trigger('change');
+
+                        var newafp = new Option(data.empleado.afp, data.empleado.afp, true, true);
+                        $('#afp').append(newafp).trigger('change');
+
+                        var newarl = new Option(data.empleado.arl, data.empleado.arl, true, true);
+                        $('#arl').append(newarl).trigger('change');
+
+                        //Tercer form contrato
+
+                        $('#type_contrat').val(data.empleado.type_contrat);
+
+                        $('#date_in').val(data.empleado.date_in);
+
+                        $('#activo').val(data.empleado.activo);
+
+                        $('#type_salary').val(data.empleado.type_salary);
+
+                        if ($('#type_contrat').val() == "CT") {
+                            $("#salaryform").css("display", "block");
+                            $("#salary").prop("required", true).val(data.empleado.salary);
+
+                            $("#salarypsform").css("display", "none");
+                            $("#salary_ps").prop("required", false);
+
+                        } else {
+                            $("#salarypsform").css("display", "block");
+                            $("#salary_ps").prop("required", true).val(data.empleado.salary_ps);
+
+                            $("#salaryform").css("display", "none");
+                            $("#salary").prop("required", false);
+
+                        }
+
+                        $('#date_incontract').val(data.empleado.date_incontract);
+                        $('#date_endcontract').val(data.empleado.date_endcontract);
+                        $('#date_out').val(data.empleado.date_out);
+
+                        //Cuato form salarios
+
+
+                        var newbank = new Option(data.empleado.name_bank, data.empleado.name_bank, true, true);
+                        $('#name_bank').append(newbank).trigger('change');
+
+                        var newtypea = new Option(data.empleado.type_account, data.empleado.type_account, true, true);
+                        $('#type_account').append(newtypea).trigger('change');
+
+                        $('#account').val(data.empleado.account);
+
+                        $('#value_transporte').val(data.empleado.value_transporte);
+
+                        $('#value_salary_add').val(data.empleado.value_salary_add);
+
+                        $('#value_hour').val(data.empleado.value_hour);
+
+                        $('#value_patient_attended').val(data.empleado.value_patient_attended);
+
+                        $('#value_add_security_social').val(data.empleado.value_add_security_social);
+
+
                         $('#hidden_id').val(id)
-                        $('.card-title').text('Editar usuario');
+                        $('.card-title').text("Editando empleado: " + data.empleado.pnombre +
+                            "-" + data.empleado.papellido);
                         $('#action_button').val('Edit');
                         $('#action').val('Edit');
                         $('#modal-u').modal('show');
@@ -671,7 +733,7 @@
                     if (jqXHR.status === 403) {
 
                         Manteliviano.notificaciones('No tienes permisos para realizar esta accion',
-                            'Sistema Ventas', 'warning');
+                            'Call Nomina', 'warning');
 
                     }
                 });

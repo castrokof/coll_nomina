@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Nomina;
 
 use App\Events\UpdateNovedadEmp;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\ValidacionEmpleado;
 use App\Models\nomina\Empleados;
 use App\Models\Seguridad\Usuario;
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ class EmpleadosController extends Controller
            return  DataTables()->of($datas)
             ->addColumn('action', function($datas){
             $button = '<button type="button" name="edit" id="'.$datas->id.'"
-            class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="fas fa-user-edit"></i></button>';
+            class = "editemployed btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="fas fa-user-edit"></i></button>';
             $button .='&nbsp;<button type="button" name="addnovedad" id="'.$datas->id.'" usuario1="'.$datas->usuario.'"
             class = "addnovedad btn-float  bg-gradient-warning btn-sm tooltipsC" title="Adicionar novedad"><i class="fas fa-plus-square"></i></button>';
 
@@ -52,7 +52,7 @@ class EmpleadosController extends Controller
         return  DataTables()->of($datas)
         ->addColumn('action', function($datas){
         $button = '<button type="button" name="edit" id="'.$datas->id.'"
-        class = "edit btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="fas fa-user-edit"></i></button>';
+        class = "editemployed btn-float  bg-gradient-primary btn-sm tooltipsC"  title="Editar usuario"><i class="fas fa-user-edit"></i></button>';
         $button .='&nbsp;<button type="button" name="editpass" id="'.$datas->id.'"
         class = "epassword btn-float  bg-gradient-warning btn-sm tooltipsC" title="Editar password"><i class="fas fa-plus-square"></i></button>';
         return $button;
@@ -85,24 +85,12 @@ class EmpleadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Empleados $empleados)
+    public function store(ValidacionEmpleado $request, Empleados $empleados)
     {
-
-        $rules = array(
-            'monto'  => 'numeric|required|min:1|max:9999999999',
-            'descripcion'  => 'required|max:150'
-
-        );
-
-        $error = Validator::make($request->all(), $rules);
-
-        if($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }
 
             Empleados::create($request->all());
 
-            event(new UpdateNovedadEmp($empleados));
+           // event(new UpdateNovedadEmp($empleados));
 
             return response()->json(['success' => 'ok']);
 
@@ -125,9 +113,14 @@ class EmpleadosController extends Controller
      * @param  \App\Models\nomina\Empleados  $empleados
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empleados $empleados)
+    public function edit(Request $request, $empleados)
     {
-        //
+        if($request->ajax()){
+
+           $empleado = Empleados::findOrFail($empleados);
+        }
+
+        return response()->json(['empleado'=>$empleado]);
     }
 
     /**
@@ -137,9 +130,16 @@ class EmpleadosController extends Controller
      * @param  \App\Models\nomina\Empleados  $empleados
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleados $empleados)
+    public function update(ValidacionEmpleado $request, $empleados)
     {
 
+        if($request->ajax()){
+
+            Empleados::findOrFail($empleados)
+            ->update($request->all());
+         }
+
+         return response()->json(['success' => 'ok1']);
 
 
 

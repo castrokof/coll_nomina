@@ -33,7 +33,7 @@
                         <div class="tab-pane fade active show" id="custom-tabs-one-datos-del-empleado" role="tabpanel"
                             aria-labelledby="custom-tabs-one-datos-del-empleado-tab">
                             <div class="card-body">
-                                @csrf
+
 
                                 @include('nomina.empleados.form.formdatosbasicos')
 

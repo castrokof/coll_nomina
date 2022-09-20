@@ -1,7 +1,7 @@
 <div class="form-group row">
     <div class="col-lg-3">
         <label for="cargo_id" class="col-xs-4 control-label requerido">Cargo</label>
-        <select name="cargo_id" id="cargo_id" class="form-control select2bs4"
+        <select name="position" id="cargo_id" class="form-control select2bs4"
             style="width: 100%;" required>
         </select>
     </div>
