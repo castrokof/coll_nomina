@@ -65,24 +65,7 @@
             }
 
             $('#type_contrat').change(ocultarsalario);
-            // // funcion para cargar el select de position
-            // $.get('select_position',
-            //     function(positions) {
-            //         $('#cargo_id').empty();
-            //         $('#cargo_id').append("<option value=''>---seleccione via---</option>")
-            //         $.each(positions, function(position1, value) {
-            //             $('#cargo_id').append("<option value='" + value.id + "'>" + value.position +
-            //                 "</option>")
-            //         });
 
-            //     });
-            //     $("#cargo_id").select2({
-            //         theme: "bootstrap4",
-            //     });
-
-            //     $("#rol_id").select2({
-            //         theme: "bootstrap4",
-            //     });
 
             //Consulta de datos de la tabla lista-detalle
             $("#ips").select2({
@@ -516,11 +499,13 @@
             $('#create_empleado').click(function() {
                 $('#form-general')[0].reset();
                 $('#email').prop('disabled', false).prop('required', true);
-                // $('.card-title').text('Agregar Nuevo empleado');
+                $('.card-title').text('Estas creando un nuevo empleado');
                 $('#action_button').val('Add');
                 $('#action').val('Add');
                 $('#form_result').html('');
-                $('#modal-u').modal('show');
+                $('#modal-u').modal({backdrop: 'static', keyboard: false});
+                $('#modal-u').modal('stactic');
+
 
             });
 

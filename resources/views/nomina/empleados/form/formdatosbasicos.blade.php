@@ -6,7 +6,7 @@
                 <input type="text" name="pnombre" id="pnombre" class="form-control" value="{{ old('pnombre') }}" required>
             </div>
             <div class="col-lg-3">
-                <label for="snombre" class="col-xs-4 control-label requerido">Segundo nombre</label>
+                <label for="snombre" class="col-xs-4 control-label ">Segundo nombre</label>
                 <input type="text" name="snombre" id="snombre" class="form-control" value="{{ old('snombre') }}">
             </div>
             <div class="col-lg-3">
@@ -15,7 +15,7 @@
                     required>
             </div>
             <div class="col-lg-3">
-                <label for="sapellido" class="col-xs-4 control-label requerido">Segundo apellido</label>
+                <label for="sapellido" class="col-xs-4 control-label ">Segundo apellido</label>
                 <input type="text" name="sapellido" id="sapellido" class="form-control" value="{{ old('sapellido') }}">
             </div>
         </div>
